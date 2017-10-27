@@ -31,8 +31,8 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   readonly options = this.chartService.getChartSmoothieDefaults({
     millisPerPixel: 8,
-    maxValue: 1000,
-    minValue: -1000
+    maxValue: 500,
+    minValue: -500
   });
   readonly colors = this.chartService.getColors();
   readonly canvases = Array(this.channels).fill(0).map(() => new SmoothieChart(this.options));
@@ -48,14 +48,24 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  get scale() {
+  get AmplitudeScale() {
     return this.canvases[0].options.maxValue;
   }
 
-  set scale(value: number) {
+  set AmplitudeScale(value: number) {
     for (const canvas of this.canvases) {
       canvas.options.maxValue = value;
       canvas.options.minValue = -value;
+    }
+  }
+
+  get timeScale() {
+    return this.canvases[0].options.millisPerPixel;
+  }
+
+  set timeScale(value: number) {
+    for (const canvas of this.canvases) {
+      canvas.options.millisPerPixel = value;
     }
   }
 

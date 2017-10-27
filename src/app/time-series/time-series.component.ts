@@ -48,6 +48,17 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  get scale() {
+    return this.canvases[0].options.maxValue;
+  }
+
+  set scale(value: number) {
+    for (const canvas of this.canvases) {
+      canvas.options.maxValue = value;
+      canvas.options.minValue = -value;
+    }
+  }
+
   ngAfterViewInit() {
     const channels = this.view.nativeElement.querySelectorAll('canvas');
     this.canvases.forEach((canvas, index) => {

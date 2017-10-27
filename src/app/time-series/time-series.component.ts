@@ -79,8 +79,11 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
       amplitude = filter.next(amplitude);
     }
 
-    this.uMeans[index] = 0.995 * this.uMeans[index] + 0.005 * amplitude;
-    this.uVrms[index] = Math.sqrt(0.995 * this.uVrms[index] ** 2 + 0.005 * (amplitude - this.uMeans[index]) ** 2);
+    if (!isNaN(amplitude)) {
+      this.uMeans[index] = 0.995 * this.uMeans[index] + 0.005 * amplitude;
+      this.uVrms[index] = Math.sqrt(0.995 * this.uVrms[index] ** 2 + 0.005 * (amplitude - this.uMeans[index]) ** 2);
+    }
+
     this.lines[index].append(timestamp, amplitude);
     this.amplitudes[index] = amplitude.toFixed(2);
   }

@@ -16,4 +16,8 @@
     <div class="graph-settings">
       <md-checkbox [(ngModel)]="filter">Filter</md-checkbox>
     </div>
+
+    <div class="graph-settings">
+      Scale : <md-slider [(ngModel)]="scale" min="5" max="1000" step="10"></md-slider> {{scale}} uV
+    </div>
 </section>

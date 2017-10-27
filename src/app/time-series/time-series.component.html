@@ -18,6 +18,7 @@
     </div>
 
     <div class="graph-settings">
-      Scale : <md-slider [(ngModel)]="scale" min="5" max="1000" step="10"></md-slider> {{scale}} uV
+      Amplitude Scale : <md-slider [(ngModel)]="AmplitudeScale" min="5" max="1500" step="10"></md-slider> {{AmplitudeScale}} uV
+      Time Scale : <md-slider [(ngModel)]="timeScale" min="2" max="16" step="1"></md-slider> {{timeScale}}
     </div>
 </section>

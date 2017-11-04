@@ -1,8 +1,8 @@
-<button md-icon-button (click)="startRecording()" *ngIf="!recording">
-  <md-icon>fiber_manual_record</md-icon>
+<button mat-icon-button (click)="startRecording()" *ngIf="!recording">
+  <mat-icon>fiber_manual_record</mat-icon>
 </button>
 <div *ngIf="recording">
-  <button md-icon-button (click)="stopRecording()" *ngIf="recording">
-    <md-icon>stop</md-icon>
+  <button mat-icon-button (click)="stopRecording()" *ngIf="recording">
+    <mat-icon>stop</mat-icon>
   </button> {{sampleCount}}
 </div>

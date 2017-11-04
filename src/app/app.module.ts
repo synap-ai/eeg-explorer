@@ -3,7 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import {
+  MatSnackBarModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule,
+  MatProgressBarModule, MatCheckboxModule, MatSliderModule, MatListModule,
+} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { TimeSeriesComponent } from './time-series/time-series.component';
@@ -25,7 +28,15 @@ import { RecorderComponent } from './recorder/recorder.component';
     FormsModule,
     HttpModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MatSnackBarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatProgressBarModule,
+    MatCheckboxModule,
+    MatSliderModule,
+    MatListModule,
   ],
   providers: [
     ChartService

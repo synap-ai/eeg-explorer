@@ -1,42 +1,42 @@
-<md-toolbar color="primary">
+<mat-toolbar color="primary">
   <img src="assets/brain.svg" alt="Brain icon" class="app-icon" />
   Muse EEG Explorer
   <span class="header-fill"></span>
   <span [hidden]="!(batteryLevel|async)" class="battery-level-indicator">
-    <md-icon>battery_std</md-icon>{{batteryLevel|async|number:"1.0-0"}}%
+    <mat-icon>battery_std</mat-icon>{{batteryLevel|async|number:"1.0-0"}}%
   </span>
-  <md-icon *ngIf="connected" (click)="disconnect()" title="Disconnect">bluetooth_connected</md-icon>
-</md-toolbar>
+  <mat-icon *ngIf="connected" (click)="disconnect()" title="Disconnect">bluetooth_connected</mat-icon>
+</mat-toolbar>
 <section>
-  <md-card *ngIf="!connected">
-    <button *ngIf="!connecting" md-raised-button color="primary" (click)="connect()">
-      <md-icon>bluetooth</md-icon>
+  <mat-card *ngIf="!connected">
+    <button *ngIf="!connecting" mat-raised-button color="primary" (click)="connect()">
+      <mat-icon>bluetooth</mat-icon>
       Connect
     </button>
     <div *ngIf="connecting">
       Connecting...
-      <md-progress-bar mode="indeterminate"></md-progress-bar>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
-  </md-card>
-  <md-card *ngIf="data">
-    <md-card-title>Live EEG Plot</md-card-title>
-    <md-card-content>
+  </mat-card>
+  <mat-card *ngIf="data">
+    <mat-card-title>Live EEG Plot</mat-card-title>
+    <mat-card-content>
       <time-series [data]="data"></time-series>
-    </md-card-content>
-  </md-card>
-  <md-card *ngIf="connected">
-    <md-card-title>Head Position</md-card-title>
-    <md-card-content>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="connected">
+    <mat-card-title>Head Position</mat-card-title>
+    <mat-card-content>
       <app-head-view [xyz]="accelerometer"></app-head-view>
-    </md-card-content>
-  </md-card>
-  <md-card *ngIf="data">
-    <md-card-title>Recording</md-card-title>
-    <md-card-content>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="data">
+    <mat-card-title>Recording</mat-card-title>
+    <mat-card-content>
       <app-recorder [data]="data"></app-recorder>
-    </md-card-content>
-  </md-card>
-  <md-card *ngIf="connected">
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="connected">
     <app-headset-info [controlResponses]="controlResponses"></app-headset-info>
-  </md-card>
+  </mat-card>
 </section>

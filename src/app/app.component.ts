@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { MuseClient, MuseControlResponse, zipSamples, EEGSample } from 'muse-js';
 import { Observable } from 'rxjs/Observable';
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private muse = new MuseClient();
 
-  constructor(private cd: ChangeDetectorRef, private snackBar: MdSnackBar) {
+  constructor(private cd: ChangeDetectorRef, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {

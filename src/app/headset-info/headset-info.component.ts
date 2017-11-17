@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { MuseControlResponse } from 'muse-js';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-headset-info',
@@ -23,9 +24,9 @@ export class HeadsetInfoComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.controlResponses) {
       const cr = this.controlResponses;
-      this.headsetName = cr.map(response => response.hn).filter(Boolean);
-      this.firmwareVersion = cr.map(response => response.fw).filter(Boolean);
-      this.hardwareVersion = cr.map(response => response.hw).filter(Boolean);
+      this.headsetName = cr.pipe(map(response => response.hn), filter(Boolean));
+      this.firmwareVersion = cr.pipe(map(response => response.fw), filter(Boolean));
+      this.hardwareVersion = cr.pipe(map(response => response.hw), filter(Boolean));
     }
   }
 }

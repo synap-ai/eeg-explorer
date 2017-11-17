@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { filter, takeUntil } from 'rxjs/operators';
 
 export interface XYZ {
   x: number;
@@ -25,7 +26,7 @@ export class HeadViewComponent implements OnInit, OnDestroy {
   private scene: THREE.Scene;
   private camera: THREE.Camera;
   private renderer: THREE.WebGLRenderer;
-  private headModel: THREE.Mesh;
+  private headModel: THREE.Mesh | null = null;
 
   constructor(private element: ElementRef) {
     this.scene = new THREE.Scene();
@@ -56,15 +57,15 @@ export class HeadViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.element.nativeElement.appendChild(this.renderer.domElement);
     this.animate();
-    this.xyz
-      .takeUntil(this.destroy)
+    this.xyz.pipe(
+      takeUntil(this.destroy),
+      filter(() => this.modelLoaded)
+    )
       .subscribe(acceleration => {
-        if (this.headModel) {
-          const gVector = new THREE.Vector3(acceleration.y, -acceleration.x, acceleration.z);
-          gVector.applyAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
-          const yAxis = new THREE.Vector3(0, 1, 0);
-          this.headModel.quaternion.setFromUnitVectors(yAxis, gVector.clone().normalize());
-        }
+        const gVector = new THREE.Vector3(acceleration.y, -acceleration.x, acceleration.z);
+        gVector.applyAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+        const yAxis = new THREE.Vector3(0, 1, 0);
+        this.headModel.quaternion.setFromUnitVectors(yAxis, gVector.clone().normalize());
       });
   }
 

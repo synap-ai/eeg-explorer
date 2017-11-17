@@ -5,9 +5,6 @@ import { SmoothieChart, TimeSeries } from 'smoothie';
 import { channelNames, EEGSample } from 'muse-js';
 import { BandpassFilter } from './../shared/bandpass-filter';
 
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/take';
-
 import { ChartService } from '../shared/chart.service';
 
 const samplingFrequency = 256;

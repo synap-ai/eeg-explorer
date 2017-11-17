@@ -4,11 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { MuseClient, MuseControlResponse, zipSamples, EEGSample } from 'muse-js';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/takeUntil';
+import { map, share, tap, takeUntil } from 'rxjs/operators';
 
 import { XYZ } from './head-view/head-view.component';
 
@@ -32,8 +28,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.muse.connectionStatus
-      .takeUntil(this.destroy)
+    this.muse.connectionStatus.pipe(
+      takeUntil(this.destroy)
+    )
       .subscribe(status => {
         this.connected = status;
         this.data = null;
@@ -52,17 +49,20 @@ export class AppComponent implements OnInit, OnDestroy {
       await this.muse.connect();
       this.controlResponses = this.muse.controlResponses;
       await this.muse.start();
-      this.data = zipSamples(this.muse.eegReadings)
-        .takeUntil(this.destroy)
-        .do(() => this.cd.detectChanges())
-        .share();
-      this.batteryLevel = this.muse.telemetryData
-        .takeUntil(this.destroy)
-        .map(t => t.batteryLevel);
-      this.muse.accelerometerData
-        .takeUntil(this.destroy)
-        .map(reading => reading.samples[reading.samples.length - 1])
-        .subscribe(this.accelerometer);
+      this.data = this.muse.eegReadings.pipe(
+        zipSamples,
+        takeUntil(this.destroy),
+        tap(() => this.cd.detectChanges()),
+        share()
+      );
+      this.batteryLevel = this.muse.telemetryData.pipe(
+        takeUntil(this.destroy),
+        map(t => t.batteryLevel)
+      );
+      this.muse.accelerometerData.pipe(
+        takeUntil(this.destroy),
+        map(reading => reading.samples[reading.samples.length - 1])
+      ).subscribe(this.accelerometer);
       await this.muse.deviceInfo();
     } catch (err) {
       this.snackBar.open('Connection failed: ' + err.toString(), 'Dismiss');

@@ -40,7 +40,6 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly lines = Array(this.channels).fill(0).map(() => new TimeSeries());
 
   constructor(private view: ElementRef, private chartService: ChartService) {
-    this.chartService = chartService;
   }
 
   get amplitudeScale() {

@@ -73,12 +73,12 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
         }))),
       groupBy(sample => sample.electrode),
       mergeMap(group => {
-        const bandpassFilter = bandpass(samplingFrequency, 1, 30)
+        const bandpassFilter = bandpass(samplingFrequency, 1, 30);
         const conditionalFilter = value => this.filter ? bandpassFilter(value) : value;
         return group.pipe(
           filter(sample => !isNaN(sample.value)),
           map(sample => ({ ...sample, value: conditionalFilter(sample.value) })),
-        )
+        );
       })
     )
       .subscribe(sample => {

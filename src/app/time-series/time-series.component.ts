@@ -3,14 +3,16 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { SmoothieChart, TimeSeries } from 'smoothie';
 import { channelNames, EEGSample } from 'muse-js';
-import { BandpassFilter } from './../shared/bandpass-filter';
+import { Subject } from 'rxjs/Subject';
+import { map, groupBy, filter, mergeMap, takeUntil } from 'rxjs/operators';
+import { bandpass } from './../shared/bandpass.filter';
 
 import { ChartService } from '../shared/chart.service';
 
 const samplingFrequency = 256;
 
 @Component({
-  selector: 'time-series',
+  selector: 'app-time-series',
   templateUrl: 'time-series.component.html',
   styleUrls: ['time-series.component.css'],
 })
@@ -20,6 +22,7 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filter = false;
 
+  readonly destroy = new Subject<void>();
   readonly channels = 4;
   readonly channelNames = channelNames.slice(0, this.channels);
   readonly amplitudes = [];
@@ -35,21 +38,16 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   readonly canvases = Array(this.channels).fill(0).map(() => new SmoothieChart(this.options));
 
   private readonly lines = Array(this.channels).fill(0).map(() => new TimeSeries());
-  private readonly bandpassFilters: BandpassFilter[] = [];
 
   constructor(private view: ElementRef, private chartService: ChartService) {
     this.chartService = chartService;
-
-    for (let i = 0; i < this.channels; i++) {
-      this.bandpassFilters[i] = new BandpassFilter(samplingFrequency, 1, 30);
-    }
   }
 
-  get AmplitudeScale() {
+  get amplitudeScale() {
     return this.canvases[0].options.maxValue;
   }
 
-  set AmplitudeScale(value: number) {
+  set amplitudeScale(value: number) {
     for (const canvas of this.canvases) {
       canvas.options.maxValue = value;
       canvas.options.minValue = -value;
@@ -66,6 +64,29 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  ngOnInit() {
+    this.addTimeSeries();
+    this.data.pipe(
+      takeUntil(this.destroy),
+      mergeMap(sampleSet =>
+        sampleSet.data.slice(0, this.channels).map((value, electrode) => ({
+          timestamp: sampleSet.timestamp, value, electrode
+        }))),
+      groupBy(sample => sample.electrode),
+      mergeMap(group => {
+        const bandpassFilter = bandpass(samplingFrequency, 1, 30)
+        const conditionalFilter = value => this.filter ? bandpassFilter(value) : value;
+        return group.pipe(
+          filter(sample => !isNaN(sample.value)),
+          map(sample => ({ ...sample, value: conditionalFilter(sample.value) })),
+        )
+      })
+    )
+      .subscribe(sample => {
+        this.draw(sample.timestamp, sample.value, sample.electrode);
+      });
+  }
+
   ngAfterViewInit() {
     const channels = this.view.nativeElement.querySelectorAll('canvas');
     this.canvases.forEach((canvas, index) => {
@@ -73,13 +94,8 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  ngOnInit() {
-    this.addTimeSeries();
-    this.data.subscribe(sample => {
-      sample.data.slice(0, this.channels).forEach((electrode, index) => {
-        this.draw(sample.timestamp, electrode, index);
-      });
-    });
+  ngOnDestroy() {
+    this.destroy.next();
   }
 
   addTimeSeries() {
@@ -92,21 +108,10 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   draw(timestamp: number, amplitude: number, index: number) {
-    const filter = this.bandpassFilters[index];
-    if (this.filter && !isNaN(amplitude)) {
-      amplitude = filter.next(amplitude);
-    }
-
-    if (!isNaN(amplitude)) {
-      this.uMeans[index] = 0.995 * this.uMeans[index] + 0.005 * amplitude;
-      this.uVrms[index] = Math.sqrt(0.995 * this.uVrms[index] ** 2 + 0.005 * (amplitude - this.uMeans[index]) ** 2);
-    }
+    this.uMeans[index] = 0.995 * this.uMeans[index] + 0.005 * amplitude;
+    this.uVrms[index] = Math.sqrt(0.995 * this.uVrms[index] ** 2 + 0.005 * (amplitude - this.uMeans[index]) ** 2);
 
     this.lines[index].append(timestamp, amplitude);
     this.amplitudes[index] = amplitude.toFixed(2);
   }
-
-  ngOnDestroy() {
-  }
-
 }

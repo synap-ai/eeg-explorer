@@ -74,4 +74,12 @@ export class AppComponent implements OnInit, OnDestroy {
   disconnect() {
     this.muse.disconnect();
   }
+
+  get enableAux() {
+    return this.muse.enableAux;
+  }
+
+  set enableAux(value: boolean) {
+    this.muse.enableAux = value;
+  }
 }

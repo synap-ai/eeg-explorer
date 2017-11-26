@@ -19,15 +19,18 @@ const samplingFrequency = 256;
 export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() data: Observable<EEGSample>;
+  @Input() enableAux: boolean;
 
   filter = false;
 
+  channels = 4;
+  canvases: SmoothieChart[];
+
   readonly destroy = new Subject<void>();
-  readonly channels = 4;
-  readonly channelNames = channelNames.slice(0, this.channels);
+  readonly channelNames = channelNames;
   readonly amplitudes = [];
-  readonly uVrms = [0, 0, 0, 0];
-  readonly uMeans = [0, 0, 0, 0];
+  readonly uVrms = [0, 0, 0, 0, 0];
+  readonly uMeans = [0, 0, 0, 0, 0];
 
   readonly options = this.chartService.getChartSmoothieDefaults({
     millisPerPixel: 8,
@@ -35,9 +38,8 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     minValue: -500
   });
   readonly colors = this.chartService.getColors();
-  readonly canvases = Array(this.channels).fill(0).map(() => new SmoothieChart(this.options));
 
-  private readonly lines = Array(this.channels).fill(0).map(() => new TimeSeries());
+  private lines: TimeSeries[];
 
   constructor(private view: ElementRef, private chartService: ChartService) {
   }
@@ -64,6 +66,9 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    this.channels = this.enableAux ? 5 : 4;
+    this.canvases = Array(this.channels).fill(0).map(() => new SmoothieChart(this.options));
+    this.lines = Array(this.channels).fill(0).map(() => new TimeSeries());
     this.addTimeSeries();
     this.data.pipe(
       takeUntil(this.destroy),

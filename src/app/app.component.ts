@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
   data: Observable<EEGSample> | null;
   batteryLevel: Observable<number> | null;
   controlResponses: Observable<MuseControlResponse>;
-  accelerometer = new Subject<XYZ>();
+  accelerometer: Observable<XYZ>;
   destroy = new Subject<void>();
 
   private muse = new MuseClient();
@@ -59,10 +59,10 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy),
         map(t => t.batteryLevel)
       );
-      this.muse.accelerometerData.pipe(
+      this.accelerometer = this.muse.accelerometerData.pipe(
         takeUntil(this.destroy),
         map(reading => reading.samples[reading.samples.length - 1])
-      ).subscribe(this.accelerometer);
+      );
       await this.muse.deviceInfo();
     } catch (err) {
       this.snackBar.open('Connection failed: ' + err.toString(), 'Dismiss');

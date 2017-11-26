@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import 'imports-loader?THREE=three!three/examples/js/loaders/GLTF2Loader';
   templateUrl: './head-view.component.html',
   styleUrls: ['./head-view.component.css']
 })
-export class HeadViewComponent implements OnInit, OnDestroy {
+export class HeadViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input() xyz: Observable<XYZ>;
 
   modelLoaded = false;
@@ -57,16 +57,21 @@ export class HeadViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.element.nativeElement.appendChild(this.renderer.domElement);
     this.animate();
-    this.xyz.pipe(
-      takeUntil(this.destroy),
-      filter(() => this.modelLoaded)
-    )
-      .subscribe(acceleration => {
-        const gVector = new THREE.Vector3(acceleration.y, -acceleration.x, acceleration.z);
-        gVector.applyAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
-        const yAxis = new THREE.Vector3(0, 1, 0);
-        this.headModel.quaternion.setFromUnitVectors(yAxis, gVector.clone().normalize());
-      });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.xyz && this.xyz) {
+      this.xyz.pipe(
+        takeUntil(this.destroy),
+        filter(() => this.modelLoaded)
+      )
+        .subscribe(acceleration => {
+          const gVector = new THREE.Vector3(acceleration.y, -acceleration.x, acceleration.z);
+          gVector.applyAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+          const yAxis = new THREE.Vector3(0, 1, 0);
+          this.headModel.quaternion.setFromUnitVectors(yAxis, gVector.clone().normalize());
+        });
+    }
   }
 
   ngOnDestroy() {

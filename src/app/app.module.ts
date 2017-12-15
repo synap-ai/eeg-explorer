@@ -5,7 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
   MatSnackBarModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule,
-  MatProgressBarModule, MatCheckboxModule, MatSliderModule, MatListModule,
+  MatProgressBarModule, MatProgressSpinnerModule, MatCheckboxModule, MatSliderModule,
+  MatListModule,
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { RecorderComponent } from './recorder/recorder.component';
     MatToolbarModule,
     MatCardModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatCheckboxModule,
     MatSliderModule,
     MatListModule,

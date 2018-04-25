@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription } from 'rxjs';
 import { MuseControlResponse } from 'muse-js';
 import { map, filter } from 'rxjs/operators';
 

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription } from 'rxjs';
 import { EEGSample, channelNames } from 'muse-js';
 
 @Component({

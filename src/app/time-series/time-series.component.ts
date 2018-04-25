@@ -1,9 +1,8 @@
 import { Component, ElementRef, Input, AfterViewInit } from '@angular/core';
 import { OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 import { SmoothieChart, TimeSeries } from 'smoothie';
 import { channelNames, EEGSample } from 'muse-js';
-import { Subject } from 'rxjs/Subject';
 import { map, groupBy, filter, mergeMap, takeUntil } from 'rxjs/operators';
 import { bandpass } from './../shared/bandpass.filter';
 

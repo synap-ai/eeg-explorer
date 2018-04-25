@@ -2,8 +2,7 @@ import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
 import { MuseClient, MuseControlResponse, zipSamples, EEGSample } from 'muse-js';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { map, share, tap, takeUntil } from 'rxjs/operators';
 
 import { XYZ } from './head-view/head-view.component';

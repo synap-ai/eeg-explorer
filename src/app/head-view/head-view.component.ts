@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ElementRef, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 export interface XYZ {

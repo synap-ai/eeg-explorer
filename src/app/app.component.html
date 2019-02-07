@@ -8,6 +8,7 @@
   <mat-icon *ngIf="connected" (click)="disconnect()" title="Disconnect">bluetooth_connected</mat-icon>
 </mat-toolbar>
 <section>
+  <!-- initial unconnected screen -->
   <mat-card *ngIf="!connected">
     <button *ngIf="!connecting" mat-raised-button color="primary" (click)="connect()">
       <mat-icon>bluetooth</mat-icon>
@@ -22,25 +23,39 @@
       Connecting...
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
+    <!--File upload-->
+    <div class="form-group">
+        <label for="file">UploadFile</label>
+        <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+    </div>
+    <!-- File Player-->
+    <button *ngIf="replayFile" mat-raised-button color="primary" (click)="playFile()">
+        <mat-icon>play_arrow</mat-icon>
+        Play File
+      </button>
   </mat-card>
+  <!-- If EEG data -->
   <mat-card *ngIf="data">
-    <mat-card-title>Live EEG Plot</mat-card-title>
+    <mat-card-title>Live EEG Plot {{lastTimeStamp | async}}</mat-card-title>
     <mat-card-content>
       <app-time-series [data]="data" [enableAux]="enableAux"></app-time-series>
     </mat-card-content>
   </mat-card>
+  <!-- If connected -->
   <mat-card *ngIf="connected">
     <mat-card-title>Head Position</mat-card-title>
     <mat-card-content>
       <app-head-view [xyz]="accelerometer"></app-head-view>
     </mat-card-content>
   </mat-card>
+  <!--If data show recorder-->
   <mat-card *ngIf="data">
     <mat-card-title>Recording</mat-card-title>
     <mat-card-content>
       <app-recorder [data]="data"></app-recorder>
     </mat-card-content>
   </mat-card>
+  <!--If connected show app info-->
   <mat-card *ngIf="connected">
     <app-headset-info [controlResponses]="controlResponses"></app-headset-info>
   </mat-card>

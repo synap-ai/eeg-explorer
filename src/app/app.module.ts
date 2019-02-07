@@ -9,6 +9,8 @@ import {
   MatListModule,
 } from '@angular/material';
 
+import { PapaParseModule } from 'ngx-papaparse';
+
 import { AppComponent } from './app.component';
 import { TimeSeriesComponent } from './time-series/time-series.component';
 import { ChartService } from './shared/chart.service';
@@ -39,6 +41,7 @@ import { RecorderComponent } from './recorder/recorder.component';
     MatCheckboxModule,
     MatSliderModule,
     MatListModule,
+    PapaParseModule,
   ],
   providers: [
     ChartService

@@ -6,15 +6,18 @@ import { HttpModule } from '@angular/http';
 import {
   MatSnackBarModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatCheckboxModule, MatSliderModule,
-  MatListModule,
+  MatListModule, MatFormFieldModule, MatInputModule
 } from '@angular/material';
-
+import { AngularFileUploaderModule } from "angular-file-uploader";
 import { AppComponent } from './app.component';
 import { TimeSeriesComponent } from './time-series/time-series.component';
 import { ChartService } from './shared/chart.service';
 import { HeadViewComponent } from './head-view/head-view.component';
 import { HeadsetInfoComponent } from './headset-info/headset-info.component';
 import { RecorderComponent } from './recorder/recorder.component';
+import { MatVideoModule } from 'mat-video';
+import { MatFileUploadModule } from 'angular-material-fileupload';
+import { YoutubePlayerModule } from 'ngx-youtube-player';
 
 @NgModule({
   declarations: [
@@ -34,11 +37,16 @@ import { RecorderComponent } from './recorder/recorder.component';
     MatIconModule,
     MatToolbarModule,
     MatCardModule,
+    MatInputModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatSliderModule,
     MatListModule,
+    MatVideoModule,
+    MatFormFieldModule,
+    MatFileUploadModule,
+    YoutubePlayerModule
   ],
   providers: [
     ChartService

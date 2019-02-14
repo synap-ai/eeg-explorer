@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <img src="assets/brain.svg" alt="Brain icon" class="app-icon" />
-  Muse EEG Explorer
+  Muse EEG Explorer - Synap.ai
   <span class="header-fill"></span>
   <span [hidden]="!(batteryLevel|async)" class="battery-level-indicator">
     <mat-icon>battery_std</mat-icon>{{batteryLevel|async|number:"1.0-0"}}%
@@ -22,6 +22,20 @@
       Connecting...
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
+  </mat-card>
+  <mat-card *ngIf="data">
+    <mat-card-title>Media Player</mat-card-title>
+    <mat-card-content style="text-align:center">
+      <iframe id="videoPlayer" width="800" height="600" [src] = "link" type="video/mp4" controls>
+        Your browser does not support HTML5 video.
+      </iframe><br>
+      <form class="youtube">
+        <mat-form-field>
+          <input matInput #url name="url" type="url" placeholder="Video Url">
+        </mat-form-field>
+        <button mat-button (click)="load(url.value)" style="margin-left:2em">Load</button>
+      </form>
+    </mat-card-content>
   </mat-card>
   <mat-card *ngIf="data">
     <mat-card-title>Live EEG Plot</mat-card-title>

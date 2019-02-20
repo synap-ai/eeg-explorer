@@ -6,9 +6,10 @@ import { HttpModule } from '@angular/http';
 import {
   MatSnackBarModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatCheckboxModule, MatSliderModule,
-  MatListModule,
+  MatListModule, MatFormFieldModule, MatInputModule,
 } from '@angular/material';
 
+import { YoutubePlayerModule } from 'ngx-youtube-player';
 import { PapaParseModule } from 'ngx-papaparse';
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { ChartService } from './shared/chart.service';
 import { HeadViewComponent } from './head-view/head-view.component';
 import { HeadsetInfoComponent } from './headset-info/headset-info.component';
 import { RecorderComponent } from './recorder/recorder.component';
+import { MediaPlayerComponent } from './media-player/media-player.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { RecorderComponent } from './recorder/recorder.component';
     TimeSeriesComponent,
     HeadViewComponent,
     HeadsetInfoComponent,
-    RecorderComponent
+    RecorderComponent,
+    MediaPlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,10 @@ import { RecorderComponent } from './recorder/recorder.component';
     MatCheckboxModule,
     MatSliderModule,
     MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
     PapaParseModule,
+    YoutubePlayerModule,
   ],
   providers: [
     ChartService

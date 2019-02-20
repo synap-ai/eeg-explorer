@@ -25,21 +25,28 @@
     </div>
     <!--File upload-->
     <div class="form-group">
-        <label for="file">UploadFile</label>
-        <input #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
+      <label for="file">UploadFile</label>
+      <input #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
     </div>
     <!-- File Player-->
     <button *ngIf="FilePlayer.Loaded && !FilePlayer.Playing" mat-raised-button color="primary" (click)="playFile()">
-        <mat-icon>play_arrow</mat-icon>
-        Play File
+      <mat-icon>play_arrow</mat-icon>
+      Play File
     </button>
     <button *ngIf="FilePlayer.Loaded" mat-raised-button color="primary" (click)="stopFile(); fileInput.value = null">
       <mat-icon>stop</mat-icon>
     </button>
-      <p *ngIf="FilePlayer.Loading"> Loading </p>
-      <p *ngIf="FilePlayer.Loaded && FilePlayer.Playing"> {{FilePlayer.PlayBackTime}} </p>
+    <p *ngIf="FilePlayer.Loading"> Loading </p>
+    <p *ngIf="FilePlayer.Loaded && FilePlayer.Playing"> {{FilePlayer.PlayBackTime}} </p>
   </mat-card>
-  <!-- If EEG data -->
+  <!-- Video Player-->
+  <mat-card>
+    <mat-card-title>Media Player</mat-card-title>
+    <mat-card-content>
+      <app-media-player></app-media-player>
+    </mat-card-content>
+  </mat-card>
+  <!-- EEG data -->
   <mat-card *ngIf="data">
     <mat-card-title>Live EEG Plot {{lastTimeStamp | async}}</mat-card-title>
     <mat-card-content>

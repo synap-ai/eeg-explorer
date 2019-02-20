@@ -26,13 +26,18 @@
     <!--File upload-->
     <div class="form-group">
         <label for="file">UploadFile</label>
-        <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+        <input #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
     </div>
     <!-- File Player-->
-    <button *ngIf="replayFile" mat-raised-button color="primary" (click)="playFile()">
+    <button *ngIf="FilePlayer.Loaded && !FilePlayer.Playing" mat-raised-button color="primary" (click)="playFile()">
         <mat-icon>play_arrow</mat-icon>
         Play File
-      </button>
+    </button>
+    <button *ngIf="FilePlayer.Loaded" mat-raised-button color="primary" (click)="stopFile(); fileInput.value = null">
+      <mat-icon>stop</mat-icon>
+    </button>
+      <p *ngIf="FilePlayer.Loading"> Loading </p>
+      <p *ngIf="FilePlayer.Loaded && FilePlayer.Playing"> {{FilePlayer.PlayBackTime}} </p>
   </mat-card>
   <!-- If EEG data -->
   <mat-card *ngIf="data">

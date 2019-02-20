@@ -7,7 +7,7 @@ import { map, share, tap, takeUntil } from 'rxjs/operators';
 
 import { XYZ } from './head-view/head-view.component';
 
-import { Papa, PapaParseResult } from 'ngx-papaparse';
+import { FilePlayerService } from './shared/file-player.service';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private muse = new MuseClient();
 
-  constructor(private cd: ChangeDetectorRef, private snackBar: MatSnackBar, private papa: Papa) {
+  constructor(private cd: ChangeDetectorRef, private snackBar: MatSnackBar, public FilePlayer: FilePlayerService) {
   }
 
   ngOnInit() {
@@ -92,72 +92,23 @@ export class AppComponent implements OnInit, OnDestroy {
 
   handleFileInput(files: FileList) {
     this.replayFile = files.item(0);
+    this.FilePlayer.LoadFile(this.replayFile);
   }
 
-  async playFile() {
-    this.connecting = true;
-    this.snackBar.dismiss();
-    try {
-      // Pump file data into data
-      this.playBackEEG = new Subject<EEGSample>();
-      this.data = this.playBackEEG.asObservable().pipe(
-        takeUntil(this.destroy),
-        tap(() => this.cd.detectChanges()),
-        share()
-      );
-      this.lastTimeStamp = this.data.pipe(
-        map(sample => sample.timestamp / 1000),
-      );
-      this.playBackIndex = 0;
-
-      this.playBackStart = Date.now() / 1000;
-
-      this.papa.parse(this.replayFile, {
-        /*worker: true,*/
-        step: (row) => this.readRecordLine(row),
-        complete: () => console.log('File complete')
-      });
-    } catch (err) {
-      this.snackBar.open('File play failed: ' + err.toString(), 'Dismiss');
-    } finally {
-      this.connecting = false;
-    }
-
+  playFile() {
+    this.data = this.FilePlayer.Data.asObservable().pipe(
+      takeUntil(this.destroy),
+      tap(() => this.cd.detectChanges()),
+      share()
+    );
+    this.FilePlayer.Play();
   }
 
-  async readRecordLine(row: PapaParseResult) {
-    const values = row.data[0];
-    if (!values[1]) {
-      return;
-    }
-    const type = values[1].trim();
-    if (type === '/muse/eeg' && values.length > 5) {
-        const timeStamp = parseFloat(values[0].trim());
-        if (this.fileTimeStart === -1) {
-          this.fileTimeStart = timeStamp;
-        }
-        const relativeTime = this.playBackStart + (timeStamp - this.fileTimeStart);
-
-        const tp9 = parseFloat(values[2].trim());
-        const af7 = parseFloat(values[3].trim());
-        const af8 = parseFloat(values[4].trim());
-        const tp10 = parseFloat(values[5].trim());
-        const eegSample: EEGSample = { index: this.playBackIndex, timestamp: relativeTime * 1000, data: [tp9, af7, af8, tp10] };
-        this.playBackIndex++;
-        const toWait =  relativeTime - (Date.now() / 1000);
-        console.log(toWait);
-        if (toWait <= 0) {
-          this.playBackEEG.next(eegSample);
-        } else {
-          setTimeout( () => this.playBackEEG.next(eegSample), toWait);
-        }
-    }
+  stopFile() {
+    this.FilePlayer.Stop();
+    this.data = null;
+    this.replayFile = null;
   }
-
-  sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
 }
 
 

@@ -73,7 +73,7 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.addTimeSeries();
     const filtered: Observable<EEGSample> = this.data.pipe(
       takeUntil(this.destroy),
-      bandpassFilter({ cutoffFrequencies: [1, 30], nbChannels: 4 })
+      bandpassFilter({ cutoffFrequencies: [1, 30], nbChannels: 4, samplingRate: samplingFrequency })
     );
     filtered.pipe(
       mergeMap((sampleSet: EEGSample) =>

@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "10.15.1"
+dist: trusty
+cache:
+  directories:
+    - node_modules
+sudo: required
+branches:
+  only:
+    - master
+before_script:
+  - npm install -g @angular/cli
+script:
+  - ng lint
+  - ng build --prod --base-href https://synap-ai.github.io/eeg-explorer/

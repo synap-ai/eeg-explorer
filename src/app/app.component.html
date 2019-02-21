@@ -46,6 +46,13 @@
       <app-media-player></app-media-player>
     </mat-card-content>
   </mat-card>
+  <!-- Experiment Form-->
+  <mat-card>
+      <mat-card-title> Experiment </mat-card-title>
+      <mat-card-content>
+        <app-experiment-form></app-experiment-form>
+      </mat-card-content>
+    </mat-card>
   <!-- EEG data -->
   <mat-card *ngIf="data">
     <mat-card-title>Live EEG Plot {{lastTimeStamp | async}}</mat-card-title>

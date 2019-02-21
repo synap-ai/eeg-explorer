@@ -1,0 +1,20 @@
+.emediaform {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .media-form > * {
+    width: 100%;
+  }
+  
+  .media-form form {
+    margin-bottom: 20px;
+  }
+  
+  .media-form form > * {
+    margin: 5px 0;
+  }
+  
+  .media-form .mat-radio-button {
+    margin: 0 5px;
+  }

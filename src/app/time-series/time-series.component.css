@@ -56,6 +56,16 @@
 
 .time-series-amplitude {
   position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #f2f2f2;
+  background: #f2f2f2;
+  padding: 3px 6px;
+  border-radius: 9px;
+}
+.time-series-bandpower {
+  position: absolute;
   bottom: 10px;
   right: 10px;
   font-size: 12px;

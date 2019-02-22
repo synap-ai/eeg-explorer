@@ -37,9 +37,9 @@ export class DataCollectionComponent implements OnInit {
   }
   onStateChange(event) {
     const state = event.data;
-    if (state === 1) { //playing
-      this.subscription = this.eegStream.data.subscribe(sample => {
-        this.samples.push(sample);
+    if (state === 1) { // playing
+      this.subscription = this.eegStream.data.subscribe(s => {
+        this.samples.push(s);
       });
     } else if (state === 0) {
       this.subscription.unsubscribe();

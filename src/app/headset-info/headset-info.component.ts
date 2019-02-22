@@ -9,7 +9,7 @@ import { EegStreamService } from 'app/shared/eeg-stream.service';
   templateUrl: './headset-info.component.html',
   styleUrls: ['./headset-info.component.css']
 })
-export class HeadsetInfoComponent implements OnInit{
+export class HeadsetInfoComponent implements OnInit {
   get controlResponses(): Observable<MuseControlResponse> {
     return this.eegStream.controlResponses;
   }

@@ -14,7 +14,7 @@ export class ConnectionComponent implements OnInit {
     return this.eegStream.connected || this.eegStream.playingFile;
   }
 
-  constructor(private snackBar: MatSnackBar, private eegStream: EegStreamService) {
+  constructor(private snackBar: MatSnackBar, public eegStream: EegStreamService) {
   }
 
   ngOnInit() {}

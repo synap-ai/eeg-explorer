@@ -7,7 +7,7 @@ import { EegStreamService } from 'app/shared/eeg-stream.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(private eegStream: EegStreamService) {
+  constructor(public eegStream: EegStreamService) {
   }
   ngOnInit() {
   }

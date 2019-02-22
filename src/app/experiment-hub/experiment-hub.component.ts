@@ -11,7 +11,7 @@ export class ExperimentHubComponent implements OnInit {
 
   selectedExperiment: Experiment;
 
-  constructor(private eService: ExperimentService) { }
+  constructor(public eService: ExperimentService) { }
 
   ngOnInit() {
   }

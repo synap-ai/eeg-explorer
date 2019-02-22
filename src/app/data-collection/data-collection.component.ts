@@ -27,7 +27,7 @@ export class DataCollectionComponent implements OnInit {
   powers = [];
   coovariance = [];
 
-  constructor(private eService: ExperimentService, private sService: SubjectService, private eegStream: EegStreamService) { }
+  constructor(public eService: ExperimentService, public sService: SubjectService, public eegStream: EegStreamService) { }
 
   ngOnInit() {
   }

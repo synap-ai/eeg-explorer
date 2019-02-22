@@ -19,7 +19,6 @@ import { ChartService } from './shared/chart.service';
 import { HeadViewComponent } from './head-view/head-view.component';
 import { HeadsetInfoComponent } from './headset-info/headset-info.component';
 import { RecorderComponent } from './recorder/recorder.component';
-import { MediaPlayerComponent } from './media-player/media-player.component';
 import { ExperimentFormComponent } from './experiment-form/experiment-form.component';
 import { MediaDescriptionFormComponent } from './media-description-form/media-description-form.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -42,7 +41,6 @@ const appRoutes: Routes = [
     HeadViewComponent,
     HeadsetInfoComponent,
     RecorderComponent,
-    MediaPlayerComponent,
     ExperimentFormComponent,
     MediaDescriptionFormComponent,
     HomeComponent,

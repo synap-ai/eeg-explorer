@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { EEGSample, channelNames } from 'muse-js';
+import { EegStreamService } from 'app/shared/eeg-stream.service';
 
 @Component({
   selector: 'app-recorder',
@@ -8,14 +9,16 @@ import { EEGSample, channelNames } from 'muse-js';
   styleUrls: ['./recorder.component.css']
 })
 export class RecorderComponent implements OnInit {
-  @Input() data: Observable<EEGSample>;
+  get data(): Observable<EEGSample> {
+    return this.eegStream.data;
+  }
 
   recording = false;
 
   private samples: number[][];
   private subscription: Subscription;
 
-  constructor() { }
+  constructor(private eegStream: EegStreamService) { }
 
   ngOnInit() {
   }

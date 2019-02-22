@@ -1,6 +1,6 @@
 <h4> Hello </h4>
 <mat-sidenav-container class="nav-container">
-  <mat-sidenav mode="side" opened="true" class="side-nav" >
+  <mat-sidenav mode="side" opened="true" class="side-nav">
     <mat-nav-list>
       <a mat-list-item routerLink="/home">Home</a>
       <a mat-list-item routerLink="/experiments">Experiments</a>
@@ -8,6 +8,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="nav-content">
+    <app-connection></app-connection>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

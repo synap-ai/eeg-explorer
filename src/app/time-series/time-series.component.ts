@@ -8,6 +8,7 @@ import { bandpass } from './../shared/bandpass.filter';
 import { epoch, fft, addInfo, powerByBand, bandpassFilter } from '@neurosity/pipes';
 
 import { ChartService } from '../shared/chart.service';
+import { EegStreamService } from 'app/shared/eeg-stream.service';
 
 const samplingFrequency = 256;
 
@@ -18,8 +19,9 @@ const samplingFrequency = 256;
 })
 export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @Input() data: Observable<EEGSample>;
-  @Input() enableAux: boolean;
+  get data(): Observable<EEGSample> {
+    return this.eegStream.data;
+  }
 
   filter = false;
 
@@ -43,7 +45,7 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private lines: TimeSeries[];
 
-  constructor(private view: ElementRef, private chartService: ChartService) {
+  constructor(private view: ElementRef, private chartService: ChartService, private eegStream: EegStreamService) {
   }
 
   get amplitudeScale() {

@@ -1,0 +1,68 @@
+<mat-toolbar color="primary">
+    <img src="assets/brain.svg" alt="Brain icon" class="app-icon" />
+    Muse EEG Explorer
+    <span class="header-fill"></span>
+    <span [hidden]="!(batteryLevel|async)" class="battery-level-indicator">
+      <mat-icon>battery_std</mat-icon>{{batteryLevel|async|number:"1.0-0"}}%
+    </span>
+    <mat-icon *ngIf="connected" (click)="disconnect()" title="Disconnect">bluetooth_connected</mat-icon>
+  </mat-toolbar>
+  <section>
+    <!-- initial unconnected screen -->
+    <mat-card *ngIf="!connected">
+      <button *ngIf="!connecting" mat-raised-button color="primary" (click)="connect()">
+        <mat-icon>bluetooth</mat-icon>
+        Connect
+      </button>
+      <div *ngIf="!connecting" class="connection-options">
+        <mat-checkbox [(ngModel)]="enableAux">
+          Enable Auxilary Electrode
+        </mat-checkbox>
+      </div>
+      <div *ngIf="connecting">
+        Connecting...
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+      <!--File upload-->
+      <div class="form-group">
+        <label for="file">UploadFile</label>
+        <input #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
+      </div>
+      <!-- File Player-->
+      <button *ngIf="FilePlayer.Loaded && !FilePlayer.Playing" mat-raised-button color="primary" (click)="playFile()">
+        <mat-icon>play_arrow</mat-icon>
+        Play File
+      </button>
+      <button *ngIf="FilePlayer.Loaded" mat-raised-button color="primary" (click)="stopFile(); fileInput.value = null">
+        <mat-icon>stop</mat-icon>
+      </button>
+      <p *ngIf="FilePlayer.Loading"> Loading </p>
+      <p *ngIf="FilePlayer.Loaded && FilePlayer.Playing"> {{FilePlayer.PlayBackTime}} </p>
+    </mat-card>
+    <!-- EEG data -->
+    <mat-card *ngIf="data">
+      <mat-card-title>Live EEG Plot {{lastTimeStamp | async}}</mat-card-title>
+      <mat-card-content>
+        <app-time-series [data]="data" [enableAux]="enableAux"></app-time-series>
+      </mat-card-content>
+    </mat-card>
+    <!-- If connected -->
+    <mat-card *ngIf="connected">
+      <mat-card-title>Head Position</mat-card-title>
+      <mat-card-content>
+        <app-head-view [xyz]="accelerometer"></app-head-view>
+      </mat-card-content>
+    </mat-card>
+    <!--If data show recorder-->
+    <mat-card *ngIf="data">
+      <mat-card-title>Recording</mat-card-title>
+      <mat-card-content>
+        <app-recorder [data]="data"></app-recorder>
+      </mat-card-content>
+    </mat-card>
+    <!--If connected show app info-->
+    <mat-card *ngIf="connected">
+      <app-headset-info [controlResponses]="controlResponses"></app-headset-info>
+    </mat-card>
+  </section>
+  

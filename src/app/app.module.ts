@@ -7,7 +7,7 @@ import {
   MatSnackBarModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatCheckboxModule, MatSliderModule,
   MatListModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule,
-  MatExpansionModule,
+  MatExpansionModule, MatSidenavModule,
 } from '@angular/material';
 
 import { YoutubePlayerModule } from 'ngx-youtube-player';
@@ -22,6 +22,15 @@ import { RecorderComponent } from './recorder/recorder.component';
 import { MediaPlayerComponent } from './media-player/media-player.component';
 import { ExperimentFormComponent } from './experiment-form/experiment-form.component';
 import { MediaDescriptionFormComponent } from './media-description-form/media-description-form.component';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+
+const appRoutes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'experiments', component: ExperimentFormComponent },
+  { path: 'media', component: MediaPlayerComponent },
+  { path: '**', component: HomeComponent },
+];
 
 @NgModule({
   declarations: [
@@ -32,7 +41,8 @@ import { MediaDescriptionFormComponent } from './media-description-form/media-de
     RecorderComponent,
     MediaPlayerComponent,
     ExperimentFormComponent,
-    MediaDescriptionFormComponent
+    MediaDescriptionFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -55,8 +65,10 @@ import { MediaDescriptionFormComponent } from './media-description-form/media-de
     MatSelectModule,
     MatOptionModule,
     MatExpansionModule,
+    MatSidenavModule,
     PapaParseModule,
     YoutubePlayerModule,
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [
     ChartService

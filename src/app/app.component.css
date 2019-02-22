@@ -1,25 +1,15 @@
-.app-icon {
-  width: 40px;
-  margin-right: 10px;
+.nav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.side-nav {
+  margin-right: 5px;
+  border: 2px solid darkcyan; 
 }
 
-.header-fill {
-  flex: 1;
-}
-
-.battery-level-indicator mat-icon {
-  margin-right: -4px;
-  vertical-align: text-bottom;
-}
-
-.battery-level-indicator {
-  padding-right: 12px;
-}
-
-mat-card {
-  margin-bottom: 10px;
-}
-
-.connection-options {
-  margin-top: 16px;
+.nav-content {
+  padding-left: 5px;
 }

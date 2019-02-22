@@ -1,0 +1,20 @@
+.experiment-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .experiment-form > * {
+    width: 100%;
+  }
+  
+  .experiment-form form {
+    margin-bottom: 20px;
+  }
+  
+  .experiment-form form > * {
+    margin: 5px 0;
+  }
+  
+  .experiment-form .mat-radio-button {
+    margin: 0 5px;
+  }

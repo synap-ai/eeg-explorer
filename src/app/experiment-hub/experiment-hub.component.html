@@ -1,0 +1,27 @@
+<section>
+  <mat-card>
+    <mat-card-title>Experiment Hub</mat-card-title>
+    <mat-card-content>
+      <button (click)="newExperiment()" mat-button>New Experiment</button>
+      <mat-list>
+        <mat-list-item *ngFor="let experiment of eService.experiments">
+          <span>
+            {{experiment.title}} {{experiment.id}}
+            <button (click)="editExperiment(experiment)" mat-button name="edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="deleteExperiment(experiment)" mat-button name="delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="selectedExperiment">
+      <mat-card-title>Experiment Form</mat-card-title>
+      <mat-card-content>
+        <app-experiment-form [experiment]="selectedExperiment"></app-experiment-form>
+      </mat-card-content>
+    </mat-card>
+</section>

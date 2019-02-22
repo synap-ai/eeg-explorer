@@ -25,11 +25,13 @@ import { MediaDescriptionFormComponent } from './media-description-form/media-de
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ConnectionComponent } from './connection/connection.component';
+import { ExperimentHubComponent } from './experiment-hub/experiment-hub.component';
+import { DataCollectionComponent } from './data-collection/data-collection.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'experiments', component: ExperimentFormComponent },
-  { path: 'media', component: MediaPlayerComponent },
+  { path: 'experiments', component: ExperimentHubComponent },
+  { path: 'media', component: DataCollectionComponent },
   { path: '**', component: HomeComponent },
 ];
 
@@ -44,7 +46,9 @@ const appRoutes: Routes = [
     ExperimentFormComponent,
     MediaDescriptionFormComponent,
     HomeComponent,
-    ConnectionComponent
+    ConnectionComponent,
+    ExperimentHubComponent,
+    DataCollectionComponent
   ],
   imports: [
     BrowserModule,

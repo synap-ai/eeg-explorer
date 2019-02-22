@@ -1,0 +1,38 @@
+<section>
+  <mat-card>
+    <mat-card-title>Selection</mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <mat-select placeholder="Subject" [(value)]="subject">
+          <mat-option *ngFor="let _subject of sService.subjects" [value]="_subject">
+            {{_subject.id}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="subject">
+        <mat-select placeholder="Experiment" [(value)]="experiment">
+          <mat-option *ngFor="let _experiment of eService.experiments" [value]="_experiment">
+            {{_experiment.title}} {{_experiment.id}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="subject && experiment">
+        <mat-select placeholder="Video" [(value)]="video">
+          <mat-option *ngFor="let _video of experiment.videos" [value]="_video">
+            {{_video.title}} {{_video.id}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="subject && experiment && video && eegStream.data">
+      <mat-card-title>Media</mat-card-title>
+      <mat-card-content>
+          <youtube-player 
+          [videoId]="video.id" 
+          (ready)="savePlayer($event)" 
+          (change)="onStateChange($event)">
+        </youtube-player>
+      </mat-card-content>
+    </mat-card>
+</section>

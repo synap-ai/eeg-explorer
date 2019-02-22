@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import { MediaDescription } from 'app/media-description';
+import { MediaDescription } from 'app/shared/media-description';
 
 @Component({
   selector: 'app-media-description-form',

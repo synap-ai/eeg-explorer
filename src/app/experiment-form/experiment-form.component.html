@@ -1,6 +1,9 @@
 <form class="experiment-form" [formGroup]="experimentOptions">
+    <mat-form-field>
+        <input matInput #title formControlName="title" name="title" type="text" placeholder="Title">
+      </mat-form-field>
   <mat-form-field>
-    <input matInput #experimentID formControlName="experimentID" name="experimentID" type="text" placeholder="Experiment ID">
+    <input matInput #experimentID formControlName="id" name="experimentID" type="text" placeholder="Experiment ID">
   </mat-form-field>
   <mat-form-field matSuffix="Samples / Epoch">
     <input matInput #epoch formControlName="epoch" name="epoch" type="number" placeholder="Epoch Samples" hin>
@@ -10,13 +13,13 @@
   </mat-form-field>
   <mat-checkbox formControlName="useBandPowers">Use Band Powers</mat-checkbox>
   <mat-checkbox formControlName="useCovariance">Use Covariance</mat-checkbox>
-
+  <button mat-button name="save" (click)="save()">Save Changes</button>
   <h4> Videos </h4>
 
   <button mat-button (click)="addVideo()">Add Video</button>
 
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let video of videos">
+    <mat-expansion-panel *ngFor="let video of experiment.videos">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{video.title || "New Video"}}

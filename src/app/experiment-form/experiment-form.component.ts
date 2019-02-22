@@ -1,42 +1,57 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import { MediaDescription } from 'app/media-description';
+import { MediaDescription } from 'app/shared/media-description';
+import { Experiment } from 'app/shared/experiment';
+import { e } from '@angular/core/src/render3';
+import { ExperimentService } from 'app/shared/experiment.service';
 
 @Component({
   selector: 'app-experiment-form',
   templateUrl: './experiment-form.component.html',
   styleUrls: ['./experiment-form.component.css']
 })
-export class ExperimentFormComponent implements OnInit {
+export class ExperimentFormComponent implements OnInit, OnChanges {
+
+  @Input() experiment: Experiment;
 
   experimentOptions: FormGroup;
-  videos: MediaDescription[] = [
-    {title: 'video 1', id: 'dsfafadsf', label: 2.00},
-    {title: 'video 2', id: 'dfasdfsd', label: 3.00},
-    {title: 'video 3', id: 'dsfasdf', label: 4.00},
-    {title: 'video 4', id: 'asdfgasdg', label: 5.00},
-  ];
 
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, private eService: ExperimentService) {
     this.experimentOptions = fb.group({
-      experimentID: null,
+      title: null,
+      id: null,
       epoch: 256,
       epochInterval: 100,
       useBandPowers: true,
       useCovariance: true,
+      videos: [],
     });
   }
 
   ngOnInit() {
   }
 
+  ngOnChanges() {
+    this.experimentOptions.reset();
+    if (this.experiment.title) {
+      this.experimentOptions.setValue(this.experiment);
+    }
+  }
+
+  save() {
+    const videos = this.experiment.videos;
+    Object.assign(this.experiment, this.experimentOptions.value);
+    this.experiment.videos = videos;
+    this.eService.save(this.experiment);
+  }
+
   addVideo() {
-    this.videos.push(new MediaDescription());
+    this.experiment.videos.push(new MediaDescription());
   }
   deleteVideo(video: MediaDescription) {
-    const i = this.videos.indexOf(video);
+    const i = this.experiment.videos.indexOf(video);
     if (i >= 0) {
-      this.videos.splice(i, 1);
+      this.experiment.videos.splice(i, 1);
     }
   }
 

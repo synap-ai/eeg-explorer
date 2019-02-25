@@ -1,0 +1,39 @@
+<mat-toolbar color="primary">
+  <img src="assets/brain.svg" alt="Brain icon" class="app-icon" />
+  Muse EEG Explorer
+  <span class="header-fill"></span>
+  <span [hidden]="!(eegStream.batteryLevel | async)" class="battery-level-indicator">
+    <mat-icon>battery_std</mat-icon>{{eegStream.batteryLevel|async|number:"1.0-0"}}%
+  </span>
+  <mat-icon *ngIf="eegStream.connected" title="Disconnect">bluetooth_connected</mat-icon>
+  <button mat-button *ngIf="Streaming" title="Disconnect" (click)="disconnect()">
+      <mat-icon>stop</mat-icon>
+  </button>
+</mat-toolbar>
+<section>
+  <!-- initial unconnected screen -->
+  <mat-card *ngIf="!Streaming">
+    <button *ngIf="!eegStream.connecting" mat-raised-button color="primary" (click)="connect()">
+      <mat-icon>bluetooth</mat-icon>
+      Connect
+    </button>
+    <div *ngIf="connecting">
+      Connecting...
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <!--File upload-->
+    <div class="file-player">
+      <div>
+        <label for="file">UploadFile</label>
+        <input #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
+      </div>
+      <div> <!-- File Player-->
+        <button *ngIf="eegStream.fileLoaded && !Streaming" mat-raised-button color="primary" (click)="playFile()">
+          <mat-icon>play_arrow</mat-icon>
+          Play File
+        </button>
+        <mat-spinner *ngIf="eegStream.fileLoading"></mat-spinner>
+      </div>    
+    </div>
+  </mat-card>
+</section>

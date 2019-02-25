@@ -2,25 +2,25 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MuseControlResponse } from 'muse-js';
 import { map, filter } from 'rxjs/operators';
+import { EegStreamService } from 'app/shared/eeg-stream.service';
 
 @Component({
   selector: 'app-headset-info',
   templateUrl: './headset-info.component.html',
   styleUrls: ['./headset-info.component.css']
 })
-export class HeadsetInfoComponent implements OnInit, OnChanges {
-  @Input() controlResponses: Observable<MuseControlResponse>;
+export class HeadsetInfoComponent implements OnInit {
+  get controlResponses(): Observable<MuseControlResponse> {
+    return this.eegStream.controlResponses;
+  }
 
   headsetName: Observable<string>;
   firmwareVersion: Observable<string>;
   hardwareVersion: Observable<string>;
 
-  constructor() { }
+  constructor(private eegStream: EegStreamService) { }
 
   ngOnInit() {
-  }
-
-  ngOnChanges() {
     if (this.controlResponses) {
       const cr = this.controlResponses;
       this.headsetName = cr.pipe(map(response => response.hn), filter(Boolean));

@@ -1,0 +1,12 @@
+<form class="media-form" [formGroup]="mediaOptions">
+  <mat-form-field>
+    <input matInput #videoID formControlName="title" name="title" type="text" placeholder="Video Title">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #videoID formControlName="id" name="id" type="text" placeholder="Youtube ID">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput #label formControlName="label" name="label" type="text" placeholder="Classification Label">
+  </mat-form-field>
+  <button mat-button (click)="save()">Save Changes</button>
+</form>

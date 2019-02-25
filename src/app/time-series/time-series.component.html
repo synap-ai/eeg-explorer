@@ -11,11 +11,15 @@
             [ngStyle]="{ 'background': colors[i].borderColor }">
             {{ uVrms[i].toFixed(1) }} uVrms
         </aside>
+        <aside class="time-series-bandpower"
+            *ngIf="powers"
+            [ngStyle]="{ 'background': colors[i].borderColor }">
+            A: {{ powers['alpha'][i].toFixed(2) }},
+            B: {{ powers['beta'][i].toFixed(2) }},
+            G: {{ powers['gamma'][i].toFixed(2) }},
+            D: {{ powers['delta'][i].toFixed(2) }}
+        </aside>
     </article>
-
-    <div class="graph-settings">
-      <mat-checkbox [(ngModel)]="filter">Filter</mat-checkbox>
-    </div>
 
     <div class="graph-settings">
       Amplitude Scale : <mat-slider [(ngModel)]="amplitudeScale" min="5" max="1500" step="10"></mat-slider> {{amplitudeScale}} uV

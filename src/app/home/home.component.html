@@ -1,0 +1,20 @@
+<section>
+  <!-- EEG data -->
+  <mat-card *ngIf="eegStream.data">
+    <mat-card-title>Live EEG Plot {{eegStream.lastTimeStamp | async}}</mat-card-title>
+    <mat-card-content>
+      <app-time-series></app-time-series>
+    </mat-card-content>
+  </mat-card>
+  <!--If data show recorder-->
+  <mat-card *ngIf="eegStream.data">
+    <mat-card-title>Recording</mat-card-title>
+    <mat-card-content>
+      <app-recorder></app-recorder>
+    </mat-card-content>
+  </mat-card>
+  <!--If connected show app info-->
+  <mat-card *ngIf="eegStream.connected">
+    <app-headset-info ></app-headset-info>
+  </mat-card>
+</section>

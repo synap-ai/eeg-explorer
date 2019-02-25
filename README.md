@@ -64,3 +64,8 @@ ng build --prod
 2. Copy everything within the dist/ folder to a folder on the server.
 
 3. Configure the server to redirect requests for missing files to index.html.
+
+## License
+
+Copyright (C) 2017, Alex Castillo and Uri Shaked. 
+Code released under the MIT license.

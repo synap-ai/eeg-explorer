@@ -6,6 +6,11 @@ import { Subject } from 'app/shared/subject';
 import { e } from '@angular/core/src/render3';
 import { SubjectService } from 'app/shared/subject.service';
 
+export interface Sex {
+  value: string;
+}
+
+
 @Component({
   selector: 'app-subject-form',
   templateUrl: './subject-form.component.html',
@@ -13,6 +18,11 @@ import { SubjectService } from 'app/shared/subject.service';
 })
 export class SubjectFormComponent implements OnInit, OnChanges {
 
+  sexes: Sex[] = [
+    {value: 'Male'},
+    {value: 'Female'},
+    {value: 'Other'}
+  ];
   @Input() subject: Subject;
 
   subjectOptions: FormGroup;

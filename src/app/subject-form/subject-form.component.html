@@ -6,7 +6,10 @@
       <input matInput #subjectAge formControlName="age" name="SubjectAge" type="text" placeholder="Age">
     </mat-form-field>
 <mat-form-field>
-  <input matInput #subjectSex formControlName="sex" name="subjectSex" type="text" placeholder="Sex">
+  <mat-select #subjectSex formControlName="sex" placeholder="Sex">
+    <mat-option *ngFor = "let sex of sexes"[value]="sex.value">{{sex.value}}</mat-option>
+    </mat-select>
+  <!-- <input matInput #subjectSex formControlName="sex" name="subjectSex" type="text" placeholder="Sex"> -->
 </mat-form-field>
 <button mat-button name="save" (click)="save()">Save Changes</button>
 </form>

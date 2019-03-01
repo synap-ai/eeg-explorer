@@ -26,11 +26,14 @@ import { HomeComponent } from './home/home.component';
 import { ConnectionComponent } from './connection/connection.component';
 import { ExperimentHubComponent } from './experiment-hub/experiment-hub.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
+import { SubjectFormComponent } from './subject-form/subject-form.component';
+import { SubjectHubComponent } from './subject-hub/subject-hub.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'experiments', component: ExperimentHubComponent },
   { path: 'media', component: DataCollectionComponent },
+  { path: 'subjects', component: SubjectHubComponent},
   { path: '**', component: HomeComponent },
 ];
 
@@ -46,7 +49,9 @@ const appRoutes: Routes = [
     HomeComponent,
     ConnectionComponent,
     ExperimentHubComponent,
-    DataCollectionComponent
+    DataCollectionComponent,
+    SubjectFormComponent,
+    SubjectHubComponent
   ],
   imports: [
     BrowserModule,

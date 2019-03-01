@@ -1,0 +1,27 @@
+<section>
+  <mat-card>
+    <mat-card-title>Subject Hub</mat-card-title>
+    <mat-card-content>
+      <button (click)="newSubject()" mat-button>New Subject</button>
+      <mat-list>
+        <mat-list-item *ngFor="let subject of eService.subjects">
+          <span>
+            {{subject.name}} {{subject.id}}
+            <button (click)="editSubject(subject)" mat-button name="edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="deleteSubject(subject)" mat-button name="delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="selectedSubject">
+      <mat-card-title>Subject Form</mat-card-title>
+      <mat-card-content>
+        <app-subject-form [subject]="selectedSubject"></app-subject-form>
+      </mat-card-content>
+    </mat-card>
+</section>

@@ -12,7 +12,25 @@ const exampleData: Subject[] = [
 })
 export class SubjectService {
 
-  subjects: Subject[] = exampleData;
+  subjects: Subject[];
 
-  constructor() { }
+  constructor() { 
+    this.subjects = exampleData;
+  }
+
+  save(subject: Subject) {
+    const i = this.subjects.findIndex(e => e.id === subject.id);
+    if (i >= 0) {
+      this.subjects[i] = subject;
+    } else {
+      this.subjects.push(subject);
+    }
+  }
+
+  delete(subject: Subject) {
+    const i = this.subjects.indexOf(subject);
+    if (i >= 0) {
+      this.subjects.splice(i, 1);
+    }
+  }
 }

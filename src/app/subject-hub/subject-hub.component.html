@@ -2,12 +2,12 @@
   <mat-card>
     <mat-card-title>Subject Hub</mat-card-title>
     <mat-card-content>
-      <button (click)="newSubject()" mat-button>New Subject</button>
+      <button (click)="newSubject()" mat-raised-button>New Subject</button>
       <mat-list>
         <mat-list-item *ngFor="let subject of eService.subjects">
           <span>
             {{subject.name}}
-            <button (click)="editSubject(subject)" mat-button name="edit">
+            <button style="margin:0 20px 0 20px" (click)="editSubject(subject)" mat-button name="edit">
               <mat-icon>edit</mat-icon>
             </button>
             <button (click)="deleteSubject(subject)" mat-button name="delete">

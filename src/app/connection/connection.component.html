@@ -20,12 +20,12 @@
     <div *ngIf="connecting">
       Connecting...
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div>
+    </div><br><br><br>
     <!--File upload-->
     <div class="file-player">
       <div>
-        <label for="file">UploadFile</label>
-        <input #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
+        <label style="color:#3f51b5; font-size:20px" for="file">UploadFile</label><br><br>
+        <input class="btn" #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
       </div>
       <div> <!-- File Player-->
         <button *ngIf="eegStream.fileLoaded && !Streaming" mat-raised-button color="primary" (click)="playFile()">

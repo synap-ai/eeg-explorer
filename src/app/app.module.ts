@@ -7,8 +7,9 @@ import {
   MatSnackBarModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatCheckboxModule, MatSliderModule,
   MatListModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule,
-  MatExpansionModule, MatSidenavModule,
+  MatExpansionModule, MatSidenavModule, MatNativeDateModule
 } from '@angular/material';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { YoutubePlayerModule } from 'ngx-youtube-player';
 import { PapaParseModule } from 'ngx-papaparse';
@@ -77,10 +78,13 @@ const appRoutes: Routes = [
     MatSidenavModule,
     PapaParseModule,
     YoutubePlayerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
-    ChartService
+    ChartService,
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent]
 })

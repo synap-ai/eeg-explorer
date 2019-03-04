@@ -6,7 +6,7 @@
       <mat-list>
         <mat-list-item *ngFor="let subject of eService.subjects">
           <span>
-            {{subject.name}} {{subject.id}}
+            {{subject.name}}
             <button (click)="editSubject(subject)" mat-button name="edit">
               <mat-icon>edit</mat-icon>
             </button>

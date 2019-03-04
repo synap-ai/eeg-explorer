@@ -14,7 +14,7 @@ export class SubjectService {
 
   subjects: Subject[];
 
-  constructor() { 
+  constructor() {
     this.subjects = exampleData;
   }
 

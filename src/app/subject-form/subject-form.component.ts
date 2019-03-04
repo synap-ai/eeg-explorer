@@ -27,7 +27,7 @@ export class SubjectFormComponent implements OnInit, OnChanges {
 
   subjectOptions: FormGroup;
 
-  constructor(fb: FormBuilder, private eService: SubjectService) { 
+  constructor(fb: FormBuilder, private eService: SubjectService) {
     this.subjectOptions = fb.group({
       id: null,
       age: null,

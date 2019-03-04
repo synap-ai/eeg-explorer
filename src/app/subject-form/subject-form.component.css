@@ -1,0 +1,20 @@
+.subject-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .subject-form > * {
+    width: 100%;
+  }
+  
+  .subject-form form {
+    margin-bottom: 20px;
+  }
+  
+  .subject-form form > * {
+    margin: 5px 0;
+  }
+  
+  .subject-form .mat-radio-button {
+    margin: 0 5px;
+  }

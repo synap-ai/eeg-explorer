@@ -9,7 +9,7 @@ import { SubjectService } from 'app/shared/subject.service';
 export interface Sex {
   value: string;
 }
-export interface DominantHands{
+export interface DominantHands {
   value: string;
 }
 

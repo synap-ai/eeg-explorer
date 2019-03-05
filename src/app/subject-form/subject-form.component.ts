@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MediaDescription } from 'app/shared/media-description';
 import { Subject } from 'app/shared/subject';
 import { e } from '@angular/core/src/render3';
@@ -9,7 +9,9 @@ import { SubjectService } from 'app/shared/subject.service';
 export interface Sex {
   value: string;
 }
-
+export interface DominantHands {
+  value: string;
+}
 
 @Component({
   selector: 'app-subject-form',
@@ -23,6 +25,11 @@ export class SubjectFormComponent implements OnInit, OnChanges {
     {value: 'Female'},
     {value: 'Other'}
   ];
+  dominantHands: DominantHands[] = [
+    {value: 'Right'},
+    {value: 'Left'},
+    {value: 'Ambidextrous'}
+  ];
   @Input() subject: Subject;
 
   subjectOptions: FormGroup;
@@ -30,8 +37,10 @@ export class SubjectFormComponent implements OnInit, OnChanges {
   constructor(fb: FormBuilder, private eService: SubjectService) {
     this.subjectOptions = fb.group({
       id: null,
-      age: null,
-      sex: null
+      name: null,
+      dob: null,
+      sex: null,
+      dominantHand: null
     });
   }
 

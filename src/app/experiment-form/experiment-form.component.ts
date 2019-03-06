@@ -9,7 +9,6 @@ import {
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MediaDescription } from 'app/shared/media-description';
 import { Experiment } from 'app/shared/experiment';
-import { e } from '@angular/core/src/render3';
 import { ExperimentService } from 'app/shared/experiment.service';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';

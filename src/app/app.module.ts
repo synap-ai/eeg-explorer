@@ -101,7 +101,7 @@ const appRoutes: Routes = [
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'
+            uri: 'http://localhost:8000/graphql'
           })
         };
       },

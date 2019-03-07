@@ -10,8 +10,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MediaDescription } from 'app/shared/media-description';
 import { Experiment } from 'app/shared/experiment';
 import { ExperimentService } from 'app/shared/experiment.service';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
 
 @Component({
   selector: 'app-experiment-form',
@@ -26,11 +24,10 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
   constructor(
     fb: FormBuilder,
     private eService: ExperimentService,
-    private apollo: Apollo
   ) {
     this.experimentOptions = fb.group({
       title: null,
-      id: null,
+      description: null,
       epoch: 256,
       epochInterval: 100,
       useBandPowers: true,

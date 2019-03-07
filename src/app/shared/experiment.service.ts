@@ -3,18 +3,17 @@ import { Experiment } from './experiment';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
-const exampleData: Experiment[] = [
-  { id: '123', title: 'experiment 1', epoch: 256, epochInterval: 100, useBandPowers: true, useCovariance: true, videos: [
-    { title: 'coffee break', id: 'GTcM7ydgAwo', label: 'comedy' },
-  ]},
-  { id: '321', title: 'experiment 2', epoch: 256, epochInterval: 100, useBandPowers: true, useCovariance: true, videos: []},
-  { id: '213', title: 'experiment 3', epoch: 256, epochInterval: 100, useBandPowers: true, useCovariance: true, videos: []},
-];
+type Response = {
+  researcher: {
+    experiments: any[]
+  };
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class ExperimentService {
-  createExperiment = gql`
+  createExperimentMutation = gql`
     mutation createExperiment(
       $researcherId: ID!,
       $title: String!,
@@ -37,19 +36,36 @@ export class ExperimentService {
       }
     }
   `;
-  experiments: Experiment[];
+  getExperimentsQuery = gql`
+    query getExperiments($researcherId: ID!) {
+      researcher(id: $researcherId) {
+        experiments{
+          title
+          description
+          epoch_samples
+          epoch_interval
+          uses_band_powers
+          uses_covariance
+        }
+      }
+    }
+  `;
 
   constructor(private apollo: Apollo) {
-    this.experiments = exampleData;
+  }
+
+  getExperiments(id: Number) {
+    return this.apollo
+      .watchQuery<Response>({ query: this.getExperimentsQuery, variables: { researcherId: id }});
   }
 
   save(experiment: Experiment) {
-    const i = this.experiments.findIndex(e => e.id === experiment.id);
-    if (i >= 0) {
-      this.experiments[i] = experiment;
-    } else {
+    // const i = this.experiments.findIndex(e => e.id === experiment.id);
+    // if (i >= 0) {
+    //   this.experiments[i] = experiment;
+    // } else {
       this.apollo.mutate({
-        mutation: this.createExperiment,
+        mutation: this.createExperimentMutation,
         variables: {
           researcherId: 2,
           title: experiment.title,
@@ -64,15 +80,15 @@ export class ExperimentService {
       }, (error) => {
         console.log('There was an error sending the query', error);
       });
-    }
+    // }
   }
 
 
 
   delete(experiment: Experiment) {
-    const i = this.experiments.indexOf(experiment);
-    if (i >= 0) {
-      this.experiments.splice(i, 1);
-    }
+    // const i = this.experiments.indexOf(experiment);
+    // if (i >= 0) {
+    //   this.experiments.splice(i, 1);
+    // }
   }
 }

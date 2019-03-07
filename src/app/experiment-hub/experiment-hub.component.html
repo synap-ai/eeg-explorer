@@ -4,7 +4,7 @@
     <mat-card-content>
       <button (click)="newExperiment()" mat-button>New Experiment</button>
       <mat-list>
-        <mat-list-item *ngFor="let experiment of eService.experiments">
+        <mat-list-item *ngFor="let experiment of experiments | async">
           <span>
             {{experiment.title}} {{experiment.id}}
             <button (click)="editExperiment(experiment)" mat-button name="edit">

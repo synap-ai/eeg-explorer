@@ -40,6 +40,7 @@ export class ExperimentService {
     query getExperiments($researcherId: ID!) {
       researcher(id: $researcherId) {
         experiments{
+          id
           title
           description
           epoch_samples
@@ -48,6 +49,11 @@ export class ExperimentService {
           uses_covariance
         }
       }
+    }
+  `;
+  deleteExperimentMutation = gql`
+    mutation deleteExperiment($id: ID!) {
+      deleteExperiment(id: $id)
     }
   `;
 
@@ -85,10 +91,16 @@ export class ExperimentService {
 
 
 
-  delete(experiment: Experiment) {
-    // const i = this.experiments.indexOf(experiment);
-    // if (i >= 0) {
-    //   this.experiments.splice(i, 1);
-    // }
+  delete(id: Number) {
+    this.apollo.mutate({
+      mutation: this.deleteExperimentMutation,
+      variables: {
+        id: id
+      }
+    }).subscribe(({ data }) => {
+      console.log('Experiment delete - ', data);
+    }, (error) => {
+      console.log('There was an error deleting the experiment', error);
+    });
   }
 }

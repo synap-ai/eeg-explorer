@@ -6,11 +6,11 @@
       <mat-list>
         <mat-list-item *ngFor="let experiment of experiments | async">
           <span>
-            {{experiment.title}} {{experiment.id}}
+            {{experiment.title}}
             <button (click)="editExperiment(experiment)" mat-button name="edit">
               <mat-icon>edit</mat-icon>
             </button>
-            <button (click)="deleteExperiment(experiment)" mat-button name="delete">
+            <button (click)="deleteExperiment(experiment.id)" mat-button name="delete">
               <mat-icon>delete</mat-icon>
             </button>
           </span>

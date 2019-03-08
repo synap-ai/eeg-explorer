@@ -29,12 +29,15 @@ import { ExperimentHubComponent } from './experiment-hub/experiment-hub.componen
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import { SubjectFormComponent } from './subject-form/subject-form.component';
 import { SubjectHubComponent } from './subject-hub/subject-hub.component';
+import { SessionsComponent } from './sessions/sessions.component';
+import { SessionFormComponent } from './session-form/session-form.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'experiments', component: ExperimentHubComponent },
   { path: 'media', component: DataCollectionComponent },
-  { path: 'subjects', component: SubjectHubComponent},
+  { path: 'subjects', component: SubjectHubComponent },
+  { path: 'sessions', component: SessionsComponent },
   { path: '**', component: HomeComponent },
 ];
 
@@ -52,7 +55,9 @@ const appRoutes: Routes = [
     ExperimentHubComponent,
     DataCollectionComponent,
     SubjectFormComponent,
-    SubjectHubComponent
+    SubjectHubComponent,
+    SessionsComponent,
+    SessionFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+.session-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .session-form > * {
+    width: 100%;
+  }
+  
+  .session-form form {
+    margin-bottom: 20px;
+  }
+  
+  .session-form form > * {
+    margin: 5px 0;
+  }
+  
+  .session-form .mat-radio-button {
+    margin: 0 5px;
+  }

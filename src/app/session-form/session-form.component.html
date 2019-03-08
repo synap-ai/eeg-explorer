@@ -1,0 +1,27 @@
+<form class="session-form" [formGroup]="sessionOptions">
+  <mat-form-field>
+    <input matInput #sessionId formControlName="id" name="id" type="text" placeholder="Session ID">
+  </mat-form-field><br>
+  <mat-form-field>
+    <mat-select #sessionSubjectId formControlName="subject_id" placeholder="Subject ID">
+      <mat-option *ngFor = "let subject of subjects" [value]="subject.id">{{subject.name}}</mat-option>
+    </mat-select>
+  </mat-form-field><br>
+  <mat-form-field>
+    <mat-select #sessionHand formControlName="experiment_id" placeholder="Experiment ID">
+      <mat-option *ngFor = "let experiment of experiments" [value]="experiment.id">{{experiment.title}}</mat-option>
+    </mat-select>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput formControlName="date" [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput #sessionVideoId formControlName="video_id" name="video_id" type="text" placeholder="Video ID">
+  </mat-form-field><br>
+  <mat-form-field>
+    <input matInput #sessionEegData formControlName="eeg_data" name="id" type="text" placeholder="EEG Data">
+  </mat-form-field><br>
+<button mat-button name="save" (click)="save()">Save Changes</button>
+</form>

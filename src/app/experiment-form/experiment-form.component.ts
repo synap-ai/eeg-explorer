@@ -26,13 +26,14 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
     private eService: ExperimentService,
   ) {
     this.experimentOptions = fb.group({
+      id: null,
       title: null,
       description: null,
       epoch_samples: 256,
       epoch_interval: 100,
       uses_band_powers: true,
       uses_covariance: true,
-      videos: []
+      videos: [],
     });
   }
 

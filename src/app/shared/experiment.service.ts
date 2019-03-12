@@ -3,7 +3,7 @@ import { Experiment } from './experiment';
 
 const exampleData: Experiment[] = [
   { id: '123', title: 'experiment 1', epoch: 256, epochInterval: 100, useBandPowers: true, useCovariance: true, videos: [
-    { title: 'coffe break', id: 'GTcM7ydgAwo', label: 'comedy' },
+    { title: 'coffee break', id: 'GTcM7ydgAwo', label: 'comedy' },
   ]},
   { id: '321', title: 'experiment 2', epoch: 256, epochInterval: 100, useBandPowers: true, useCovariance: true, videos: []},
   { id: '213', title: 'experiment 3', epoch: 256, epochInterval: 100, useBandPowers: true, useCovariance: true, videos: []},

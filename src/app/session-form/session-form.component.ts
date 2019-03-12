@@ -4,7 +4,7 @@ import { Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Session } from 'app/shared/session';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Experiment } from 'app/shared/experiment';
-import { Subject } from 'app/shared/Subject';
+import { Subject } from 'app/shared/subject';
 import { e } from '@angular/core/src/render3';
 
 @Component({

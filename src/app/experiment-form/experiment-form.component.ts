@@ -28,10 +28,10 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
     this.experimentOptions = fb.group({
       title: null,
       description: null,
-      epoch: 256,
-      epochInterval: 100,
-      useBandPowers: true,
-      useCovariance: true,
+      epoch_samples: 256,
+      epoch_interval: 100,
+      uses_band_powers: true,
+      uses_covariance: true,
       videos: []
     });
   }

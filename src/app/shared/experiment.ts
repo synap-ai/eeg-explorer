@@ -1,12 +1,12 @@
 import { MediaDescription } from './media-description';
 
 export class Experiment {
-    id: string;
+    id: number;
     title: string;
     description: string;
-    epoch: number;
-    epochInterval: number;
-    useBandPowers: boolean;
-    useCovariance: boolean;
+    epoch_samples: number;
+    epoch_interval: number;
+    uses_band_powers: boolean;
+    uses_covariance: boolean;
     videos: MediaDescription[] = [];
 }

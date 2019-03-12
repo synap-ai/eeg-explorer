@@ -22,6 +22,7 @@ export class ExperimentService {
       $epoch_interval: Int,
       $uses_band_powers: Boolean,
       $uses_covariance: Boolean,
+      $videos: [VideoInput]
     ) {
       createExperiment(
         researcherId: $researcherId,
@@ -31,6 +32,7 @@ export class ExperimentService {
         epoch_interval: $epoch_interval,
         uses_band_powers: $uses_band_powers,
         uses_covariance: $uses_covariance,
+        videos: $videos,
       ) {
         id
       }
@@ -39,7 +41,7 @@ export class ExperimentService {
   getExperimentsQuery = gql`
     query getExperiments($researcherId: ID!) {
       researcher(id: $researcherId) {
-        experiments{
+        experiments {
           id
           title
           description
@@ -47,6 +49,13 @@ export class ExperimentService {
           epoch_interval
           uses_band_powers
           uses_covariance
+          videos {
+            id
+            title
+            description
+            youtube_id
+            category
+          }
         }
       }
     }
@@ -66,27 +75,27 @@ export class ExperimentService {
   }
 
   save(experiment: Experiment) {
-    // const i = this.experiments.findIndex(e => e.id === experiment.id);
-    // if (i >= 0) {
-    //   this.experiments[i] = experiment;
-    // } else {
+    if (experiment.id) {
+      // this.experiments[i] = experiment;
+    } else {
       this.apollo.mutate({
         mutation: this.createExperimentMutation,
         variables: {
-          researcherId: 2,
+          researcherId: 1,
           title: experiment.title,
           description: experiment.description,
-          epoch_samples: experiment.epoch,
-          epoch_interval: experiment.epochInterval,
-          uses_band_powers: !!experiment.useBandPowers,
-          uses_covariance: !!experiment.useCovariance
+          epoch_samples: experiment.epoch_samples,
+          epoch_interval: experiment.epoch_interval,
+          uses_band_powers: !!experiment.uses_band_powers,
+          uses_covariance: !!experiment.uses_covariance,
+          videos: experiment.videos,
         }
       }).subscribe(({ data }) => {
         console.log('Experiment created - ', data);
       }, (error) => {
         console.log('There was an error sending the query', error);
       });
-    // }
+    }
   }
 
 

@@ -17,7 +17,7 @@ export class ExperimentHubComponent implements OnInit {
   constructor(public eService: ExperimentService) { }
 
   ngOnInit() {
-    this.experiments = this.eService.getExperiments(2)
+    this.experiments = this.eService.getExperiments(1)
       .valueChanges
       .pipe(map(({data}) => data.researcher.experiments));
   }

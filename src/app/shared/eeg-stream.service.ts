@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { MuseControlResponse, XYZ, MuseClient } from 'muse-js';
 import { FilePlayerService } from './file-player.service';
 import { takeUntil, tap, share, map } from 'rxjs/operators';
+import { createEEG } from '@neurosity/pipes';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class EegStreamService {
   connecting = false;
   connected = false;
   playingFile = false;
+  playingMock = false;
   data: Observable<EEGSample> | null;
   batteryLevel: Observable<number> | null;
   controlResponses: Observable<MuseControlResponse>;
@@ -65,6 +67,9 @@ export class EegStreamService {
     if (this.playingFile) {
       this.stopFile();
     }
+    if (this.playingMock) {
+      this.stopWave();
+    }
   }
 
   loadFile(file: File) {
@@ -83,5 +88,17 @@ export class EegStreamService {
     this.filePlayer.Stop();
     this.data = null;
     this.playingFile = false;
+  }
+
+  playWave() {
+    this.data = createEEG({channles: 4, samlpingRate: 256, sine: 1 }).pipe(
+      share()
+    );
+    this.playingMock = true;
+  }
+
+  stopWave() {
+    this.data = null;
+    this.playingMock = false;
   }
 }

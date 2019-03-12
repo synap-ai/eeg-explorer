@@ -6,8 +6,8 @@ import { Experiment } from 'app/shared/experiment';
 import { MediaDescription } from 'app/shared/media-description';
 import { EegStreamService } from 'app/shared/eeg-stream.service';
 import { EEGSample, zipSamples } from 'muse-js';
-import { Subscription } from 'rxjs';
-import { sample } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-data-collection',
@@ -19,7 +19,7 @@ export class DataCollectionComponent implements OnInit {
   subject: Subject;
   experiment: Experiment;
   video: MediaDescription;
-
+  experiments: Observable<Experiment[]>;
   Player: YT.Player;
 
   private subscription: Subscription;
@@ -30,6 +30,11 @@ export class DataCollectionComponent implements OnInit {
   constructor(public eService: ExperimentService, public sService: SubjectService, public eegStream: EegStreamService) { }
 
   ngOnInit() {
+    this.experiments = this.eService.getExperiments(1)
+      .valueChanges
+      .pipe(map(({data}) => {
+        return data.researcher.experiments;
+      }));
   }
 
   savePlayer(player) {

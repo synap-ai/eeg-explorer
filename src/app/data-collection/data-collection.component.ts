@@ -8,6 +8,8 @@ import { EegStreamService } from 'app/shared/eeg-stream.service';
 import { EEGSample, zipSamples } from 'muse-js';
 import { Subscription, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SessionService } from 'app/shared/session.service';
+import { Session } from 'app/shared/session';
 
 @Component({
   selector: 'app-data-collection',
@@ -15,7 +17,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./data-collection.component.css']
 })
 export class DataCollectionComponent implements OnInit {
-
   subject: Subject;
   experiment: Experiment;
   video: MediaDescription;
@@ -27,14 +28,19 @@ export class DataCollectionComponent implements OnInit {
   powers = [];
   coovariance = [];
 
-  constructor(public eService: ExperimentService, public sService: SubjectService, public eegStream: EegStreamService) { }
+  constructor(
+    public eService: ExperimentService,
+    public sService: SubjectService,
+    public eegStream: EegStreamService,
+    private sessionsService: SessionService
+  ) {}
 
   ngOnInit() {
-    this.experiments = this.eService.getExperiments(1)
-      .valueChanges
-      .pipe(map(({data}) => {
+    this.experiments = this.eService.getExperiments(1).valueChanges.pipe(
+      map(({ data }) => {
         return data.researcher.experiments;
-      }));
+      })
+    );
   }
 
   savePlayer(player) {
@@ -42,7 +48,8 @@ export class DataCollectionComponent implements OnInit {
   }
   onStateChange(event) {
     const state = event.data;
-    if (state === 1) { // playing
+    if (state === 1) {
+      // playing
       this.subscription = this.eegStream.data.subscribe(s => {
         this.samples.push(s);
       });
@@ -55,8 +62,23 @@ export class DataCollectionComponent implements OnInit {
   }
 
   async cleanUp() {
-    console.log(this.samples);
-     this.samples = [];
-  }
+    const eegSamples = this.samples.map(sample => {
+      return {
+        timestamp: sample.timestamp,
+        tp9: sample.data[0],
+        af7: sample.data[1],
+        af8: sample.data[2],
+        tp10: sample.data[3],
+      };
+    });
 
+    this.sessionsService.save(new Session({
+      subject_id: 1, // temp
+      experiment_id: this.experiment.id,
+      video_id: this.video.id,
+      eeg_data: eegSamples
+    }));
+
+    this.samples = [];
+  }
 }

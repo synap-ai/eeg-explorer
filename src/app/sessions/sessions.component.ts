@@ -23,6 +23,6 @@ export class SessionsComponent implements OnInit {
     this.eService.delete(session);
   }
   newSession() {
-    this.selectedSession = new Session();
+    this.selectedSession = new Session({});
   }
 }

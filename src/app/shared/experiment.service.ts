@@ -3,11 +3,11 @@ import { Experiment } from './experiment';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
-type Response = {
+interface Response {
   researcher: {
     experiments: any[]
   };
-};
+}
 
 @Injectable({
   providedIn: 'root'

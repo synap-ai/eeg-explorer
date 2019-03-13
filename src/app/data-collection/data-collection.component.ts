@@ -36,11 +36,7 @@ export class DataCollectionComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.experiments = this.eService.getExperiments(1).valueChanges.pipe(
-      map(({ data }) => {
-        return data.researcher.experiments;
-      })
-    );
+    this.experiments = this.eService.getExperiments(1);
   }
 
   savePlayer(player) {

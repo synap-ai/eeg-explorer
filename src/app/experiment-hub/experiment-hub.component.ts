@@ -16,10 +16,13 @@ export class ExperimentHubComponent implements OnInit {
   constructor(public eService: ExperimentService) { }
 
   ngOnInit() {
+    this.updateExperiments();
+  }
+
+  updateExperiments() {
     this.experiments = this.eService.getExperiments(1)
-      .valueChanges
-      .pipe(map(({data}) => {
-        return data.researcher.experiments.map(e => {
+      .pipe(map((experiments) => {
+        return experiments.map(e => {
           // Temporary hacky fix
           delete e.__typename;
           delete e.__proto;

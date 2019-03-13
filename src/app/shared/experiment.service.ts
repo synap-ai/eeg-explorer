@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Experiment } from './experiment';
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { switchMap } from 'rxjs/operators';
+import { empty, of, Observable, Subject } from 'rxjs';
 
 interface Response {
   researcher: {
@@ -66,12 +68,29 @@ export class ExperimentService {
     }
   `;
 
+  private last_id = -1;
+  private queryRef: QueryRef<Response>;
+
   constructor(private apollo: Apollo) {
   }
 
-  getExperiments(id: Number) {
-    return this.apollo
-      .watchQuery<Response>({ query: this.getExperimentsQuery, variables: { researcherId: id }});
+  getExperiments(id: number) {
+    if (this.last_id === id && this.queryRef) { // query is already on stored
+      this.queryRef.refetch();
+    } else {
+      this.queryRef = this.apollo
+        .watchQuery<Response>({ query: this.getExperimentsQuery, variables: { researcherId: id }});
+      this.last_id = id;
+    }
+    return this.queryRef
+      .valueChanges
+      .pipe(
+        switchMap(x => {
+          const r = x.data.researcher;
+          const e = r ? r.experiments : null;
+          return e ? of(e) : empty();
+        })
+      );
   }
 
   save(experiment: Experiment) {
@@ -92,6 +111,7 @@ export class ExperimentService {
         }
       }).subscribe(({ data }) => {
         console.log('Experiment created - ', data);
+        this.queryRef.refetch();
       }, (error) => {
         console.log('There was an error sending the query', error);
       });
@@ -108,6 +128,7 @@ export class ExperimentService {
       }
     }).subscribe(({ data }) => {
       console.log('Experiment delete - ', data);
+      this.queryRef.refetch();
     }, (error) => {
       console.log('There was an error deleting the experiment', error);
     });

@@ -1,12 +1,12 @@
 <form class="media-form" [formGroup]="mediaOptions">
   <mat-form-field>
-    <input matInput #videoID formControlName="title" name="title" type="text" placeholder="Video Title">
+    <input matInput #videoID formControlName="title" name="title" type="text" placeholder="Video Title" required>
   </mat-form-field>
   <mat-form-field>
-    <input matInput #videoID formControlName="id" name="id" type="text" placeholder="Youtube ID">
+    <input matInput #videoID formControlName="youtube_id" name="youtube_id" type="text" placeholder="Youtube ID" required>
   </mat-form-field>
   <mat-form-field>
-    <input matInput #label formControlName="label" name="label" type="text" placeholder="Classification Label">
+    <input matInput #category formControlName="category" name="category" type="text" placeholder="Classification Label">
   </mat-form-field>
   <button mat-button (click)="save()">Save Changes</button>
 </form>

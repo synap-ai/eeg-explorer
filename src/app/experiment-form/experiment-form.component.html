@@ -1,24 +1,24 @@
 <form class="experiment-form" [formGroup]="experimentOptions">
-    <mat-form-field>
-        <input matInput #title formControlName="title" name="title" type="text" placeholder="Title">
-      </mat-form-field>
   <mat-form-field>
-    <input matInput #experimentID formControlName="id" name="experimentID" type="text" placeholder="Experiment ID">
+    <input matInput #title formControlName="title" name="title" type="text" placeholder="Title" required>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput #description formControlName="description" name="description" type="text" placeholder="Experiment Description"></textarea>
   </mat-form-field>
   <mat-form-field matSuffix="Samples / Epoch">
-    <input matInput #epoch formControlName="epoch" name="epoch" type="number" placeholder="Epoch Samples" hin>
+    <input matInput #epoch_samples formControlName="epoch_samples" name="epoch_samples" type="number" placeholder="Epoch Samples" value=255>
   </mat-form-field>
   <mat-form-field matSuffix="ms">
-    <input matInput #epochInterval formControlName="epochInterval" name="epochInterval" type="number" placeholder="Epoch Interval">
+    <input matInput #epoch_interval formControlName="epoch_interval" name="epoch_interval" type="number" placeholder="Epoch Interval" value=100>
   </mat-form-field>
-  <mat-checkbox formControlName="useBandPowers">Use Band Powers</mat-checkbox>
-  <mat-checkbox formControlName="useCovariance">Use Covariance</mat-checkbox>
-  <button mat-button name="save" (click)="save()">Save Changes</button>
+  <mat-checkbox formControlName="uses_band_powers">Use Band Powers</mat-checkbox>
+  <mat-checkbox formControlName="uses_covariance">Use Covariance</mat-checkbox>
+  
   <h4> Videos </h4>
 
   <button mat-button (click)="addVideo()">Add Video</button>
 
-  <mat-accordion>
+  <mat-accordion *ngIf="experiment.videos?.length > 0">
     <mat-expansion-panel *ngFor="let video of experiment.videos">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -34,5 +34,5 @@
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
-
+<button mat-button name="save" (click)="save()">Save Changes</button>
 </form>

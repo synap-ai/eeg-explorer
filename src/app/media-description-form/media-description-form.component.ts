@@ -18,8 +18,8 @@ export class MediaDescriptionFormComponent implements OnInit {
   constructor(fb: FormBuilder) {
     this.mediaOptions = fb.group({
       title: null,
-      id: null,
-      label: null,
+      youtube_id: null,
+      category: null,
     });
   }
 

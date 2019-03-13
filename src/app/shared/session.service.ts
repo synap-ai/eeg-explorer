@@ -1,28 +1,49 @@
 import { Injectable } from '@angular/core';
 import { Session } from './session';
-const exampleData: Session[] = [
-  {id: 'session 1', subject_id: 'subject 1', experiment_id: '123', date: new Date(), video_id: 'GTcM7ydgAwo', eeg_data: 'data 1'},
-  {id: 'session 2', subject_id: 'subject 1', experiment_id: '213', date: new Date(), video_id: 'GTcM7ydgAwo', eeg_data: 'data 2'},
-  {id: 'session 3', subject_id: 'subject 1', experiment_id: '321', date: new Date(), video_id: 'GTcM7ydgAwo', eeg_data: 'data 3'},
-];
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
-
   sessions: Session[];
 
-  constructor() {
-    this.sessions = exampleData;
+  createSessionMutation = gql`
+    mutation createSession(
+    $subjectId: ID!
+    $experimentId: ID!
+    $videoId: ID!
+    $eeg_data: [EEGInput!]!
+  ){
+    createSession(
+      subjectId: $subjectId,
+      experimentId: $experimentId,
+      videoId: $videoId,
+      eeg_data: $eeg_data,
+    ){
+      id
+    }
+  }
+  `;
+
+  constructor(private apollo: Apollo) {
   }
 
   save(session: Session) {
-    const i = this.sessions.findIndex(e => e.id === session.id);
-    if (i >= 0) {
-      this.sessions[i] = session;
-    } else {
-      this.sessions.push(session);
-    }
+    this.apollo.mutate({
+      mutation: this.createSessionMutation,
+      variables: {
+        subjectId: session.subject_id,
+        experimentId: session.experiment_id,
+        videoId: session.video_id,
+        eeg_data: session.eeg_data,
+      }
+    }).subscribe(({ data }) => {
+      console.log('Session created - ', data);
+    }, (error) => {
+      console.log('There was an error sending the query', error);
+    });
   }
 
   delete(session: Session) {

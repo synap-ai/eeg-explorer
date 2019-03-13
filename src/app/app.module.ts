@@ -1,8 +1,11 @@
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import {
   MatSnackBarModule, MatButtonModule, MatIconModule, MatToolbarModule, MatCardModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatCheckboxModule, MatSliderModule,
@@ -60,10 +63,12 @@ const appRoutes: Routes = [
     SessionFormComponent
   ],
   imports: [
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
     MatButtonModule,
@@ -89,7 +94,19 @@ const appRoutes: Routes = [
   ],
   providers: [
     ChartService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink) {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:8000/graphql'
+          })
+        };
+      },
+      deps: [HttpLink]
+    }
   ],
   bootstrap: [AppComponent]
 })

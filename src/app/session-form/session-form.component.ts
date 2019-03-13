@@ -5,7 +5,6 @@ import { Session } from 'app/shared/session';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Experiment } from 'app/shared/experiment';
 import { Subject } from 'app/shared/subject';
-import { e } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-session-form',
@@ -16,9 +15,9 @@ export class SessionFormComponent implements OnInit, OnChanges {
   @Input() session: Session;
 
   experiments: Experiment[] = [
-    {id: '1568', title: 'Experiment 1', epoch: 125, epochInterval: 200, useBandPowers: true, useCovariance: true, videos: null },
-    {id: '19803', title: 'Experiment 2', epoch: 125, epochInterval: 200, useBandPowers: true, useCovariance: true, videos: null },
-    {id: '4896', title: 'Experiment 3', epoch: 125, epochInterval: 200, useBandPowers: true, useCovariance: true, videos: null }
+    // {id: '1568', title: 'Experiment 1', epoch: 125, epochInterval: 200, useBandPowers: true, useCovariance: true, videos: null },
+    // {id: '19803', title: 'Experiment 2', epoch: 125, epochInterval: 200, useBandPowers: true, useCovariance: true, videos: null },
+    // {id: '4896', title: 'Experiment 3', epoch: 125, epochInterval: 200, useBandPowers: true, useCovariance: true, videos: null }
   ];
   subjects: Subject[] = [
     {id: '56', name: 'Subject 1', dob: new Date(), sex: 'Male', dominantHand: 'Left' },

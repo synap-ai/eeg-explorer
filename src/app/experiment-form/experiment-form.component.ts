@@ -1,8 +1,14 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChange,
+  SimpleChanges
+} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MediaDescription } from 'app/shared/media-description';
 import { Experiment } from 'app/shared/experiment';
-import { e } from '@angular/core/src/render3';
 import { ExperimentService } from 'app/shared/experiment.service';
 
 @Component({
@@ -11,25 +17,27 @@ import { ExperimentService } from 'app/shared/experiment.service';
   styleUrls: ['./experiment-form.component.css']
 })
 export class ExperimentFormComponent implements OnInit, OnChanges {
-
   @Input() experiment: Experiment;
 
   experimentOptions: FormGroup;
 
-  constructor(fb: FormBuilder, private eService: ExperimentService) {
+  constructor(
+    fb: FormBuilder,
+    private eService: ExperimentService,
+  ) {
     this.experimentOptions = fb.group({
-      title: null,
       id: null,
-      epoch: 256,
-      epochInterval: 100,
-      useBandPowers: true,
-      useCovariance: true,
+      title: null,
+      description: null,
+      epoch_samples: 256,
+      epoch_interval: 100,
+      uses_band_powers: true,
+      uses_covariance: true,
       videos: [],
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     this.experimentOptions.reset();
@@ -54,5 +62,4 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
       this.experiment.videos.splice(i, 1);
     }
   }
-
 }

@@ -3,7 +3,6 @@ import { Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MediaDescription } from 'app/shared/media-description';
 import { Subject } from 'app/shared/subject';
-import { e } from '@angular/core/src/render3';
 import { SubjectService } from 'app/shared/subject.service';
 
 export interface Sex {

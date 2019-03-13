@@ -34,7 +34,7 @@ npm i
 3. Serve application
 
 ```
-ng serve -o
+npm start
 ```
 
 ### Testing

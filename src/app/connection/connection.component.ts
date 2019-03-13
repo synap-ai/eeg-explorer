@@ -11,7 +11,7 @@ import { EegStreamService } from 'app/shared/eeg-stream.service';
 export class ConnectionComponent implements OnInit {
 
   get Streaming() {
-    return this.eegStream.connected || this.eegStream.playingFile;
+    return this.eegStream.connected || this.eegStream.playingFile || this.eegStream.playingMock;
   }
 
   constructor(private snackBar: MatSnackBar, public eegStream: EegStreamService) {
@@ -36,5 +36,9 @@ export class ConnectionComponent implements OnInit {
 
   playFile() {
     this.eegStream.playFile();
+  }
+
+  playWave() {
+    this.eegStream.playWave();
   }
 }

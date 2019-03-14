@@ -19,15 +19,15 @@ export interface DominantHands {
 })
 export class SubjectFormComponent implements OnInit, OnChanges {
 
-  sexes: Sex[] = [
-    {value: 'Male'},
-    {value: 'Female'},
-    {value: 'Other'}
+  genders: Sex[] = [
+    {value: 'M'},
+    {value: 'F'},
+    {value: 'O'}
   ];
-  dominantHands: DominantHands[] = [
-    {value: 'Right'},
-    {value: 'Left'},
-    {value: 'Ambidextrous'}
+  dominant_hands: DominantHands[] = [
+    {value: 'R'},
+    {value: 'L'},
+    {value: 'A'}
   ];
   @Input() subject: Subject;
 
@@ -36,10 +36,12 @@ export class SubjectFormComponent implements OnInit, OnChanges {
   constructor(fb: FormBuilder, private eService: SubjectService) {
     this.subjectOptions = fb.group({
       id: null,
-      name: null,
+      first_name: null,
+      last_name: null,
+      email: null,
+      gender: null,
       dob: null,
-      sex: null,
-      dominantHand: null
+      dominant_hand: null
     });
   }
 

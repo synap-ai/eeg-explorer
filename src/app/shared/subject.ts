@@ -1,7 +1,9 @@
 export class Subject {
     id: string;
-    name: string;
+    first_name: string;
+    last_name: string;
+    email: string;
     dob: Date;
-    sex: string;
-    dominantHand: string;
+    gender: string;
+    dominant_hand: string;
 }

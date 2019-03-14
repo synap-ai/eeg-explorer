@@ -1,36 +1,69 @@
 import { Injectable } from '@angular/core';
 import { Subject } from './subject';
+import gql from 'graphql-tag';
+import { Observable, of, empty } from 'rxjs';
+import { Apollo, QueryRef } from 'apollo-angular';
+import { switchMap } from 'rxjs/operators';
 
-const exampleData: Subject[] = [
-  {id: 'subject 1', name: 'Joe', dob: new Date('1995-12-17T03:24:00'), sex: 'Male', dominantHand: 'Left'},
-  {id: 'subject 2', name: 'Anna', dob: new Date('1995-12-17T03:24:00'), sex: 'Female', dominantHand: 'Right'},
-  {id: 'subject 3', name: 'Sophie', dob: new Date('1995-12-17T03:24:00'), sex: 'Female', dominantHand: 'Ambidextrous'},
-];
+interface Response {
+  subjects: Subject[]
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubjectService {
+  getSubjectsQuery = gql`
+  query getSubjects {
+    subjects {
+      id
+      first_name
+      last_name
+      email
+      dob
+      gender
+      dominant_hand
+    }
+  }`;
 
-  subjects: Subject[];
+  subjects: Observable<Subject[]>;
 
-  constructor() {
-    this.subjects = exampleData;
+  private queryRef: QueryRef<Response>;
+
+  constructor(private apollo: Apollo) {
+    this.queryRef = this.apollo.watchQuery<Response>({ query: this.getSubjectsQuery});
+
+    this.subjects = this.queryRef.valueChanges.pipe(
+      switchMap(x =>  x.data.subjects ? of(x.data.subjects.map(this.anyToSubject)) : empty())
+      );
+
   }
 
   save(subject: Subject) {
-    const i = this.subjects.findIndex(e => e.id === subject.id);
-    if (i >= 0) {
-      this.subjects[i] = subject;
-    } else {
-      this.subjects.push(subject);
-    }
+    // const i = this.subjects.findIndex(e => e.id === subject.id);
+    // if (i >= 0) {
+    //   this.subjects[i] = subject;
+    // } else {
+    //   this.subjects.push(subject);
+    // }
   }
 
   delete(subject: Subject) {
-    const i = this.subjects.indexOf(subject);
-    if (i >= 0) {
-      this.subjects.splice(i, 1);
-    }
+    // const i = this.subjects.indexOf(subject);
+    // if (i >= 0) {
+    //   this.subjects.splice(i, 1);
+    // }
+  }
+
+  private anyToSubject(a: any) {
+    const s = new Subject();
+    s.id = a.id;
+    s.first_name = a.first_name;
+    s.last_name = a.last_name;
+    s.email = a.email;
+    s.gender = a.gender;
+    s.dob = a.dob;
+    s.dominant_hand = a.dominant_hand;
+    return s;
   }
 }

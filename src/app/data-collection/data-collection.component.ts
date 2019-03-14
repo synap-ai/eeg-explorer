@@ -23,6 +23,10 @@ export class DataCollectionComponent implements OnInit {
   experiments: Observable<Experiment[]>;
   Player: YT.Player;
 
+  get uploading() {
+    return this.sessionsService.uploading;
+  }
+
   private subscription: Subscription;
   samples: EEGSample[] = [];
   powers = [];
@@ -36,11 +40,7 @@ export class DataCollectionComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.experiments = this.eService.getExperiments(1).valueChanges.pipe(
-      map(({ data }) => {
-        return data.researcher.experiments;
-      })
-    );
+    this.experiments = this.eService.getExperiments(1);
   }
 
   savePlayer(player) {

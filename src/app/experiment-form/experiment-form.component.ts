@@ -4,7 +4,9 @@ import {
   Input,
   OnChanges,
   SimpleChange,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MediaDescription } from 'app/shared/media-description';
@@ -18,6 +20,7 @@ import { ExperimentService } from 'app/shared/experiment.service';
 })
 export class ExperimentFormComponent implements OnInit, OnChanges {
   @Input() experiment: Experiment;
+  @Output() onSave = new EventEmitter<void>();
 
   experimentOptions: FormGroup;
 
@@ -29,10 +32,6 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
       id: null,
       title: null,
       description: null,
-      epoch_samples: 256,
-      epoch_interval: 100,
-      uses_band_powers: true,
-      uses_covariance: true,
       videos: [],
     });
   }
@@ -46,11 +45,15 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
     }
   }
 
-  save() {
+  async save() {
     const videos = this.experiment.videos;
     Object.assign(this.experiment, this.experimentOptions.value);
     this.experiment.videos = videos;
-    this.eService.save(this.experiment);
+    try {
+      this.eService.save(this.experiment, () => this.onSave.emit());
+    } catch {
+      // do nothing
+    }
   }
 
   addVideo() {

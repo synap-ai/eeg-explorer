@@ -1,25 +1,18 @@
 <form class="experiment-form" [formGroup]="experimentOptions">
+
   <mat-form-field>
     <input matInput #title formControlName="title" name="title" type="text" placeholder="Title" required>
   </mat-form-field>
   <mat-form-field>
     <textarea matInput #description formControlName="description" name="description" type="text" placeholder="Experiment Description"></textarea>
   </mat-form-field>
-  <mat-form-field matSuffix="Samples / Epoch">
-    <input matInput #epoch_samples formControlName="epoch_samples" name="epoch_samples" type="number" placeholder="Epoch Samples" value=255>
-  </mat-form-field>
-  <mat-form-field matSuffix="ms">
-    <input matInput #epoch_interval formControlName="epoch_interval" name="epoch_interval" type="number" placeholder="Epoch Interval" value=100>
-  </mat-form-field>
-  <mat-checkbox formControlName="uses_band_powers">Use Band Powers</mat-checkbox>
-  <mat-checkbox formControlName="uses_covariance">Use Covariance</mat-checkbox>
   
   <h4> Videos </h4>
 
-  <button mat-button (click)="addVideo()">Add Video</button>
+  <button mat-raised-button style="width: 200px; margin: 10px 0" (click)="addVideo()">Add Video</button>
 
   <mat-accordion *ngIf="experiment.videos?.length > 0">
-    <mat-expansion-panel *ngFor="let video of experiment.videos">
+    <mat-expansion-panel *ngFor="let video of experiment.videos; first as isFirst" [expanded]="isFirst">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{video.title || "New Video"}}
@@ -30,9 +23,10 @@
       </mat-expansion-panel-header>
       <app-media-description-form [video]="video"></app-media-description-form>
       <mat-action-row>
-          <button mat-button (click)="deleteVideo(video)" >Delete</button>
+          <button mat-raised-button style="background-color: red; width: 50px;" (click)="deleteVideo(video)" >Delete</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
-<button mat-button name="save" (click)="save()">Save Changes</button>
+  <h4> Actions </h4>
+  <button mat-raised-button style="background-color:lightgreen; width: 200px; margin-top: 10px;" name="save" (click)="save()">Save Changes</button>
 </form>

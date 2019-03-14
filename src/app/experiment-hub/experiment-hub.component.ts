@@ -16,16 +16,11 @@ export class ExperimentHubComponent implements OnInit {
   constructor(public eService: ExperimentService) { }
 
   ngOnInit() {
-    this.experiments = this.eService.getExperiments(1)
-      .valueChanges
-      .pipe(map(({data}) => {
-        return data.researcher.experiments.map(e => {
-          // Temporary hacky fix
-          delete e.__typename;
-          delete e.__proto;
-          return e;
-        });
-      }));
+    this.updateExperiments();
+  }
+
+  updateExperiments() {
+    this.experiments = this.eService.getExperiments(1);
   }
 
   editExperiment(experiment: Experiment) {
@@ -36,6 +31,11 @@ export class ExperimentHubComponent implements OnInit {
   }
   newExperiment() {
     this.selectedExperiment = new Experiment();
+  }
+
+
+  onSave() {
+    this.selectedExperiment = null;
   }
 
 }

@@ -20,9 +20,9 @@ export class SessionFormComponent implements OnInit, OnChanges {
     // {id: '4896', title: 'Experiment 3', epoch: 125, epochInterval: 200, useBandPowers: true, useCovariance: true, videos: null }
   ];
   subjects: Subject[] = [
-    {id: '56', name: 'Subject 1', dob: new Date(), sex: 'Male', dominantHand: 'Left' },
-    {id: '98', name: 'Subject 2', dob: new Date(), sex: 'Male', dominantHand: 'Left' },
-    {id: '45', name: 'Subject 3', dob: new Date(), sex: 'Male', dominantHand: 'Left' }
+    // {id: '56', name: 'Subject 1', dob: new Date(), sex: 'Male', dominantHand: 'Left' },
+    // {id: '98', name: 'Subject 2', dob: new Date(), sex: 'Male', dominantHand: 'Left' },
+    // {id: '45', name: 'Subject 3', dob: new Date(), sex: 'Male', dominantHand: 'Left' }
   ];
   sessionOptions: FormGroup;
 
@@ -31,8 +31,8 @@ export class SessionFormComponent implements OnInit, OnChanges {
       id: null,
       subject_id: null,
       experiment_id: null,
-      date: null,
       video_id: null,
+      date: null,
       eeg_data: null
     });
   }

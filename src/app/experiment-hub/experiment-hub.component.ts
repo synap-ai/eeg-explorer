@@ -20,15 +20,7 @@ export class ExperimentHubComponent implements OnInit {
   }
 
   updateExperiments() {
-    this.experiments = this.eService.getExperiments(1)
-      .pipe(map((experiments) => {
-        return experiments.map(e => {
-          // Temporary hacky fix
-          delete e.__typename;
-          delete e.__proto;
-          return e;
-        });
-      }));
+    this.experiments = this.eService.getExperiments(1);
   }
 
   editExperiment(experiment: Experiment) {
@@ -39,6 +31,11 @@ export class ExperimentHubComponent implements OnInit {
   }
   newExperiment() {
     this.selectedExperiment = new Experiment();
+  }
+
+
+  onSave() {
+    this.selectedExperiment = null;
   }
 
 }

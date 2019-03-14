@@ -23,6 +23,10 @@ export class DataCollectionComponent implements OnInit {
   experiments: Observable<Experiment[]>;
   Player: YT.Player;
 
+  get uploading() {
+    return this.sessionsService.uploading;
+  }
+
   private subscription: Subscription;
   samples: EEGSample[] = [];
   powers = [];

@@ -6,7 +6,7 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import { switchMap } from 'rxjs/operators';
 
 interface Response {
-  subjects: Subject[]
+  subjects: Subject[];
 }
 
 @Injectable({

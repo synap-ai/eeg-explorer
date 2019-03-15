@@ -4,6 +4,8 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { switchMap } from 'rxjs/operators';
 import { empty, of, Observable, Subject } from 'rxjs';
+import { debug } from 'util';
+import { identifierModuleUrl } from '@angular/compiler';
 
 interface Response {
   researcher: {
@@ -42,7 +44,6 @@ export class ExperimentService {
           videos {
             id
             title
-            description
             youtube_id
             category
           }
@@ -50,6 +51,23 @@ export class ExperimentService {
       }
     }
   `;
+  updateExperimentMutation = gql`
+  mutation updateExperiment(
+    $id: ID!,
+    $title: String!,
+    $description: String,
+    $videos: [VideoInput]
+  ) {
+    updateExperiment(
+      id: $id,
+      title: $title,
+      description: $description,
+      videos: $videos,
+    ) {
+      id
+    }
+  }
+`;
   deleteExperimentMutation = gql`
     mutation deleteExperiment($id: ID!) {
       deleteExperiment(id: $id)
@@ -82,27 +100,47 @@ export class ExperimentService {
   }
 
   save(experiment: Experiment, callback: Function) {
+    let mut: Observable<any>;
+    const videos = experiment.videos.map(x => ({ id: x.id, title: x.title, category: x.category, youtube_id: x.youtube_id}));
     if (experiment.id) {
-      // this.experiments[i] = experiment;
-    } else {
-      const mut = this.apollo.mutate({
-        mutation: this.createExperimentMutation,
+
+      console.log(experiment.videos);
+
+      mut = this.apollo.mutate({
+        mutation: this.updateExperimentMutation,
         variables: {
-          researcherId: 1,
+          id: experiment.id,
           title: experiment.title,
           description: experiment.description,
-          videos: experiment.videos,
+          videos: videos,
+        },
+        errorPolicy: 'all'
+      });
+
+    } else {
+
+      mut = this.apollo.mutate({
+        mutation: this.createExperimentMutation,
+        variables: {
+          researcherId: 1, // temp
+          title: experiment.title,
+          description: experiment.description,
+          videos: videos,
         }
       });
-      mut.subscribe(({ data }) => {
-        console.log('Experiment created - ', data);
+
+    }
+      mut.subscribe(({ errors, data }) => {
+        if (errors) {
+          console.log('something went wrong', errors);
+        }
+        console.log('Experiment saved - ', data);
         this.queryRef.refetch();
         callback();
       }, (error) => {
         console.log('There was an error sending the query', error);
       });
       return mut;
-    }
   }
 
 

@@ -40,10 +40,10 @@ import { NeedAuthGuard } from 'app/need-auth.guard';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'experiments', component: ExperimentHubComponent, canActivate:[NeedAuthGuard] },
-  { path: 'media', component: DataCollectionComponent, canActivate:[NeedAuthGuard] },
-  { path: 'subjects', component: SubjectHubComponent, canActivate:[NeedAuthGuard] },
-  { path: 'sessions', component: SessionsComponent, canActivate:[NeedAuthGuard] },
+  { path: 'experiments', component: ExperimentHubComponent, canActivate: [NeedAuthGuard] },
+  { path: 'media', component: DataCollectionComponent, canActivate: [NeedAuthGuard] },
+  { path: 'subjects', component: SubjectHubComponent, canActivate: [NeedAuthGuard] },
+  { path: 'sessions', component: SessionsComponent, canActivate: [NeedAuthGuard] },
   { path: 'login', component: LoginComponent},
   { path: 'view', component: ViewComponent},
   { path: '**', component: LoginComponent},

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {LoginResultModel} from '../shared/LoginResultModel'
+import {LoginResultModel} from '../shared/LoginResultModel';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,13 @@ export class ApiService {
 
   }
 
-  login(email: string, password: string): Observable<LoginResultModel>{
+  login(email: string, password: string): Observable<LoginResultModel> {
     return this.http.post<LoginResultModel>('https://reqres.in/api/login', {
       email: email,
       password: password
     });
   }
-  register(first: string, last: string, email: string, password: string):Observable<LoginResultModel>{
+  register(first: string, last: string, email: string, password: string): Observable<LoginResultModel> {
     return this.http.post<LoginResultModel>('https://reqres.in/api/register', {
       firstName: first,
       lastName: last,

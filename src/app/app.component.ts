@@ -7,8 +7,8 @@ import { Component, OnInit,  } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  loggedIn = localStorage.getItem('loggedIn')||false;
-  
+  loggedIn = localStorage.getItem('loggedIn') || false;
+
   constructor() {}
 
   ngOnInit() {}

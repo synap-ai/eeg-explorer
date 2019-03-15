@@ -15,28 +15,27 @@ export class LoginComponent implements OnInit {
   registerOptions: FormGroup;
   login: boolean;
 
-  constructor(private api: ApiService, private customer: AuthService, private router: Router, fb: FormBuilder) { 
-    this.login=true;
+  constructor(private api: ApiService, private customer: AuthService, private router: Router, fb: FormBuilder) {
+    this.login = true;
     this.loginOptions = fb.group({
-      username: "",
-      password: ""
+      username: '',
+      password: ''
     });
     this.registerOptions = fb.group({
-      firstname:"",
-      lastname:"",
-      emailReg:"",
-      passwordReg:""
-    })
+      firstname: '',
+      lastname: '',
+      emailReg: '',
+      passwordReg: ''
+    });
   }
 
-  switch(){
-    this.login=!this.login;
+  switch() {
+    this.login = !this.login;
   }
   ngOnInit() {
   }
 
-  tryLogin(email,password) {
-    console.log(email + password);
+  tryLogin(email, password) {
     this.api.login(
       email,
       password
@@ -52,8 +51,7 @@ export class LoginComponent implements OnInit {
           alert(r.error.error);
         });
   }
-  tryRegister(first,last,email,password){
-    console.log(first+last+email+password);
+  tryRegister(first, last, email, password) {
     this.api.register(
       first,
       last,

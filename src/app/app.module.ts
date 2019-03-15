@@ -34,14 +34,19 @@ import { SubjectFormComponent } from './subject-form/subject-form.component';
 import { SubjectHubComponent } from './subject-hub/subject-hub.component';
 import { SessionsComponent } from './sessions/sessions.component';
 import { SessionFormComponent } from './session-form/session-form.component';
+import { LoginComponent } from './login/login.component';
+import { ViewComponent } from './view/view.component';
+import { NeedAuthGuard } from 'app/need-auth.guard';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'experiments', component: ExperimentHubComponent },
-  { path: 'media', component: DataCollectionComponent },
-  { path: 'subjects', component: SubjectHubComponent },
-  { path: 'sessions', component: SessionsComponent },
-  { path: '**', component: HomeComponent },
+  { path: 'experiments', component: ExperimentHubComponent, canActivate:[NeedAuthGuard] },
+  { path: 'media', component: DataCollectionComponent, canActivate:[NeedAuthGuard] },
+  { path: 'subjects', component: SubjectHubComponent, canActivate:[NeedAuthGuard] },
+  { path: 'sessions', component: SessionsComponent, canActivate:[NeedAuthGuard] },
+  { path: 'login', component: LoginComponent},
+  { path: 'view', component: ViewComponent},
+  { path: '**', component: LoginComponent},
 ];
 
 @NgModule({
@@ -60,7 +65,9 @@ const appRoutes: Routes = [
     SubjectFormComponent,
     SubjectHubComponent,
     SessionsComponent,
-    SessionFormComponent
+    SessionFormComponent,
+    LoginComponent,
+    ViewComponent,
   ],
   imports: [
     HttpClientModule,
@@ -93,6 +100,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
+    NeedAuthGuard,
     ChartService,
     MatDatepickerModule,
     {

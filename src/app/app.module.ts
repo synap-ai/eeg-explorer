@@ -31,12 +31,14 @@ import { ExperimentHubComponent } from './experiment-hub/experiment-hub.componen
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import { SubjectFormComponent } from './subject-form/subject-form.component';
 import { SubjectHubComponent } from './subject-hub/subject-hub.component';
+import { AnalysisComponent } from './analysis/analysis.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'experiments', component: ExperimentHubComponent },
   { path: 'media', component: DataCollectionComponent },
   { path: 'subjects', component: SubjectHubComponent },
+  { path: 'analysis', component: AnalysisComponent },
   { path: '**', component: HomeComponent },
 ];
 
@@ -54,6 +56,7 @@ const appRoutes: Routes = [
     DataCollectionComponent,
     SubjectFormComponent,
     SubjectHubComponent,
+    AnalysisComponent,
   ],
   imports: [
     HttpClientModule,

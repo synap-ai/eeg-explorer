@@ -52,7 +52,6 @@
     "@types/jest": "^20.0.0",
     "@types/node": "~6.0.60",
     "@types/three": "^0.84.11",
-    "auth0-js": "^9.10.0",
     "codelyzer": "^4.3.0",
     "firebase-tools": "^3.9.1",
     "imports-loader": "^0.7.1",

@@ -29,7 +29,6 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
     private eService: ExperimentService,
   ) {
     this.experimentOptions = fb.group({
-      id: null,
       title: null,
       description: null,
       videos: [],
@@ -41,7 +40,13 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.experimentOptions.reset();
     if (this.experiment.title) {
-      this.experimentOptions.setValue(this.experiment);
+      this.experimentOptions.setValue(
+        {
+          title: this.experiment.title,
+          description: this.experiment.description,
+          videos: this.experiment.videos
+        }
+      );
     }
   }
 
@@ -49,6 +54,7 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
     const videos = this.experiment.videos;
     Object.assign(this.experiment, this.experimentOptions.value);
     this.experiment.videos = videos;
+
     try {
       this.eService.save(this.experiment, () => this.onSave.emit());
     } catch {

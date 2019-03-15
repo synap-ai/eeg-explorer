@@ -12,7 +12,7 @@
   <button mat-raised-button style="width: 200px; margin: 10px 0" (click)="addVideo()">Add Video</button>
 
   <mat-accordion *ngIf="experiment.videos?.length > 0">
-    <mat-expansion-panel *ngFor="let video of experiment.videos; first as isFirst" [expanded]="isFirst">
+    <mat-expansion-panel *ngFor="let video of experiment.videos;" [expanded]="!video.id">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{video.title || "New Video"}}

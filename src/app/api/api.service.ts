@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {LoginResultModel} from '../shared/classes/LoginResultModel';
+import {LoginResultModel} from '../shared/classes/loginResultModel';
 
 @Injectable({
   providedIn: 'root'

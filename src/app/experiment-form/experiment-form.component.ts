@@ -9,9 +9,9 @@ import {
   EventEmitter
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MediaDescription } from 'app/shared/media-description';
-import { Experiment } from 'app/shared/experiment';
-import { ExperimentService } from 'app/shared/experiment.service';
+import { MediaDescription } from 'app/shared/classes/media-description';
+import { Experiment } from 'app/shared/classes/experiment';
+import { ExperimentService } from 'app/shared/services/experiment.service';
 
 @Component({
   selector: 'app-experiment-form',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject } from './subject';
+import { Subject } from '../classes/subject';
 import gql from 'graphql-tag';
-import { Observable, of, empty } from 'rxjs';
+import { Observable, of, empty, throwError } from 'rxjs';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { switchMap } from 'rxjs/operators';
 

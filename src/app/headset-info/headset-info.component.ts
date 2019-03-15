@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MuseControlResponse } from 'muse-js';
 import { map, filter } from 'rxjs/operators';
-import { EegStreamService } from 'app/shared/eeg-stream.service';
+import { EegStreamService } from 'app/shared/services/eeg-stream.service';
 
 @Component({
   selector: 'app-headset-info',

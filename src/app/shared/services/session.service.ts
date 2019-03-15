@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Session } from './session';
+import { Session } from '../classes/session';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SubjectService } from 'app/shared/subject.service';
-import { Subject } from 'app/shared/subject';
+import { SubjectService } from 'app/shared/services/subject.service';
+import { Subject } from 'app/shared/classes/subject';
 
 @Component({
   selector: 'app-subject-hub',
@@ -18,11 +18,19 @@ export class SubjectHubComponent implements OnInit {
   editSubject(subject: Subject) {
     this.selectedSubject = subject;
   }
+
   deleteSubject(id: number) {
+    if (id === this.selectedSubject.id) {
+      this.selectedSubject = null;
+    }
     this.sService.delete(id);
   }
   newSubject() {
     this.selectedSubject = new Subject();
+  }
+
+  onSave() {
+    this.selectedSubject = null;
   }
 
 }

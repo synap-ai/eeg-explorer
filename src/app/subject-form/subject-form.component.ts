@@ -1,8 +1,8 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Input, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subject } from 'app/shared/subject';
-import { SubjectService } from 'app/shared/subject.service';
+import { Subject } from 'app/shared/classes/subject';
+import { SubjectService } from 'app/shared/services/subject.service';
 
 export interface Sex {
   value: string;

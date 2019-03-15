@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Experiment } from './experiment';
+import { Experiment } from '../classes/experiment';
 import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { switchMap } from 'rxjs/operators';
@@ -103,8 +103,6 @@ export class ExperimentService {
     let mut: Observable<any>;
     const videos = experiment.videos.map(x => ({ id: x.id, title: x.title, category: x.category, youtube_id: x.youtube_id}));
     if (experiment.id) {
-
-      console.log(experiment.videos);
 
       mut = this.apollo.mutate({
         mutation: this.updateExperimentMutation,

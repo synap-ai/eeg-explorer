@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         r => {
           if (r.token) {
             this.customer.setToken(r.token);
-            this.router.navigateByUrl('/sessions');
+            this.router.navigateByUrl('/experiments');
           }
         },
         r => {

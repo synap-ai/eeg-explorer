@@ -26,6 +26,58 @@ export class SubjectService {
     }
   }`;
 
+  createSubjectMutation = gql`
+    mutation createSubject(
+      $first_name: String!,
+      $last_name: String!,
+      $email: String!,
+      $gender: String,
+      $dob: Date,
+      $dominant_hand: String,
+    ) {
+      createSubject(
+        first_name: $first_name,
+        last_name: $last_name,
+        email: $email,
+        gender: $gender
+        dob: $dob,
+        dominant_hand: $dominant_hand
+      ){
+        id
+      }
+    }
+  `;
+
+  updateSubjectMutation = gql`
+    mutation updateSubject(
+      $id: ID!,
+      $first_name: String!,
+      $last_name: String!,
+      $email: String!,
+      $gender: String,
+      $dob: Date,
+      $dominant_hand: String,
+    ) {
+      updateSubject(
+        id: $id,
+        first_name: $first_name,
+        last_name: $last_name,
+        email: $email,
+        gender: $gender
+        dob: $dob,
+        dominant_hand: $dominant_hand
+      ){
+        id
+      }
+    }
+  `;
+
+  deleteSubjectMutation = gql`
+    mutation deleteSubject($id: ID!) {
+      deleteSubject(id: $id)
+    }
+  `;
+
   subjects: Observable<Subject[]>;
 
   private queryRef: QueryRef<Response>;
@@ -39,20 +91,48 @@ export class SubjectService {
 
   }
 
-  save(subject: Subject) {
-    // const i = this.subjects.findIndex(e => e.id === subject.id);
-    // if (i >= 0) {
-    //   this.subjects[i] = subject;
-    // } else {
-    //   this.subjects.push(subject);
-    // }
+  save(subject: Subject, callback: Function) {
+    let mut: Observable<any>;
+    if (subject.id) {
+      mut = this.apollo.mutate({
+        mutation: this.updateSubjectMutation,
+        variables: subject,
+        errorPolicy: 'all'
+      });
+    } else {
+      mut = this.apollo.mutate({
+        mutation: this.createSubjectMutation,
+        variables: subject,
+        errorPolicy: 'all'
+      });
+    }
+
+    mut.subscribe(({ errors, data }) => {
+      if (errors) {
+        console.log('something went wrong', errors);
+      }
+      console.log('Subject saved - ', data);
+      this.queryRef.refetch();
+      callback();
+    }, (error) => {
+      console.log('There was an error sending the query', error);
+    });
+
+    return mut;
   }
 
-  delete(subject: Subject) {
-    // const i = this.subjects.indexOf(subject);
-    // if (i >= 0) {
-    //   this.subjects.splice(i, 1);
-    // }
+  delete(id: number) {
+    this.apollo.mutate({
+      mutation: this.deleteSubjectMutation,
+      variables: {
+        id: id
+      }
+    }).subscribe(({ data }) => {
+      console.log('Subject deleted - ', data);
+      this.queryRef.refetch();
+    }, (error) => {
+      console.log('There was an error deleting the subject', error);
+    });
   }
 
   private anyToSubject(a: any) {

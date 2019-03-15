@@ -4,7 +4,7 @@
     <mat-card-content>
       <button (click)="newSubject()" mat-raised-button>New Subject</button>
       <mat-list>
-        <mat-list-item *ngFor="let subject of eService.subjects | async">
+        <mat-list-item *ngFor="let subject of sService.subjects | async">
           <div style="display: table; min-width: 50%; max-width: 100;">
               <span style="display: table-cell; text-align: left"> <b>{{subject.first_name}} {{subject.last_name}}</b> </span>
                 <span style="display: table-cell;  width: 50px;">
@@ -13,7 +13,7 @@
                 </button>
               </span>
               <span style="display: table-cell;  width: 50px;">
-                <button (click)="deleteSubject(subject)" style="margin: 10px;" mat-raised-button name="delete">
+                <button (click)="deleteSubject(subject.id)" style="margin: 10px;" mat-raised-button name="delete">
                   <mat-icon>delete</mat-icon>
                 </button>
                 </span>

@@ -8,10 +8,9 @@ import { Subject } from 'app/shared/classes/subject';
   styleUrls: ['./subject-hub.component.css']
 })
 export class SubjectHubComponent implements OnInit {
-
   selectedSubject: Subject;
 
-  constructor(public eService: SubjectService) { }
+  constructor(public sService: SubjectService) { }
 
   ngOnInit() {
   }
@@ -19,11 +18,12 @@ export class SubjectHubComponent implements OnInit {
   editSubject(subject: Subject) {
     this.selectedSubject = subject;
   }
-  deleteSubject(subject: Subject) {
-    if (subject.id === this.selectedSubject.id) {
+
+  deleteSubject(id: number) {
+    if (id === this.selectedSubject.id) {
       this.selectedSubject = null;
     }
-    this.eService.delete(subject.id);
+    this.sService.delete(id);
   }
   newSubject() {
     this.selectedSubject = new Subject();

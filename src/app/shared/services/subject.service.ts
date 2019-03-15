@@ -26,53 +26,57 @@ export class SubjectService {
     }
   }`;
 
-  createSubjectMutation = gql`mutation createSubject(
-    $first_name: String!
-    $last_name: String!
-    $email: String!
-    $gender: String
-    $dob: Date
-    $dominant_hand: String
+  createSubjectMutation = gql`
+    mutation createSubject(
+      $first_name: String!,
+      $last_name: String!,
+      $email: String!,
+      $gender: String,
+      $dob: Date,
+      $dominant_hand: String,
     ) {
-    createSubject(
-      first_name: $first_name,
-      last_name: $last_name,
-      email: $email,
-      dominant_hand: $dominant_hand
-      dob: $dob,
-      gender: $gender
-    ) {
-      id
+      createSubject(
+        first_name: $first_name,
+        last_name: $last_name,
+        email: $email,
+        gender: $gender
+        dob: $dob,
+        dominant_hand: $dominant_hand
+      ){
+        id
+      }
     }
-  }`;
+  `;
 
-  updateSubjectMutation = gql`mutation updateSubject(
-    $id: ID!
-    $first_name: String
-    $last_name: String
-    $email: String
-    $gender: String
-    $dob: Date
-    $dominant_hand: String
+  updateSubjectMutation = gql`
+    mutation updateSubject(
+      $id: ID!,
+      $first_name: String!,
+      $last_name: String!,
+      $email: String!,
+      $gender: String,
+      $dob: Date,
+      $dominant_hand: String,
     ) {
-    updateSubject(
-      id: $id
-      first_name: $first_name
-      last_name: $last_name
-      email: $email
-      gender: $gender
-      dob: $dob
-      dominant_hand: $dominant_hand
-    ) {
-      id
+      updateSubject(
+        id: $id,
+        first_name: $first_name,
+        last_name: $last_name,
+        email: $email,
+        gender: $gender
+        dob: $dob,
+        dominant_hand: $dominant_hand
+      ){
+        id
+      }
     }
-  }`;
+  `;
 
-  delteSubjectMutation = gql`mutation deleteSubject(
-      $id: ID!
-    ) {
+  deleteSubjectMutation = gql`
+    mutation deleteSubject($id: ID!) {
       deleteSubject(id: $id)
-    }`;
+    }
+  `;
 
   subjects: Observable<Subject[]>;
 
@@ -87,59 +91,44 @@ export class SubjectService {
 
   }
 
-  save(subject: Subject, callback: Function = () => null) {
+  save(subject: Subject, callback: Function) {
     let mut: Observable<any>;
     if (subject.id) {
-
       mut = this.apollo.mutate({
         mutation: this.updateSubjectMutation,
-        variables: {
-          id: subject.id,
-          first_name: subject.first_name,
-          last_name: subject.last_name,
-          email: subject.email,
-          dob: subject.dob,
-          gender: subject.gender,
-          dominant_hand: subject.dominant_hand,
-        }
+        variables: subject,
+        errorPolicy: 'all'
       });
-
     } else {
-
       mut = this.apollo.mutate({
         mutation: this.createSubjectMutation,
-        variables: {
-          first_name: subject.first_name,
-          last_name: subject.last_name,
-          email: subject.email,
-          dob: subject.dob,
-          gender: subject.gender,
-          dominant_hand: subject.dominant_hand,
-        }
+        variables: subject,
+        errorPolicy: 'all'
       });
-
     }
-      mut.subscribe(({ errors, data }) => {
-        if (errors) {
-          console.log('something went wrong', errors);
-        }
-        console.log('Subject saved - ', data);
-        this.queryRef.refetch();
-        callback();
-      }, (error) => {
-        console.log('There was an error sending the query', error);
-      });
-      return mut;
+
+    mut.subscribe(({ errors, data }) => {
+      if (errors) {
+        console.log('something went wrong', errors);
+      }
+      console.log('Subject saved - ', data);
+      this.queryRef.refetch();
+      callback();
+    }, (error) => {
+      console.log('There was an error sending the query', error);
+    });
+
+    return mut;
   }
 
-  delete(id: String) {
+  delete(id: number) {
     this.apollo.mutate({
-      mutation: this.delteSubjectMutation,
+      mutation: this.deleteSubjectMutation,
       variables: {
         id: id
       }
     }).subscribe(({ data }) => {
-      console.log('Subject delete - ', data);
+      console.log('Subject deleted - ', data);
       this.queryRef.refetch();
     }, (error) => {
       console.log('There was an error deleting the subject', error);

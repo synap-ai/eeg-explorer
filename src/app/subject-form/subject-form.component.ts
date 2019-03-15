@@ -6,9 +6,11 @@ import { SubjectService } from 'app/shared/services/subject.service';
 
 export interface Sex {
   value: string;
+  viewValue: string;
 }
 export interface DominantHands {
   value: string;
+  viewValue: string;
 }
 
 @Component({
@@ -17,23 +19,23 @@ export interface DominantHands {
   styleUrls: ['./subject-form.component.css']
 })
 export class SubjectFormComponent implements OnInit, OnChanges {
-
-  genders: Sex[] = [
-    {value: 'M'},
-    {value: 'F'},
-    {value: 'O'}
-  ];
-  dominant_hands: DominantHands[] = [
-    {value: 'R'},
-    {value: 'L'},
-    {value: 'A'}
-  ];
   @Input() subject: Subject;
   @Output() onSave = new EventEmitter<void>();
 
+  genders: Sex[] = [
+    {value: 'M', viewValue: 'Male'},
+    {value: 'F', viewValue: 'Female'},
+    {value: 'O', viewValue: 'Other'}
+  ];
+  dominant_hands: DominantHands[] = [
+    {value: 'R', viewValue: 'Right'},
+    {value: 'L', viewValue: 'Left'},
+    {value: 'A', viewValue: 'Ambidextrous'}
+  ];
+
   subjectOptions: FormGroup;
 
-  constructor(fb: FormBuilder, private eService: SubjectService) {
+  constructor(fb: FormBuilder, private sService: SubjectService) {
     this.subjectOptions = fb.group({
       id: null,
       first_name: null,
@@ -53,10 +55,10 @@ export class SubjectFormComponent implements OnInit, OnChanges {
       this.subjectOptions.setValue(this.subject);
     }
   }
-  save() {
+
+  async save() {
     const id = this.subject.id;
     Object.assign(this.subject, this.subjectOptions.value);
-    this.eService.save(this.subject, () => this.onSave.emit());
+    this.sService.save(this.subject, () => this.onSave.emit());
   }
-
 }

@@ -1,0 +1,47 @@
+<section>
+    <!-- initial unconnected screen -->
+    <mat-card *ngIf="!Streaming">
+      <mat-card-title>Connect or Upload a File</mat-card-title>
+      <div class="row" style="display:flex; width:100%;text-align:center; margin-top:20px">
+        <div class="item">
+          <div class="connection">
+            <img src="../../assets/headset.png" style="width:100px; padding-bottom:10px"><br><br>
+              <label style="color:#3f51b5; font-size:20px" for="file">Connect Headset</label><br><br>
+              <button *ngIf="!eegStream.connecting" mat-raised-button color="primary" (click)="connect()">
+                  <mat-icon>bluetooth</mat-icon>
+                  Connect
+                </button>
+                <div *ngIf="connecting">
+                  Connecting...
+                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
+              </div>
+        </div>
+        <div class="item">
+            <div class="file-player">
+                <img src="../../assets/upload.png" style="width:100px"><br><br>
+                  <label style="color:#3f51b5; font-size:20px" for="file">Upload File</label><br><br>
+                  <input class="btn" #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
+                <div> <!-- File Player-->
+                  <button *ngIf="eegStream.fileLoaded && !Streaming" mat-raised-button color="primary" (click)="playFile()">
+                    <mat-icon>play_arrow</mat-icon>
+                    Play File
+                  </button>
+                  <mat-spinner *ngIf="eegStream.fileLoading"></mat-spinner>
+                </div>    
+              </div>
+        </div>
+        <div class="item">
+            <div class="file-player">
+                <img src="../../assets/video-player-outline.png" style="width:100px"><br><br>
+                <label style="color:#3f51b5; font-size:20px" for="wvae">Mock Data</label><br><br>
+                <button *ngIf="!Streaming" id="wave" mat-raised-button color="primary" (click)="playWave()">
+                  <mat-icon>play_circle_outline</mat-icon>
+                  Play Wave Function
+                </button>
+            </div>
+        </div>
+      </div>
+    </mat-card>
+  </section>
+

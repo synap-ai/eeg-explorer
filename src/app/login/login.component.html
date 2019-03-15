@@ -1,0 +1,41 @@
+<div class="card mt-5" style="margin:auto;width: 600px; margin-top:50px; text-align:center">
+  <mat-card *ngIf="login">
+    <img src="../../assets/icon.png">
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="loginOptions">
+          <mat-form-field>
+              <input matInput #email formControlName="username" name="user_name" type="email" placeholder="Username" [(ngModel)]="emailText">
+            </mat-form-field><br>
+            <mat-form-field>
+              <input matInput #password formControlName="password" name="password" type="password" placeholder="Password" [(ngModel)]="passwordText">
+            </mat-form-field><br>
+        <button type="submit" (click)='tryLogin(email.value,password.value)' mat-raised-button>Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="!login">
+      <img src="../../assets/icon.png">
+      <mat-card-title>Register</mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="registerOptions">
+            <mat-form-field>
+                <input matInput #firstname formControlName="firstname" name="firstname" type="text" placeholder="First Name" [(ngModel)]="firstnameText">
+              </mat-form-field><br>
+            <mat-form-field>
+                <input matInput #lastname formControlName="lastname" name="lastname" type="text" placeholder="Last Name" [(ngModel)]="lastnameText">
+              </mat-form-field><br>
+            <mat-form-field>
+                <input matInput #emailReg formControlName="emailReg" name="emailReg" type="text" placeholder="Email" [(ngModel)]="emailRegText">
+              </mat-form-field><br>
+              <mat-form-field>
+                <input matInput #passwordReg formControlName="passwordReg" name="passwordReg" type="password" placeholder="Password" [(ngModel)]="passwordRegText">
+              </mat-form-field><br>
+          <button (click)="tryRegister(firstname.value, lastname.value, emailReg.value, passwordReg.value)" mat-raised-button>Register</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  <br><br>
+  <button mat-raised-button *ngIf="login" (click)="switch()">Need an Account? Register Here.</button>
+  <button mat-raised-button *ngIf="!login" (click)="switch()">Already have an Account? Login Here.</button>
+</div>

@@ -6,10 +6,12 @@
   right: 0;
 }
 .side-nav {
-  margin-right: 5px;
-  border: 2px solid darkcyan; 
+  color:white;
+  background-color:#3f51b5; 
 }
-
+.mat-list-item{
+  color:white;
+}
 .nav-content {
   padding-left: 5px;
 }

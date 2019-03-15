@@ -3,12 +3,11 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SmoothieChart, TimeSeries } from 'smoothie';
 import { channelNames, EEGSample } from 'muse-js';
-import { map, groupBy, filter, mergeMap, takeUntil } from 'rxjs/operators';
-import { bandpass } from './../shared/bandpass.filter';
+import { groupBy, filter, mergeMap, takeUntil } from 'rxjs/operators';
 import { epoch, fft, addInfo, powerByBand, bandpassFilter } from '@neurosity/pipes';
 
-import { ChartService } from '../shared/chart.service';
-import { EegStreamService } from 'app/shared/eeg-stream.service';
+import { ChartService } from '../shared/services/chart.service';
+import { EegStreamService } from '../shared/services/eeg-stream.service';
 
 const samplingFrequency = 256;
 

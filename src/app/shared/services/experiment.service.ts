@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Experiment } from './experiment';
+import { Experiment } from '../classes/experiment';
 import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { switchMap } from 'rxjs/operators';

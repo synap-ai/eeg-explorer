@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ExperimentService } from 'app/shared/experiment.service';
-import { SubjectService } from 'app/shared/subject.service';
-import { Subject } from 'app/shared/subject';
-import { Experiment } from 'app/shared/experiment';
-import { MediaDescription } from 'app/shared/media-description';
-import { EegStreamService } from 'app/shared/eeg-stream.service';
+import { ExperimentService } from 'app/shared/services/experiment.service';
+import { SubjectService } from 'app/shared/services/subject.service';
+import { Subject } from 'app/shared/classes/subject';
+import { Experiment } from 'app/shared/classes/experiment';
+import { MediaDescription } from 'app/shared/classes/media-description';
+import { EegStreamService } from 'app//shared/services/eeg-stream.service';
 import { EEGSample, zipSamples } from 'muse-js';
 import { Subscription, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { SessionService } from 'app/shared/session.service';
-import { Session } from 'app/shared/session';
+import { SessionService } from 'app/shared/services/session.service';
+import { Session } from 'app/shared/classes/session';
 
 @Component({
   selector: 'app-data-collection',

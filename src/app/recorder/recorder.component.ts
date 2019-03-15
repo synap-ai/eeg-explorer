@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { EEGSample, channelNames } from 'muse-js';
-import { EegStreamService } from 'app/shared/eeg-stream.service';
+import { EegStreamService } from 'app/shared/services/eeg-stream.service';
 
 @Component({
   selector: 'app-recorder',

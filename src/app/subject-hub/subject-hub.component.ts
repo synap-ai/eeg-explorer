@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SubjectService } from 'app/shared/subject.service';
-import { Subject } from 'app/shared/subject';
+import { SubjectService } from 'app/shared/services/subject.service';
+import { Subject } from 'app/shared/classes/subject';
 
 @Component({
   selector: 'app-subject-hub',

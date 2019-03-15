@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ExperimentService } from 'app/shared/experiment.service';
-import { Experiment } from 'app/shared/experiment';
+import { ExperimentService } from 'app/shared/services/experiment.service';
+import { Experiment } from 'app/shared/classes/experiment';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-experiment-hub',

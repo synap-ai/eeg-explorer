@@ -20,10 +20,17 @@ export class SubjectHubComponent implements OnInit {
     this.selectedSubject = subject;
   }
   deleteSubject(subject: Subject) {
-    this.eService.delete(subject);
+    if (subject.id === this.selectedSubject.id) {
+      this.selectedSubject = null;
+    }
+    this.eService.delete(subject.id);
   }
   newSubject() {
     this.selectedSubject = new Subject();
+  }
+
+  onSave() {
+    this.selectedSubject = null;
   }
 
 }

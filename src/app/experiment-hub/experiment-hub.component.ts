@@ -26,6 +26,9 @@ export class ExperimentHubComponent implements OnInit {
     this.selectedExperiment = experiment;
   }
   deleteExperiment(id: Number) {
+    if (id === this.selectedExperiment.id) {
+      this.selectedExperiment = null;
+    }
     this.eService.delete(id);
   }
   newExperiment() {

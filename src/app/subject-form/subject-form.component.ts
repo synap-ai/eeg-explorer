@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Input, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'app/shared/classes/subject';
@@ -29,6 +29,7 @@ export class SubjectFormComponent implements OnInit, OnChanges {
     {value: 'A'}
   ];
   @Input() subject: Subject;
+  @Output() onSave = new EventEmitter<void>();
 
   subjectOptions: FormGroup;
 
@@ -55,7 +56,7 @@ export class SubjectFormComponent implements OnInit, OnChanges {
   save() {
     const id = this.subject.id;
     Object.assign(this.subject, this.subjectOptions.value);
-    this.eService.save(this.subject);
+    this.eService.save(this.subject, () => this.onSave.emit());
   }
 
 }

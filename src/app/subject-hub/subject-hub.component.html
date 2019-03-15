@@ -25,7 +25,7 @@
   <mat-card *ngIf="selectedSubject">
       <mat-card-title>Subject Form</mat-card-title>
       <mat-card-content>
-        <app-subject-form [subject]="selectedSubject"></app-subject-form>
+        <app-subject-form [subject]="selectedSubject" (onSave)="onSave()"></app-subject-form>
       </mat-card-content>
     </mat-card>
 </section>

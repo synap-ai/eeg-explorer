@@ -104,8 +104,6 @@ export class ExperimentService {
     const videos = experiment.videos.map(x => ({ id: x.id, title: x.title, category: x.category, youtube_id: x.youtube_id}));
     if (experiment.id) {
 
-      console.log(experiment.videos);
-
       mut = this.apollo.mutate({
         mutation: this.updateExperimentMutation,
         variables: {

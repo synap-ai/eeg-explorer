@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import { MediaDescription } from 'app/shared/media-description';
+import { MediaDescription } from 'app/shared/classes/media-description';
 
 @Component({
   selector: 'app-media-description-form',
@@ -25,7 +25,13 @@ export class MediaDescriptionFormComponent implements OnInit {
 
   ngOnInit() {
     if (this.video.title) { // if object has been set
-      this.mediaOptions.setValue(this.video);
+      this.mediaOptions.setValue(
+        {
+          title: this.video.title,
+          youtube_id: this.video.youtube_id,
+          category: this.video.category,
+        }
+      );
     }
   }
 

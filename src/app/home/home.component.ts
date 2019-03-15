@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EegStreamService } from 'app/shared/eeg-stream.service';
+import { EegStreamService } from 'app/shared/services/eeg-stream.service';
 
 @Component({
   selector: 'app-home',

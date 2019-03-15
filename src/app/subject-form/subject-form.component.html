@@ -1,23 +1,27 @@
 <form class="subject-form" [formGroup]="subjectOptions">
   <mat-form-field>
-    <input matInput #subjectName formControlName="name" name="Name" type="text" placeholder="Name">
+    <input matInput #subjectFirstName formControlName="first_name" name="FirstName" type="text" placeholder="First Name" required>
   </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="dob" [matDatepicker]="picker" placeholder="Choose a date">
+      <input matInput #subjectLastName formControlName="last_name" name="LastName" type="text" placeholder="Last Name" required>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput #subjectLastName formControlName="email" name="Email" type="text" placeholder="Email" required>
+      </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="dob" [matDatepicker]="picker" placeholder="Date of Birth">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 <mat-form-field>
-  <mat-select #subjectSex formControlName="sex" placeholder="Sex">
-    <mat-option *ngFor = "let sex of sexes"[value]="sex.value">{{sex.value}}</mat-option>
+  <mat-select #subjectGender formControlName="gender" placeholder="Sex">
+    <mat-option *ngFor = "let gender of genders"[value]="gender.value">{{gender.viewValue}}</mat-option>
     </mat-select>
-  <!-- <input matInput #subjectSex formControlName="sex" name="subjectSex" type="text" placeholder="Sex"> -->
 </mat-form-field>
 <mat-form-field>
-  <mat-select #subjectHand formControlName="dominantHand" placeholder="Dominant Hand">
-    <mat-option *ngFor = "let hand of dominantHands"[value]="hand.value">{{hand.value}}</mat-option>
+  <mat-select #subjectHand formControlName="dominant_hand" placeholder="Dominant Hand">
+    <mat-option *ngFor = "let hand of dominant_hands"[value]="hand.value">{{hand.viewValue}}</mat-option>
     </mat-select>
-  <!-- <input matInput #subjectSex formControlName="sex" name="subjectSex" type="text" placeholder="Sex"> -->
 </mat-form-field>
-<button mat-button name="save" (click)="save()">Save Changes</button>
+<button mat-raised-button style="background-color:lightgreen; width: 200px; margin-top: 10px;" name="save" (click)="save()">Save Changes</button>
 </form>

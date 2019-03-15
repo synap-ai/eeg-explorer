@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Session } from './session';
+import { Session } from '../classes/session';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
   providedIn: 'root'
 })
 export class SessionService {
+  uploading = false;
   sessions: Session[];
 
   createSessionMutation = gql`
@@ -31,6 +32,7 @@ export class SessionService {
   }
 
   save(session: Session) {
+    this.uploading = true;
     this.apollo.mutate({
       mutation: this.createSessionMutation,
       variables: {
@@ -41,6 +43,7 @@ export class SessionService {
       }
     }).subscribe(({ data }) => {
       console.log('Session created - ', data);
+      this.uploading = false;
     }, (error) => {
       console.log('There was an error sending the query', error);
     });

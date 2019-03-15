@@ -8,15 +8,19 @@
       <button (click)="newExperiment()" mat-raised-button>New Experiment</button>
       <mat-list>
         <mat-list-item *ngFor="let experiment of experiments | async">
-          <span>
-            {{experiment.title}}
-            <button (click)="editExperiment(experiment)" mat-button name="edit">
+          <div style="display: table; min-width: 50%; max-width: 100;">
+          <span style="display: table-cell; text-align: left"> <b>{{experiment.title}}</b> </span>
+            <span style="display: table-cell;  width: 50px;">
+            <button (click)="editExperiment(experiment)" style="margin: 10px; width: 20px" mat-raised-button name="edit">
               <mat-icon>edit</mat-icon>
             </button>
-            <button (click)="deleteExperiment(experiment.id)" mat-button name="delete">
+          </span>
+          <span style="display: table-cell;  width: 50px;">
+            <button (click)="deleteExperiment(experiment.id)" style="margin: 10px;" mat-raised-button name="delete">
               <mat-icon>delete</mat-icon>
             </button>
-          </span>
+            </span>
+          </div>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
@@ -24,7 +28,7 @@
   <mat-card *ngIf="selectedExperiment">
       <mat-card-title>Experiment Form</mat-card-title>
       <mat-card-content>
-        <app-experiment-form [experiment]="selectedExperiment"></app-experiment-form>
+        <app-experiment-form [experiment]="selectedExperiment" (onSave)="onSave()"></app-experiment-form>
       </mat-card-content>
     </mat-card>
 </section>

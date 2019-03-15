@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Input, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MediaDescription } from 'app/shared/media-description';
-import { Subject } from 'app/shared/subject';
-import { SubjectService } from 'app/shared/subject.service';
+import { Subject } from 'app/shared/classes/subject';
+import { SubjectService } from 'app/shared/services/subject.service';
 
 export interface Sex {
   value: string;
+  viewValue: string;
 }
 export interface DominantHands {
   value: string;
+  viewValue: string;
 }
 
 @Component({
@@ -18,28 +19,31 @@ export interface DominantHands {
   styleUrls: ['./subject-form.component.css']
 })
 export class SubjectFormComponent implements OnInit, OnChanges {
-
-  sexes: Sex[] = [
-    {value: 'Male'},
-    {value: 'Female'},
-    {value: 'Other'}
-  ];
-  dominantHands: DominantHands[] = [
-    {value: 'Right'},
-    {value: 'Left'},
-    {value: 'Ambidextrous'}
-  ];
   @Input() subject: Subject;
+  @Output() onSave = new EventEmitter<void>();
+
+  genders: Sex[] = [
+    {value: 'M', viewValue: 'Male'},
+    {value: 'F', viewValue: 'Female'},
+    {value: 'O', viewValue: 'Other'}
+  ];
+  dominant_hands: DominantHands[] = [
+    {value: 'R', viewValue: 'Right'},
+    {value: 'L', viewValue: 'Left'},
+    {value: 'A', viewValue: 'Ambidextrous'}
+  ];
 
   subjectOptions: FormGroup;
 
-  constructor(fb: FormBuilder, private eService: SubjectService) {
+  constructor(fb: FormBuilder, private sService: SubjectService) {
     this.subjectOptions = fb.group({
       id: null,
-      name: null,
+      first_name: null,
+      last_name: null,
+      email: null,
+      gender: null,
       dob: null,
-      sex: null,
-      dominantHand: null
+      dominant_hand: null
     });
   }
 
@@ -51,10 +55,10 @@ export class SubjectFormComponent implements OnInit, OnChanges {
       this.subjectOptions.setValue(this.subject);
     }
   }
-  save() {
+
+  async save() {
     const id = this.subject.id;
     Object.assign(this.subject, this.subjectOptions.value);
-    this.eService.save(this.subject);
+    this.sService.save(this.subject, () => this.onSave.emit());
   }
-
 }

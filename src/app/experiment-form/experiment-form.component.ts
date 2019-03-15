@@ -4,12 +4,14 @@ import {
   Input,
   OnChanges,
   SimpleChange,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MediaDescription } from 'app/shared/media-description';
-import { Experiment } from 'app/shared/experiment';
-import { ExperimentService } from 'app/shared/experiment.service';
+import { MediaDescription } from 'app/shared/classes/media-description';
+import { Experiment } from 'app/shared/classes/experiment';
+import { ExperimentService } from 'app/shared/services/experiment.service';
 
 @Component({
   selector: 'app-experiment-form',
@@ -18,6 +20,7 @@ import { ExperimentService } from 'app/shared/experiment.service';
 })
 export class ExperimentFormComponent implements OnInit, OnChanges {
   @Input() experiment: Experiment;
+  @Output() onSave = new EventEmitter<void>();
 
   experimentOptions: FormGroup;
 
@@ -26,13 +29,8 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
     private eService: ExperimentService,
   ) {
     this.experimentOptions = fb.group({
-      id: null,
       title: null,
       description: null,
-      epoch_samples: 256,
-      epoch_interval: 100,
-      uses_band_powers: true,
-      uses_covariance: true,
       videos: [],
     });
   }
@@ -42,15 +40,26 @@ export class ExperimentFormComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.experimentOptions.reset();
     if (this.experiment.title) {
-      this.experimentOptions.setValue(this.experiment);
+      this.experimentOptions.setValue(
+        {
+          title: this.experiment.title,
+          description: this.experiment.description,
+          videos: this.experiment.videos
+        }
+      );
     }
   }
 
-  save() {
+  async save() {
     const videos = this.experiment.videos;
     Object.assign(this.experiment, this.experimentOptions.value);
     this.experiment.videos = videos;
-    this.eService.save(this.experiment);
+
+    try {
+      this.eService.save(this.experiment, () => this.onSave.emit());
+    } catch {
+      // do nothing
+    }
   }
 
   addVideo() {

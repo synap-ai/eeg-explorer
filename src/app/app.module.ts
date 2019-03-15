@@ -19,8 +19,7 @@ import { PapaParseModule } from 'ngx-papaparse';
 
 import { AppComponent } from './app.component';
 import { TimeSeriesComponent } from './time-series/time-series.component';
-import { ChartService } from './shared/chart.service';
-import { HeadViewComponent } from './head-view/head-view.component';
+import { ChartService } from './shared/services/chart.service';
 import { HeadsetInfoComponent } from './headset-info/headset-info.component';
 import { RecorderComponent } from './recorder/recorder.component';
 import { ExperimentFormComponent } from './experiment-form/experiment-form.component';
@@ -32,6 +31,7 @@ import { ExperimentHubComponent } from './experiment-hub/experiment-hub.componen
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import { SubjectFormComponent } from './subject-form/subject-form.component';
 import { SubjectHubComponent } from './subject-hub/subject-hub.component';
+<<<<<<< HEAD
 import { SessionsComponent } from './sessions/sessions.component';
 import { SessionFormComponent } from './session-form/session-form.component';
 import { LoginComponent } from './login/login.component';
@@ -47,13 +47,21 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'view', component: ViewComponent},
   { path: '**', component: LoginComponent},
+=======
+
+const appRoutes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'experiments', component: ExperimentHubComponent },
+  { path: 'media', component: DataCollectionComponent },
+  { path: 'subjects', component: SubjectHubComponent },
+  { path: '**', component: HomeComponent },
+>>>>>>> d97730839a302a3a4186214930d4fd613784cc6c
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     TimeSeriesComponent,
-    HeadViewComponent,
     HeadsetInfoComponent,
     RecorderComponent,
     ExperimentFormComponent,
@@ -64,10 +72,13 @@ const appRoutes: Routes = [
     DataCollectionComponent,
     SubjectFormComponent,
     SubjectHubComponent,
+<<<<<<< HEAD
     SessionsComponent,
     SessionFormComponent,
     LoginComponent,
     ViewComponent,
+=======
+>>>>>>> d97730839a302a3a4186214930d4fd613784cc6c
   ],
   imports: [
     HttpClientModule,

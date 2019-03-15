@@ -7,16 +7,20 @@
     <mat-card-content>
       <button (click)="newSubject()" mat-raised-button>New Subject</button>
       <mat-list>
-        <mat-list-item *ngFor="let subject of eService.subjects">
-          <span>
-            {{subject.name}}
-            <button style="margin:0 20px 0 20px" (click)="editSubject(subject)" mat-button name="edit">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button (click)="deleteSubject(subject)" mat-button name="delete">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </span>
+        <mat-list-item *ngFor="let subject of sService.subjects | async">
+          <div style="display: table; min-width: 50%; max-width: 100;">
+              <span style="display: table-cell; text-align: left"> <b>{{subject.first_name}} {{subject.last_name}}</b> </span>
+                <span style="display: table-cell;  width: 50px;">
+                <button (click)="editSubject(subject)" style="margin: 10px; width: 20px" mat-raised-button name="edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </span>
+              <span style="display: table-cell;  width: 50px;">
+                <button (click)="deleteSubject(subject.id)" style="margin: 10px;" mat-raised-button name="delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                </span>
+              </div>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
@@ -24,7 +28,7 @@
   <mat-card *ngIf="selectedSubject">
       <mat-card-title>Subject Form</mat-card-title>
       <mat-card-content>
-        <app-subject-form [subject]="selectedSubject"></app-subject-form>
+        <app-subject-form [subject]="selectedSubject" (onSave)="onSave()"></app-subject-form>
       </mat-card-content>
     </mat-card>
 </section>

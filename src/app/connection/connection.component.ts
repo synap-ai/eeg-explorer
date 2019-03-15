@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { EegStreamService } from 'app/shared/eeg-stream.service';
+import { EegStreamService } from '../shared/services/eeg-stream.service';
 
 @Component({
   selector: 'app-connection',

@@ -1,7 +1,10 @@
 <section>
-    <!-- initial unconnected screen -->
-    <mat-card *ngIf="!Streaming">
-      <mat-card-title>Connect or Upload a File</mat-card-title>
+    <mat-expansion-panel class="connection-panel" *ngIf="!Streaming && loggedIn" [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+              <b> Connect </b>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
       <div class="row" style="display:flex; width:100%;text-align:center; margin-top:20px">
         <div class="item">
           <div class="connection">
@@ -42,6 +45,6 @@
             </div>
         </div>
       </div>
-    </mat-card>
+  </mat-expansion-panel>
   </section>
 

@@ -31,9 +31,11 @@ import { ExperimentHubComponent } from './experiment-hub/experiment-hub.componen
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import { SubjectFormComponent } from './subject-form/subject-form.component';
 import { SubjectHubComponent } from './subject-hub/subject-hub.component';
+import { AnalysisComponent } from './analysis/analysis.component';
 import { LoginComponent } from './login/login.component';
 import { ViewComponent } from './view/view.component';
 import { NeedAuthGuard } from 'app/need-auth.guard';
+import { AnalysisHubComponent } from './analysis-hub/analysis-hub.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -41,7 +43,7 @@ const appRoutes: Routes = [
   { path: 'media', component: DataCollectionComponent, canActivate: [NeedAuthGuard] },
   { path: 'subjects', component: SubjectHubComponent, canActivate: [NeedAuthGuard] },
   { path: 'login', component: LoginComponent},
-  { path: 'view', component: ViewComponent},
+  { path: 'analysis', component: AnalysisHubComponent },
   { path: '**', component: LoginComponent},
 ];
 
@@ -59,8 +61,10 @@ const appRoutes: Routes = [
     DataCollectionComponent,
     SubjectFormComponent,
     SubjectHubComponent,
+    AnalysisComponent,
     LoginComponent,
     ViewComponent,
+    AnalysisHubComponent,
   ],
   imports: [
     HttpClientModule,

@@ -1,0 +1,10 @@
+<section class="analysis">
+  <article class="analysis-channel">
+    <aside class="analysis-label-container">
+      <div class="analysis-label" *ngFor="let category of classifier.categories" [ngStyle]="{'height': (100 / classifier.categories.length) + '%'}">
+        {{ category }}
+      </div>
+    </aside>
+    <canvas class="analysis-canvas"></canvas>
+  </article>
+</section>

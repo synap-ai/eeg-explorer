@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Apollo, QueryRef } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { User } from '../classes/user';
-import { Observable } from 'rxjs';
 
-const TOKEN = 'auth_token';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  TOKEN = 'auth_token';
+
   signUpMutation = gql`
     mutation(
       $first_name: String!
@@ -44,12 +44,11 @@ export class AuthService {
 
   constructor( private cookieService: CookieService, private apollo: Apollo ) { }
   isLoggedIn() {
-    return this.cookieService.check(TOKEN);
+    return this.cookieService.check(this.TOKEN);
   }
 
   login(email: string, password: string) {
-    let mut: Observable<any>;
-    mut = this.apollo.mutate({
+    return this.apollo.mutate({
       mutation: this.signInMutation,
       variables: {
         email: email,
@@ -57,21 +56,10 @@ export class AuthService {
       },
       errorPolicy: 'all'
     });
-    mut.subscribe(({ data }) => {
-      if (data && data.signIn.token) {
-        console.log('Successfully logged in - ', data);
-        this.cookieService.set(TOKEN, data.signIn.token);
-      }
-    }, (error) => {
-      console.log('There was an error registering user', error);
-    });
-
-    return mut;
   }
 
   register(user: User, password: string) {
-    let mut: Observable<any>;
-    mut = this.apollo.mutate({
+    return this.apollo.mutate({
       mutation: this.signUpMutation,
       variables: {
         first_name: user.first_name,
@@ -81,18 +69,9 @@ export class AuthService {
       },
       errorPolicy: 'all'
     });
-    mut.subscribe(({ data }) => {
-      if (data && data.signUp.token) {
-        this.cookieService.set(TOKEN, data.signUp.token);
-      }
-    }, (error) => {
-      console.log('There was an error registering user', error);
-    });
-
-    return mut;
   }
 
   logout() {
-    this.cookieService.delete(TOKEN);
+    this.cookieService.delete(this.TOKEN);
   }
 }

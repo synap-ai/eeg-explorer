@@ -3,14 +3,14 @@
     <img src="../../assets/icon.png">
     <mat-card-title>Login</mat-card-title>
     <mat-card-content>
-      <form [formGroup]="loginOptions">
+      <form #loginForm="ngForm" [formGroup]="loginOptions">
           <mat-form-field>
-              <input matInput #email formControlName="username" name="user_name" type="email" placeholder="Username" [(ngModel)]="emailText">
+              <input matInput #email formControlName="username" name="user_name" type="email" placeholder="Email" [(ngModel)]="emailText" required>
             </mat-form-field><br>
             <mat-form-field>
-              <input matInput #password formControlName="password" name="password" type="password" placeholder="Password" [(ngModel)]="passwordText">
+              <input matInput #password formControlName="password" name="password" type="password" placeholder="Password" minlength="7" [(ngModel)]="passwordText" required>
             </mat-form-field><br>
-        <button type="submit" (click)='tryLogin(email.value,password.value)' mat-raised-button>Login</button>
+        <button type="submit" (click)='tryLogin(email.value, password.value)' mat-raised-button [disabled]="loginForm.invalid">Login</button>
       </form>
     </mat-card-content>
   </mat-card>
@@ -18,20 +18,20 @@
       <img src="../../assets/icon.png">
       <mat-card-title>Register</mat-card-title>
       <mat-card-content>
-        <form [formGroup]="registerOptions">
+        <form #registerForm="ngForm" [formGroup]="registerOptions">
             <mat-form-field>
-                <input matInput #firstname formControlName="firstname" name="firstname" type="text" placeholder="First Name" [(ngModel)]="firstnameText">
+                <input matInput #firstname formControlName="firstname" name="firstname" type="text" placeholder="First Name" [(ngModel)]="firstnameText" required>
               </mat-form-field><br>
             <mat-form-field>
-                <input matInput #lastname formControlName="lastname" name="lastname" type="text" placeholder="Last Name" [(ngModel)]="lastnameText">
+                <input matInput #lastname formControlName="lastname" name="lastname" type="text" placeholder="Last Name" [(ngModel)]="lastnameText" required>
               </mat-form-field><br>
             <mat-form-field>
-                <input matInput #emailReg formControlName="emailReg" name="emailReg" type="text" placeholder="Email" [(ngModel)]="emailRegText">
+                <input matInput #emailReg formControlName="emailReg" name="emailReg" type="email" placeholder="Email" [(ngModel)]="emailRegText" required>
               </mat-form-field><br>
               <mat-form-field>
-                <input matInput #passwordReg formControlName="passwordReg" name="passwordReg" type="password" placeholder="Password" [(ngModel)]="passwordRegText">
+                <input matInput #passwordReg formControlName="passwordReg" name="passwordReg" type="password" placeholder="Password" minlength="7" [(ngModel)]="passwordRegText" required>
               </mat-form-field><br>
-          <button (click)="tryRegister(firstname.value, lastname.value, emailReg.value, passwordReg.value)" mat-raised-button>Register</button>
+          <button (click)="tryRegister(firstname.value, lastname.value, emailReg.value, passwordReg.value)" mat-raised-button [disabled]="registerForm.invalid">Register</button>
         </form>
       </mat-card-content>
     </mat-card>

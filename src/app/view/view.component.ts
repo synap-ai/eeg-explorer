@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { EegStreamService } from 'app/shared/services/eeg-stream.service';
+import { AuthService } from 'app/shared/services/auth.service';
 
 @Component({
   selector: 'app-view',
@@ -13,7 +14,11 @@ export class ViewComponent implements OnInit {
     return this.eegStream.connected || this.eegStream.playingFile || this.eegStream.playingMock;
   }
 
-  constructor(private snackBar: MatSnackBar, public eegStream: EegStreamService) {
+  get loggedIn() {
+    return this.authService.isLogged();
+  }
+
+  constructor(private snackBar: MatSnackBar, public eegStream: EegStreamService, private authService: AuthService) {
   }
 
   ngOnInit() {}

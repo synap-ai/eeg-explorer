@@ -43,7 +43,6 @@ const appRoutes: Routes = [
   { path: 'media', component: DataCollectionComponent, canActivate: [NeedAuthGuard] },
   { path: 'subjects', component: SubjectHubComponent, canActivate: [NeedAuthGuard] },
   { path: 'login', component: LoginComponent},
-  { path: 'view', component: ViewComponent},
   { path: 'analysis', component: AnalysisHubComponent },
   { path: '**', component: LoginComponent},
 ];

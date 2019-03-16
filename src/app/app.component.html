@@ -2,7 +2,6 @@
   <mat-sidenav mode="side" opened="true" class="side-nav">
     <mat-nav-list>
       <a mat-list-item routerLink="/home">Home</a>
-      <a mat-list-item routerLink="/view">Connect</a>
       <a mat-list-item routerLink="/experiments">Experiments</a>
       <a mat-list-item routerLink="/media">Media</a>
       <a mat-list-item routerLink="/subjects">Subjects</a>
@@ -11,6 +10,7 @@
   </mat-sidenav>
   <mat-sidenav-content class="nav-content">
     <app-connection></app-connection>
+    <app-view></app-view>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

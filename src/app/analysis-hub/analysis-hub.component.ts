@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EegStreamService } from 'app/shared/services/eeg-stream.service';
+import { ClassifierService } from 'app/shared/services/classifier.service';
+import { Classifier } from 'app/shared/classes/classifier';
 
 @Component({
   selector: 'app-analysis-hub',
@@ -12,7 +14,13 @@ export class AnalysisHubComponent implements OnInit {
     return (this.eegService.data !== null);
   }
 
-  constructor(private eegService: EegStreamService) { }
+  get classifiers() {
+    return this.cService.classifiers;
+  }
+
+  classifier: Classifier | null = null;
+
+  constructor(private eegService: EegStreamService, private cService: ClassifierService) { }
 
   ngOnInit() {
   }

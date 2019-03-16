@@ -1,10 +1,22 @@
 <section>
-    <mat-card>
-      <mat-card-title> Brain Wave Analysis </mat-card-title>
+  <mat-card>
+    <mat-card-title> Brain Wave Analysis </mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <mat-select placeholder="Classifier" [(value)]="classifier">
+          <mat-option *ngFor="let _classifier of classifiers | async" [value]="_classifier">
+            {{_classifier.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="classifier">
+      <mat-card-title> {{classifier.name}} </mat-card-title>
       <mat-card-content>
-        <p *ngIf="!connected"> No Connection </p>
-        <app-analysis *ngIf="connected"></app-analysis>
-        <app-time-series *ngIf="connected"></app-time-series>
+          <p *ngIf="!connected"> No Connection </p>
+          <app-analysis *ngIf="connected" [classifier]="classifier"></app-analysis>
+          <app-time-series *ngIf="connected"></app-time-series>
       </mat-card-content>
     </mat-card>
-  </section>
+</section>

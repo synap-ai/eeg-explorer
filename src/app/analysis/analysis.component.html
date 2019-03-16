@@ -1,26 +1,10 @@
-<section>
-  <mat-card>
-    <mat-card-title> Brain Wave Analysis </mat-card-title>
-    <mat-card-content>
-      <section class="analysis">
-        <article class="analysis-channel">
-          <aside class="analysis-label-container">
-            <div class="analysis-label">
-              Highly Positve
-            </div>
-            <div class="analysis-label">
-              Slightly Positive
-            </div>
-            <div class="analysis-label">
-              Slightly Negative
-            </div>
-            <div class="analysis-label">
-              Highly Negative
-            </div>
-          </aside>
-          <canvas class="analysis-canvas"></canvas>
-        </article>
-      </section>
-    </mat-card-content>
-  </mat-card>
+<section class="analysis">
+  <article class="analysis-channel">
+    <aside class="analysis-label-container">
+      <div class="analysis-label" *ngFor="let category of classifier.categories" [ngStyle]="{'height': (100 / classifier.categories.length) + '%'}">
+        {{ category }}
+      </div>
+    </aside>
+    <canvas class="analysis-canvas"></canvas>
+  </article>
 </section>

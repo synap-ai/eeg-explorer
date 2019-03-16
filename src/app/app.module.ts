@@ -35,6 +35,7 @@ import { AnalysisComponent } from './analysis/analysis.component';
 import { LoginComponent } from './login/login.component';
 import { ViewComponent } from './view/view.component';
 import { NeedAuthGuard } from 'app/need-auth.guard';
+import { AnalysisHubComponent } from './analysis-hub/analysis-hub.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -43,7 +44,7 @@ const appRoutes: Routes = [
   { path: 'subjects', component: SubjectHubComponent, canActivate: [NeedAuthGuard] },
   { path: 'login', component: LoginComponent},
   { path: 'view', component: ViewComponent},
-  { path: 'analysis', component: AnalysisComponent },
+  { path: 'analysis', component: AnalysisHubComponent },
   { path: '**', component: LoginComponent},
 ];
 
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
     AnalysisComponent,
     LoginComponent,
     ViewComponent,
+    AnalysisHubComponent,
   ],
   imports: [
     HttpClientModule,

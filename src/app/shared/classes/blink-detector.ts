@@ -30,7 +30,7 @@ export class BlinkDetector implements Classifier {
       map((maxes: number[][]) => {
         for (let i = 0; i < maxes.length; i++) {
           for (let j = 0; j < maxes[i].length; j++) {
-            if (maxes[i][j] > 250) {
+            if (maxes[i][j] > 100) {
               return 0.75;
             }
           }

@@ -34,6 +34,7 @@ import { SubjectHubComponent } from './subject-hub/subject-hub.component';
 import { LoginComponent } from './login/login.component';
 import { ViewComponent } from './view/view.component';
 import { NeedAuthGuard } from 'app/need-auth.guard';
+import { AnalysisComponent } from './analysis/analysis.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -43,6 +44,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'view', component: ViewComponent},
   { path: '**', component: LoginComponent},
+  { path: 'analysis', component: AnalysisComponent},
 ];
 
 @NgModule({
@@ -61,6 +63,7 @@ const appRoutes: Routes = [
     SubjectHubComponent,
     LoginComponent,
     ViewComponent,
+    AnalysisComponent,
   ],
   imports: [
     HttpClientModule,

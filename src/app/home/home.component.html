@@ -1,20 +1,42 @@
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" />
+<link href='https://fonts.googleapis.com/css?family=Meera Inimai' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Molengo' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Montserrat Alternates' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Paytone One' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
 <section>
   <!-- EEG data -->
-  <mat-card *ngIf="eegStream.data">
-    <mat-card-title>Live EEG Plot {{eegStream.lastTimeStamp | async}}</mat-card-title>
-    <mat-card-content>
-      <app-time-series></app-time-series>
-    </mat-card-content>
-  </mat-card>
-  <!--If data show recorder-->
-  <mat-card *ngIf="eegStream.data">
-    <mat-card-title>Recording</mat-card-title>
-    <mat-card-content>
-      <app-recorder></app-recorder>
-    </mat-card-content>
-  </mat-card>
-  <!--If connected show app info-->
-  <mat-card *ngIf="eegStream.connected">
-    <app-headset-info ></app-headset-info>
-  </mat-card>
+
+
+  <div style="font-family: Muli;" class="topnav">
+
+  <a style ="font-weight: bold;"class="active" href="/home">Synap.ai</a>
+  <a href="/experiments">Experiments</a>
+  <a href="/media">Media</a>
+  <a href="/subjects">Subjects</a>
+  <a style="float:right" href="#about">About</a>
+</div>
+
 </section>
+
+
+
+<div style = "background-color: black;" class="container">
+  <img style ="opacity: 0.55;" class="image hero-image" sizes="100vw" src="https://www.sciencenews.org/sites/default/files/2018/03/main/articles/030618_LS_brain-wave_feat.jpg" alt=" " />
+
+  <h1 style = "font-size: 50px; font-weight: bolder; font-family: Muli;" class="centered">Analyze your Brainwaves<br><span style="font-family: Muli" class ="bigger">Real Experiments. Real Results.</span><br><br><button style="font-family: muli;">&nbsp; &nbsp; Connect &nbsp; &nbsp;   </button> &nbsp;  <button>&nbsp; &nbsp; Analysis &nbsp; &nbsp;</button></h1>
+  <br><br><br><br>
+
+  </div>
+  <br>
+  <img  class="logo" src="../../assets/icon.png">
+  <h1 id="about" style="font-family: Muli;" align="center">About</h1>
+  <p style="margin-left: 80px;margin-right: 80px; font-size: 20px; font-family: muli; text-align: justify; " align ="center">As brainwave devices become more accessible, it is important to use the collected data to provide meaningful analyses. Currently, there are services available such as meditation or simple brainwave visualization tools which allows users to view simple results from their session, but there is no tool to provide a meaningful analysis on what emotion the user wearing the brainwave device may be experiencing.<br><br> Our project addresses this issue by providing the researchers with an application that can be used as a tool to add subjects, stimuli, and machine learning models and use them on subjects to try to determine the user’s emotion while watching the stimulus. This results in the researcher and user both being able to determine meaningful results from their choice of stimulus and model. When a researcher begins an experiment, they will then be able to select a subject, stimulus, and model and the application will begin collecting data, which will then output a meaningful result for the user such as which emotion they are feeling while watching the stimulus.
+</p>
+
+<br><br><br><br><br>
+<br><br><br><br><br>
+<p style="margin-left: 80px;margin-right: 80px; font-size: 20px; font-family: muli; text-align: center; " text-align ="center">Copyright (C) 2017, Alex Castillo and Uri Shaked. Code released under the MIT license.</p>

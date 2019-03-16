@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TimeSeries, SmoothieChart } from 'smoothie';
 import { EegStreamService } from 'app/shared/services/eeg-stream.service';
 import { map, bufferCount } from 'rxjs/operators';
@@ -9,8 +9,8 @@ import { Classifier } from 'app/shared/classes/classifier';
   templateUrl: './analysis.component.html',
   styleUrls: ['./analysis.component.css'],
 })
-export class AnalysisComponent implements OnInit {
-  @Input() classifier;
+export class AnalysisComponent implements OnInit, OnDestroy {
+  @Input() classifier: Classifier;
   series = new TimeSeries();
   canvas: HTMLCanvasElement;
   chart: SmoothieChart;
@@ -56,5 +56,9 @@ export class AnalysisComponent implements OnInit {
     this.classifier.result.subscribe(value => {
       this.series.append(Date.now(), value);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.classifier.stop();
   }
 }

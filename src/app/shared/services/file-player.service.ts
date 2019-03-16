@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { LoadingManager } from 'three';
 import { Papa, PapaParseResult } from 'ngx-papaparse';
 import { EEGSample } from 'muse-js';
-import { Observable, Subject } from 'rxjs';
-import { SELECT_PANEL_INDENT_PADDING_X } from '@angular/material';
-import { timestamp, sample } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Session } from '../classes/session';
 
 @Injectable({

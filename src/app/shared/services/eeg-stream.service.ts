@@ -5,6 +5,7 @@ import { MuseControlResponse, XYZ, MuseClient } from 'muse-js';
 import { FilePlayerService } from './file-player.service';
 import { takeUntil, tap, share, map } from 'rxjs/operators';
 import { createEEG } from '@neurosity/pipes';
+import { Session } from '../classes/session';
 
 @Injectable({
   providedIn: 'root',
@@ -100,5 +101,14 @@ export class EegStreamService {
   stopWave() {
     this.data = null;
     this.playingMock = false;
+  }
+
+  playSession(session: Session) {
+    this.filePlayer.LoadSession(session);
+    this.data = this.filePlayer.Data.asObservable().pipe(
+      share()
+    );
+    this.filePlayer.Play();
+    this.playingFile = true;
   }
 }

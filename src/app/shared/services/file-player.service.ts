@@ -4,7 +4,8 @@ import { Papa, PapaParseResult } from 'ngx-papaparse';
 import { EEGSample } from 'muse-js';
 import { Observable, Subject } from 'rxjs';
 import { SELECT_PANEL_INDENT_PADDING_X } from '@angular/material';
-import { timestamp } from 'rxjs/operators';
+import { timestamp, sample } from 'rxjs/operators';
+import { Session } from '../classes/session';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,20 @@ export class FilePlayerService {
       step: (row) => this.readRecordLine(row),
       complete: () => this.loading = false,
     });
+  }
+
+  LoadSession(session: Session) {
+    this.sampleIndex = 0;
+    let i = 0;
+    this.data = session.eeg_data.map(s => {
+      return {
+        index: i++,
+        timestamp: s.timestamp,
+        data: [s.tp9, s.af7, s.af8, s.tp10],
+      };
+    });
+    this.startTime = this.data[0].timestamp;
+    this.museFile = null;
   }
 
   readRecordLine(row: PapaParseResult) {

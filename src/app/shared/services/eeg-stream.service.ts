@@ -15,7 +15,7 @@ export class EegStreamService {
   connected = false;
   playingFile = false;
   playingMock = false;
-  data: Observable<EEGSample> | null;
+  data: Observable<EEGSample> | null = null;
   batteryLevel: Observable<number> | null;
   controlResponses: Observable<MuseControlResponse>;
 
@@ -50,10 +50,9 @@ export class EegStreamService {
       this.data = this.muse.eegReadings.pipe(
         zipSamples,
         takeUntil(this.stop),
-        tap(x => console.log(x.data.toString())),
         filter(x => !(isNaN(x.data[0]) || isNaN(x.data[1]) || isNaN(x.data[2]) || isNaN(x.data[3]))),
         share(),
-      ); 
+      );
       this.batteryLevel = this.muse.telemetryData.pipe(
         map(t => t.batteryLevel)
       );

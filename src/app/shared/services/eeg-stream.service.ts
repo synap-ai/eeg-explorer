@@ -53,7 +53,7 @@ export class EegStreamService {
         tap(x => console.log(x.data.toString())),
         filter(x => !(isNaN(x.data[0]) || isNaN(x.data[1]) || isNaN(x.data[2]) || isNaN(x.data[3]))),
         share(),
-      ); 
+      );
       this.batteryLevel = this.muse.telemetryData.pipe(
         map(t => t.batteryLevel)
       );

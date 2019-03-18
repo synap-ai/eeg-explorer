@@ -36,6 +36,7 @@ import { LoginComponent } from './login/login.component';
 import { ViewComponent } from './view/view.component';
 import { NeedAuthGuard } from 'app/need-auth.guard';
 import { AnalysisHubComponent } from './analysis-hub/analysis-hub.component';
+import { StaticEegComponent } from './static-eeg/static-eeg.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -65,6 +66,7 @@ const appRoutes: Routes = [
     LoginComponent,
     ViewComponent,
     AnalysisHubComponent,
+    StaticEegComponent,
   ],
   imports: [
     HttpClientModule,

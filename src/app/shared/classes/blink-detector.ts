@@ -1,7 +1,7 @@
 import { Classifier } from './classifier';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { EEGSample } from 'muse-js';
-import { map, bufferCount } from 'rxjs/operators';
+import { map, bufferCount, takeLast, takeUntil } from 'rxjs/operators';
 
 export class BlinkDetector implements Classifier {
   name = 'Blink Detector';
@@ -13,8 +13,11 @@ export class BlinkDetector implements Classifier {
   private _result: Observable<number>;
   readonly uMeans = [0, 0, 0, 0, 0];
 
+  private destroy = new Subject<void>();
+
   start(stream: Observable<EEGSample>): void {
     this._result = stream.pipe(
+      takeUntil(this.destroy),
       map(sample => {
         for (let i = 0; i < sample.data.length; i++) {
           this.uMeans[i] = 0.99 * this.uMeans[i] + 0.01 * sample.data[i];
@@ -27,7 +30,7 @@ export class BlinkDetector implements Classifier {
       map((maxes: number[][]) => {
         for (let i = 0; i < maxes.length; i++) {
           for (let j = 0; j < maxes[i].length; j++) {
-            if (maxes[i][j] > 250) {
+            if (maxes[i][j] > 100) {
               return 0.75;
             }
           }
@@ -35,5 +38,10 @@ export class BlinkDetector implements Classifier {
         return -0.75;
       })
     );
+  }
+
+  stop() {
+    this.destroy.next();
+
   }
 }

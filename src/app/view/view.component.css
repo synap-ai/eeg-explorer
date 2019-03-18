@@ -28,3 +28,17 @@
 .connection-panel{
   margin-bottom: 10px;
 }
+
+.session-fetcher {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.session-fetcher > * {
+  margin-top: 5px;
+  align-content: center;
+}

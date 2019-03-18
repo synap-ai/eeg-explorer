@@ -7,4 +7,5 @@ export interface Classifier {
     categories: string[];
     result: Observable<number>;
     start: (stream: Observable<EEGSample>) => void;
+    stop: () => void;
 }

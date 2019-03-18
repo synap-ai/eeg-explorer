@@ -1,7 +1,10 @@
 <section>
-    <!-- initial unconnected screen -->
-    <mat-card *ngIf="!Streaming">
-      <mat-card-title>Connect or Upload a File</mat-card-title>
+    <mat-expansion-panel class="connection-panel" *ngIf="!Streaming && loggedIn" [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+              <b> Connect </b>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
       <div class="row" style="display:flex; width:100%;text-align:center; margin-top:20px">
         <div class="item">
           <div class="connection">
@@ -34,14 +37,47 @@
         <div class="item">
             <div class="file-player">
                 <img src="../../assets/video-player-outline.png" style="width:100px"><br><br>
-                <label style="color:#3f51b5; font-size:20px" for="wvae">Mock Data</label><br><br>
+                <label style="color:#3f51b5; font-size:20px" for="wave">Mock Data</label><br><br>
                 <button *ngIf="!Streaming" id="wave" mat-raised-button color="primary" (click)="playWave()">
                   <mat-icon>play_circle_outline</mat-icon>
                   Play Wave Function
                 </button>
             </div>
         </div>
+        <div class="item">
+            <div class="session-fetcher">
+                <img src="../../assets/cloud-download.png" style="width:100px"><br><br>
+                <label style="color:#3f51b5; font-size:20px" for="session">Fetch Session</label><br><br>
+                <mat-form-field>
+                    <mat-select placeholder="Experiment" [(value)]="experiment">
+                      <mat-option *ngFor="let _experiment of experiments | async" [value]="_experiment">
+                        {{_experiment.title}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="experiment">
+                    <mat-select placeholder="Subject" [(value)]="subject">
+                      <mat-option *ngFor="let _subject of sService.subjects | async" [value]="_subject">
+                        {{_subject.last_name}} id:{{_subject.id}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="subject && experiment">
+                    <mat-select placeholder="Video" [(value)]="video">
+                      <mat-option *ngFor="let _video of experiment.videos" [value]="_video">
+                        {{_video.title}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <span style="display: flex; flex-direction:row; align-items: center;">
+                      <button *ngIf="subject && experiment && video" id="session" [disabled]="loadingSession"  mat-raised-button color="primary" (click)="playSession()">
+                          Play Session
+                        </button>
+                        <mat-spinner *ngIf="loadingSession" diameter="20" ></mat-spinner>
+                  </span>    
+            </div>
+        </div>
       </div>
-    </mat-card>
+  </mat-expansion-panel>
   </section>
 

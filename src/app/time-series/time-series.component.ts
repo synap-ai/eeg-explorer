@@ -3,7 +3,7 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SmoothieChart, TimeSeries } from 'smoothie';
 import { channelNames, EEGSample } from 'muse-js';
-import { groupBy, filter, mergeMap, takeUntil } from 'rxjs/operators';
+import { groupBy, filter, mergeMap, takeUntil, map, tap } from 'rxjs/operators';
 import { epoch, fft, addInfo, powerByBand, bandpassFilter } from '@neurosity/pipes';
 
 import { ChartService } from '../shared/services/chart.service';
@@ -72,11 +72,10 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.canvases = Array(this.channels).fill(0).map(() => new SmoothieChart(this.options));
     this.lines = Array(this.channels).fill(0).map(() => new TimeSeries());
     this.addTimeSeries();
-    const filtered: Observable<EEGSample> = this.data.pipe(
+
+    this.data.pipe(
       takeUntil(this.destroy),
-      bandpassFilter({ cutoffFrequencies: [1, 30], nbChannels: 4, samplingRate: samplingFrequency })
-    );
-    filtered.pipe(
+      bandpassFilter({ cutoffFrequencies: [1, 30], nbChannels: 4, samplingRate: samplingFrequency }),
       mergeMap((sampleSet: EEGSample) =>
         sampleSet.data.slice(0, this.channels).map((value, electrode) => ({
           timestamp: sampleSet.timestamp, value, electrode
@@ -86,19 +85,19 @@ export class TimeSeriesComponent implements OnInit, OnDestroy, AfterViewInit {
         return group.pipe(
           filter(sample => !isNaN(sample.value))
         );
-      })
+      }),
     ).subscribe(sample => {
         this.draw(sample.timestamp, sample.value, sample.electrode);
-      });
+      }, error => console.log('error:', error));
 
-    filtered.pipe(
-      epoch({ duration: 256, interval: 100 }),
-      addInfo({ samplingRate: samplingFrequency, channelNames: channelNames }),
-      fft({ bins: 256 }),
-      powerByBand()
-    ).subscribe(powers => {
-      this.powers = powers;
-    });
+    // filtered.pipe(
+    //   epoch({ duration: 256, interval: 100 }),
+    //   addInfo({ samplingRate: samplingFrequency, channelNames: channelNames }),
+    //   fft({ bins: 256 }),
+    //   powerByBand()
+    // ).subscribe(powers => {
+    //   this.powers = powers;
+    // }, (error) => console.log('error', error));
   }
 
   ngAfterViewInit() {

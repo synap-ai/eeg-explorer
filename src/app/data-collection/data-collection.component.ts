@@ -72,7 +72,7 @@ export class DataCollectionComponent implements OnInit {
     });
 
     this.sessionsService.save(new Session({
-      subject_id: 1, // temp
+      subject_id: this.subject.id, // temp
       experiment_id: this.experiment.id,
       video_id: this.video.id,
       eeg_data: eegSamples

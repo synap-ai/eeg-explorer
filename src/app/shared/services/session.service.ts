@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Session } from '../classes/session';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { SimpleWebDriverClient } from 'blocking-proxy/built/lib/simple_webdriver_client';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,16 @@ import gql from 'graphql-tag';
 export class SessionService {
   uploading = false;
   sessions: Session[];
+
+  getSessionQuery = gql`query getSession($sId: ID!, $eId: ID!, $vId: ID!) {
+    getSession(sId: $sId, eId: $eId, vId: $vId) {
+      id,
+      subjectId,
+      experimentId,
+      videoId,
+      eeg_data { timestamp, tp9, af7, af8, tp10 }
+    }
+  }`;
 
   createSessionMutation = gql`
     mutation createSession(
@@ -27,6 +38,7 @@ export class SessionService {
     }
   }
   `;
+
 
   constructor(private apollo: Apollo) {
   }
@@ -54,5 +66,17 @@ export class SessionService {
     if (i >= 0) {
       this.sessions.splice(i, 1);
     }
+  }
+
+  getSession(sId: number, eId: number, vId: number) {
+    return this.apollo.query({
+      query: this.getSessionQuery,
+      variables: {
+        sId: sId,
+        eId: eId,
+        vId: vId,
+      },
+      fetchPolicy: 'network-only'
+    });
   }
 }

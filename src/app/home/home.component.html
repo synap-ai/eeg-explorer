@@ -7,21 +7,28 @@
 <link href='https://fonts.googleapis.com/css?family=Paytone One' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
-<!--
+
 <section>
-  
-
-
-  <div style="font-family: Muli;" class="topnav">
-
-  <a style ="font-weight: bold;"class="active" href="/home">Synap.ai</a>
-  <a href="/experiments">Experiments</a>
-  <a href="/media">Media</a>
-  <a href="/subjects">Subjects</a>
- </div>
-
+  <!-- EEG data -->
+  <mat-card *ngIf="eegStream.data">
+    <mat-card-title>Live EEG Plot </mat-card-title>
+    <mat-card-content>
+      <app-time-series></app-time-series>
+    </mat-card-content>
+  </mat-card>
+  <!--If data show recorder-->
+  <mat-card *ngIf="eegStream.data">
+    <mat-card-title>Recording</mat-card-title>
+    <mat-card-content>
+      <app-recorder></app-recorder>
+    </mat-card-content>
+  </mat-card>
+  <!--If connected show app info-->
+  <mat-card *ngIf="eegStream.connected">
+    <app-headset-info ></app-headset-info>
+  </mat-card>
 </section>
--->
+
 
 <div style = "background-color: black;" class="container">
   <img style ="opacity: 0.55;" class="image hero-image" sizes="100vw" src="https://www.sciencenews.org/sites/default/files/2018/03/main/articles/030618_LS_brain-wave_feat.jpg" alt=" " />

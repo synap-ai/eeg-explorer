@@ -13,10 +13,8 @@
   </mat-card>
   <mat-card *ngIf="classifier">
       <mat-card-title> {{classifier.name}} </mat-card-title>
+        <p *ngIf="!connected"> No Connection </p>
       <mat-card-content>
-          <p *ngIf="!connected"> No Connection </p>
-          <app-analysis *ngIf="connected" [classifier]="classifier"></app-analysis>
-          <app-time-series *ngIf="connected"></app-time-series>
       </mat-card-content>
     </mat-card>
 </section>

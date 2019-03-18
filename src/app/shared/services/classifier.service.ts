@@ -12,6 +12,6 @@ export class ClassifierService {
 
   constructor() {
     // for testing
-    this.classifiers = of([ new BlinkDetector() ]);
+    this.classifiers = of([]);
    }
 }

@@ -28,6 +28,7 @@
     margin-top: 5px;
   }
   .btn {
+    float:right;
     /* default for <button>, but useful for <a> */
     display: inline-block;
     text-align: center;
@@ -46,4 +47,13 @@
     /* make sure colors have enough contrast! */
     color: #ffffff;
     background-color: #3f51b5;
+  }
+  .toolbar{
+    background-color:black;
+  }
+  .header{
+    color:white;
+  }
+  .login{
+    color:white;
   }

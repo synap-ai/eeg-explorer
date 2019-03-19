@@ -1,5 +1,5 @@
 <mat-sidenav-container class="nav-container">
-  <mat-sidenav  mode="side" opened="true" class="side-nav">
+  <mat-sidenav  #sidenav mode="side" [(opened)]="opened" class="side-nav">
     <mat-nav-list>
       <a mat-list-item routerLink="/home">Home</a>
       <a mat-list-item routerLink="/experiments">Experiments</a>
@@ -9,7 +9,12 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="nav-content">
-    <app-connection></app-connection>
+    <mat-toolbar class="toolbar">
+      <button class="navbutton" mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon aria-label="hamburger">dehaze</mat-icon>
+      </button>
+      <app-connection class="connection"></app-connection>
+    </mat-toolbar>
     <app-view></app-view>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

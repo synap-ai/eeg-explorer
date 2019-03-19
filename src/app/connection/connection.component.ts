@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { EegStreamService } from '../shared/services/eeg-stream.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-connection',
@@ -17,7 +18,8 @@ export class ConnectionComponent implements OnInit {
   constructor(public eegStream: EegStreamService) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   disconnect() {
     this.eegStream.disconnect();

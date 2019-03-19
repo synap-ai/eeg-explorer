@@ -18,3 +18,8 @@
   .subject-form .mat-radio-button {
     margin: 0 5px;
   }
+  .buttons{
+    background-color:lightgreen;
+    width: 200px;
+    margin-top: 10px;
+  }

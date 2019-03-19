@@ -3,12 +3,12 @@ import { Chart } from 'chart.js';
 import { Session } from 'app/shared/classes/session';
 import { Classification } from 'app/shared/classes/classification';
 
-const colors = [
-  'rgba(255,0,0,1)',
-  'rgba(0,0,255,1)',
-  'rgba(0,255,0,1)',
-  'cyan',
-  'yellow',
+const transparentColors = [
+  'rgba(255,0,0,0.2)',
+  'rgba(0,0,255,0.2)',
+  'rgba(0,255,0,0.2)',
+  'rgba(125,125,0,0.2)',
+  'rgba(0,125,125,0.2)',
 ];
 
 @Component({
@@ -61,6 +61,14 @@ export class StaticEegComponent implements OnInit {
           return ((voltage - minVoltage) / (maxVoltage - minVoltage)) * height;
         };
         this.drawChannel(ctx, channels[i], timeToX, voltToY);
+        this.classifications.forEach(clf => {
+          ctx.beginPath();
+          ctx.lineWidth = 0;
+          const color = this.colorDecider(clf.class);
+          ctx.fillStyle = color;
+          ctx.fillRect(timeToX(clf.startTime), 0, timeToX(clf.endTime) - timeToX(clf.startTime), height);
+          ctx.stroke();
+        });
         i++;
       }
     });
@@ -68,18 +76,12 @@ export class StaticEegComponent implements OnInit {
     this.colorKeys = Object.keys(this.classToColors);
   }
 
-  colorDecider = (index: number) => {
-    const timestamp = this.session.eeg_data[index].timestamp;
-    const classification = this.classifications.find(
-      x => x.startTime <= timestamp && timestamp <= x.endTime
-    );
-
-    let color = this.classToColors[classification.class];
+  colorDecider(classStr: string) {
+    let color = this.classToColors[classStr];
 
     if (!color) {
-      this.classToColors[classification.class] =
-        colors[Object.keys(this.classToColors).length];
-      color = this.classToColors[classification.class];
+      this.classToColors[classStr] = transparentColors[Object.keys(this.classToColors).length],
+      color = this.classToColors[classStr];
     }
 
     return color;
@@ -97,13 +99,10 @@ export class StaticEegComponent implements OnInit {
     ctx.beginPath();
     ctx.moveTo(timeToX(first.timestamp), voltToY(first[channel]));
     for (let i = 0; i < data.length - 1; i++) {
-      ctx.strokeStyle = this.colorDecider(i);
+      ctx.strokeStyle = 'black';
       const x = timeToX(data[i].timestamp);
       const y = voltToY(data[i][channel]);
       ctx.lineTo(x, y);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(x, y);
     }
     ctx.stroke();
   }

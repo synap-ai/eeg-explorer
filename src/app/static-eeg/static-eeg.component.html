@@ -1,13 +1,41 @@
-<div *ngFor="let key of colorKeys">
-  <h4 [ngStyle]="{color: classToColors[key]}">{{ key }} </h4>
-</div>
 <div style="border-style: solid; border-width: 1px" width="1200">
-  <p>tp9</p>
-  <canvas id="tp9-chart" height="50" width="1200"></canvas>
-  <p>af7</p>
-  <canvas id="af7-chart" height="50" width="1200"></canvas>
-  <p>af8</p>
-  <canvas id="af8-chart" height="50" width="1200"></canvas>
-  <p>tp10</p>
-  <canvas id="tp10-chart" height="50" width="1200"></canvas>
+  <article class="time-series-channel">
+    <aside class="time-series-control">
+      <div class="time-series-number">
+        TP9
+      </div>
+    </aside>
+    <canvas class="time-series-canvas" id="tp9-chart" height="50" width="1000"></canvas>
+  </article>
+  <article class="time-series-channel">
+    <aside class="time-series-control">
+      <div class="time-series-number">
+        AF7
+      </div>
+    </aside>
+    <canvas class="time-series-canvas" id="af7-chart" height="50" width="1000"></canvas>
+  </article>
+  <article class="time-series-channel">
+    <aside class="time-series-control">
+      <div class="time-series-number">
+        AF8
+      </div>
+    </aside>
+    <canvas class="time-series-canvas" id="af8-chart" height="50" width="1000"></canvas>
+  </article>
+  <article class="time-series-channel">
+    <aside class="time-series-control">
+      <div class="time-series-number">
+        TP10
+      </div>
+    </aside>
+    <canvas class="time-series-canvas" id="tp10-chart" height="50" width="1000"></canvas>
+  </article>
 </div>
+<table>
+    <tr><th> Legend </th></tr>
+    <tr *ngFor="let key of colorKeys">
+      <td [ngStyle]="{background: classToColors[key]}" > {{ key }} </td>
+    </tr>
+</table>
+

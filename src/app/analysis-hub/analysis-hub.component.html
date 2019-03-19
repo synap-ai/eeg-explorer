@@ -38,7 +38,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button *ngIf="selectedSession" 
+      <button *ngIf="selectedSession && classifier" 
               mat-raised-button style="background-color:lightgreen; margin-left: 10px" 
               name="classify" (click)="classify()">Classify Session</button>
     </mat-card-content>

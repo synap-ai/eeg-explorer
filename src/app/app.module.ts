@@ -38,6 +38,7 @@ import { NeedAuthGuard } from 'app/need-auth.guard';
 import { AnalysisHubComponent } from './analysis-hub/analysis-hub.component';
 import { StaticEegComponent } from './static-eeg/static-eeg.component';
 import { CookieService } from 'ngx-cookie-service';
+import { StreamViewComponent } from './stream-view/stream-view.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
   { path: 'subjects', component: SubjectHubComponent, canActivate: [NeedAuthGuard] },
   { path: 'login', component: LoginComponent},
   { path: 'analysis', component: AnalysisHubComponent },
+  { path: 'stream', component: StreamViewComponent },
   { path: '**', component: LoginComponent},
 ];
 
@@ -68,6 +70,7 @@ const appRoutes: Routes = [
     ViewComponent,
     AnalysisHubComponent,
     StaticEegComponent,
+    StreamViewComponent,
   ],
   imports: [
     HttpClientModule,

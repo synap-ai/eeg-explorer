@@ -4,7 +4,7 @@ import { map, bufferCount, takeLast, takeUntil } from 'rxjs/operators';
 
 export class BlinkDetector {
   name = 'Blink Detector';
-  categories = ['Blink', 'No-Blink'];
+  categories = ['Invalid', 'Valid'];
 
   get result(): Observable<number> {
     return this._result;

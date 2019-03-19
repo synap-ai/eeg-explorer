@@ -1,6 +1,13 @@
 mat-card {
-    margin-bottom: 10px;
+    margin: 10px;
   }
 mat-form-field {
   margin: 5px;
+}
+.imageDiv {
+  text-align: center;
+}
+.image {
+  margin-top: 20px;
+  width: 250px;
 }

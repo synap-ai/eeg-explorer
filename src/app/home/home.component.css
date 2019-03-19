@@ -54,6 +54,7 @@
       position: relative;
       text-align: center;
       color: white;
+      background-color: black;
     }
 
     /* Bottom left text */
@@ -90,6 +91,9 @@
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
+      font-size: 50px;
+      font-weight: bolder;
+      font-family: Muli;
     }
     .centeredBelow{
       position: absolute;
@@ -165,9 +169,19 @@
   .bigger
   { font-size:45%;
     font-weight: normal;
-
+    font-family: "Muli";
   }
 a {
   color: white;
   
+}
+.about{
+  font-family: 'Muli';
+}
+.text{
+  margin-left: 80px;
+  margin-right: 80px;
+  font-size: 20px;
+  font-family: muli;
+  text-align: justify;
 }

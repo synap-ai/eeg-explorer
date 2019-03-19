@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');
 .app-icon {
     width: 40px;
     margin-right: 10px;
@@ -88,12 +89,14 @@
     /* Centered text */
     .centered {
       position: absolute;
+      margin-top:80px;
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 50px;
       font-weight: bolder;
-      font-family: Muli;
+      font-family: 'Raleway';
+      font-weight: 700;
     }
     .centeredBelow{
       position: absolute;
@@ -146,7 +149,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-
+    background-color: #0B0B0B;
   }
 
   button {
@@ -169,19 +172,54 @@
   .bigger
   { font-size:45%;
     font-weight: normal;
-    font-family: "Muli";
+    font-family: "Raleway";
   }
 a {
   color: white;
+  font-family: 'Raleway';
+  font-weight: 300;
+  text-decoration: none;
   
 }
 .about{
-  font-family: 'Muli';
+  font-family: 'Raleway';
+  font-weight: 300;
+  padding-top: 50px;
 }
 .text{
   margin-left: 80px;
   margin-right: 80px;
-  font-size: 20px;
-  font-family: muli;
-  text-align: justify;
+  font-size: 18px;
+  font-family: 'Raleway';
+  text-align: center;
+  padding-bottom: 50px;
+  margin-block-end: 0;
+  padding-top: 40px;
+}
+.image{
+  opacity: 0.55;
+  width:1000px;
+}
+h1{
+  margin-block-start: 0;
+}
+.icons{
+  display: flex;
+  padding:40px 50px 0 50px;
+}
+.icon{
+  width:100px;
+}
+.icoDiv{
+  width:33%;
+  padding:40px;
+}
+.label{
+  font-family: 'Raleway';
+  font-weight: 300;
+  margin-top: 10px;
+}
+.description{
+  font-family: 'Raleway';
+  font-weight: 300;
 }

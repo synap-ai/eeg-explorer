@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400');
+
 .app-icon {
-    width: 40px;
+    width: 150px;
     margin-right: 10px;
   }
 
@@ -56,4 +58,8 @@
   }
   .login{
     color:white;
+  }
+  .toolbar{
+    font-family:'Raleway';
+    font-weight: 300;
   }

@@ -1,6 +1,6 @@
-<mat-toolbar color="primary">
-  <img src="assets/brain.svg" alt="Brain icon" class="app-icon" />
-  Synap.ai Muse EEG Explorer
+<mat-toolbar class="toolbar">
+  <img src="assets/icon.png" alt="Brain icon" class="app-icon" />
+  <p class="header">Synap.ai Muse EEG Explorer</p>
   <span class="header-fill"></span>
   <span [hidden]="!(eegStream.batteryLevel | async)" class="battery-level-indicator">
     <mat-icon>battery_std</mat-icon>{{eegStream.batteryLevel|async|number:"1.0-0"}}%
@@ -9,5 +9,5 @@
   <button mat-button *ngIf="Streaming" title="Disconnect" (click)="disconnect()">
       <mat-icon>stop</mat-icon>
   </button>
-  <button mat-button routerLink="/login">Login</button>
+  <button class="login" mat-button routerLink="/login">Login</button>
 </mat-toolbar>

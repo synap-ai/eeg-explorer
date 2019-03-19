@@ -1,3 +1,13 @@
-<div [hidden]="!chart">
-  <canvas id="eeg-chart"></canvas>
+<div *ngFor="let key of colorKeys">
+  <h4 [ngStyle]="{color: classToColors[key]}">{{ key }} </h4>
+</div>
+<div style="border-style: solid; border-width: 1px" width="1200">
+  <p>tp9</p>
+  <canvas id="tp9-chart" height="50" width="1200"></canvas>
+  <p>af7</p>
+  <canvas id="af7-chart" height="50" width="1200"></canvas>
+  <p>af8</p>
+  <canvas id="af8-chart" height="50" width="1200"></canvas>
+  <p>tp10</p>
+  <canvas id="tp10-chart" height="50" width="1200"></canvas>
 </div>

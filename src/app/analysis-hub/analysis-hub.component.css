@@ -1,3 +1,10 @@
 mat-card {
     margin: 10px;
 }
+.imageDiv{
+    text-align: center;
+}
+.image{
+    width:250px;
+    margin-top: 20px;
+}

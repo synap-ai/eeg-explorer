@@ -54,8 +54,8 @@
     .container {
       position: relative;
       text-align: center;
-      color: white;
-      background-color: black;
+      color: black;
+      background-color: white;
     }
 
     /* Bottom left text */
@@ -90,13 +90,15 @@
     .centered {
       position: absolute;
       margin-top:80px;
+      color:#383838;
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 50px;
+      font-size: 60px;
       font-weight: bolder;
       font-family: 'Raleway';
       font-weight: 700;
+      width: 100%;
     }
     .centeredBelow{
       position: absolute;
@@ -170,9 +172,11 @@
   }
 
   .bigger
-  { font-size:45%;
+  { font-size:30px;
     font-weight: normal;
     font-family: "Raleway";
+    color: #383838;
+    font-weight:700;
   }
 a {
   color: white;
@@ -197,8 +201,8 @@ a {
   padding-top: 40px;
 }
 .image{
-  opacity: 0.55;
-  width:1000px;
+  opacity: 0.60;
+  width:100%;
 }
 h1{
   margin-block-start: 0;

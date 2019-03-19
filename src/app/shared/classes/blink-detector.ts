@@ -1,11 +1,10 @@
-import { Classifier } from './classifier';
 import { Observable, Subject } from 'rxjs';
 import { EEGSample } from 'muse-js';
 import { map, bufferCount, takeLast, takeUntil } from 'rxjs/operators';
 
-export class BlinkDetector implements Classifier {
+export class BlinkDetector {
   name = 'Blink Detector';
-  categories = ['Blink', 'No-Blink'];
+  categories = ['Invalid', 'Valid'];
 
   get result(): Observable<number> {
     return this._result;

@@ -1,16 +1,15 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TimeSeries, SmoothieChart } from 'smoothie';
 import { EegStreamService } from 'app/shared/services/eeg-stream.service';
-import { map, bufferCount } from 'rxjs/operators';
-import { Classifier } from 'app/shared/classes/classifier';
+import { BlinkDetector } from 'app/shared/classes/blink-detector';
 
 @Component({
-  selector: 'app-analysis',
-  templateUrl: './analysis.component.html',
-  styleUrls: ['./analysis.component.css'],
+  selector: 'app-blink-detector',
+  templateUrl: './blink-detector.component.html',
+  styleUrls: ['./blink-detector.component.css'],
 })
-export class AnalysisComponent implements OnInit, OnDestroy {
-  @Input() classifier: Classifier;
+export class BlinkDetectorComponent implements OnInit, OnDestroy {
+  classifier = new BlinkDetector();
   series = new TimeSeries();
   canvas: HTMLCanvasElement;
   chart: SmoothieChart;

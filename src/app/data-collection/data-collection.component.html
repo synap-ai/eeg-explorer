@@ -41,4 +41,9 @@
       </div>
     </mat-card-content>
   </mat-card>
+  <mat-card *ngIf="subject && experiment && video && !eegStream.data">
+    <mat-card-content>
+      <p> Waiting for connection... </p>
+    </mat-card-content>
+  </mat-card>
 </section>

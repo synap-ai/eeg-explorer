@@ -70,7 +70,11 @@ export class AnalysisHubComponent implements OnInit {
   }
 
   classify() {
-    this.classifications = this.cService.classify(this.classifier, this.selectedSession);
+    this.cService.classify(this.classifier, this.selectedSession).subscribe(clfs => {
+      this.classifications = clfs;
+    }, error => {
+      console.log('Error getting classifications', error);
+    });
   }
 
 }

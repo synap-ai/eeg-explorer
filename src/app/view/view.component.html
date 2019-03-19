@@ -1,15 +1,15 @@
-<section>
+<section class="connect">
     <mat-expansion-panel class="connection-panel" *ngIf="!Streaming && loggedIn" [expanded]="false">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="header">
             <mat-panel-title>
-              <b> Connect </b>
+              <b class="title"> Connect </b>
             </mat-panel-title>
           </mat-expansion-panel-header>
-      <div class="row" style="display:flex; width:100%;text-align:center; margin-top:20px">
+      <div class="row">
         <div class="item">
           <div class="connection">
-            <img src="../../assets/headset.png" style="width:100px; padding-bottom:10px"><br><br>
-              <label style="color:#3f51b5; font-size:20px" for="file">Connect Headset</label><br><br>
+            <img src="../../assets/headset.png" class="image-headset"><br><br>
+              <label class="label" for="file">Connect Headset</label><br><br>
               <button *ngIf="!eegStream.connecting" mat-raised-button color="primary" (click)="connect()">
                   <mat-icon>bluetooth</mat-icon>
                   Connect
@@ -22,8 +22,8 @@
         </div>
         <div class="item">
             <div class="file-player">
-                <img src="../../assets/upload.png" style="width:100px"><br><br>
-                  <label style="color:#3f51b5; font-size:20px" for="file">Upload File</label><br><br>
+                <img src="../../assets/upload.png" class="image"><br><br>
+                  <label class="label" for="file">Upload File</label><br><br>
                   <input class="btn" #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
                 <div> <!-- File Player-->
                   <button *ngIf="eegStream.fileLoaded && !Streaming" mat-raised-button color="primary" (click)="playFile()">
@@ -36,8 +36,8 @@
         </div>
         <div class="item">
             <div class="file-player">
-                <img src="../../assets/video-player-outline.png" style="width:100px"><br><br>
-                <label style="color:#3f51b5; font-size:20px" for="wave">Mock Data</label><br><br>
+                <img src="../../assets/video-player-outline.png" class="image"><br><br>
+                <label class="label" for="wave">Mock Data</label><br><br>
                 <button *ngIf="!Streaming" id="wave" mat-raised-button color="primary" (click)="playWave()">
                   <mat-icon>play_circle_outline</mat-icon>
                   Play Wave Function
@@ -46,9 +46,9 @@
         </div>
         <div class="item">
             <div class="session-fetcher">
-                <img src="../../assets/cloud-download.png" style="width:100px"><br><br>
-                <label style="color:#3f51b5; font-size:20px" for="session">Fetch Session</label><br><br>
-                <mat-form-field>
+                <img src="../../assets/cloud-download.png" class="image"><br>
+                <label class="label-fetch" for="session">Fetch Session</label><br>
+                <mat-form-field class="experimentField">
                     <mat-select placeholder="Experiment" [(value)]="experiment">
                       <mat-option *ngFor="let _experiment of experiments | async" [value]="_experiment">
                         {{_experiment.title}}

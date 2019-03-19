@@ -25,10 +25,6 @@
     width:30%;
   }
 
-.connection-panel{
-  margin-bottom: 10px;
-}
-
 .session-fetcher {
   display: flex;
   flex-direction: column;
@@ -37,8 +33,29 @@
   justify-content: center;
   text-align: center;
 }
-
+.row{
+  display:flex; 
+  width:100%;
+  text-align:center; 
+  margin-top:20px;
+}
 .session-fetcher > * {
   margin-top: 5px;
   align-content: center;
+}
+.label{
+  color:black; 
+  font-size:20px;
+}
+.label-fetch{
+  color:black; 
+  font-size:20px;
+  padding-top:-10px;
+}
+.image{
+  width:100px;
+}
+.image-headset {
+  width:100px;
+  padding-bottom:10px;
 }

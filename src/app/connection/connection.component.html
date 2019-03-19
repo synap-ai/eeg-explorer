@@ -1,6 +1,5 @@
-<mat-toolbar color="primary" style="margin-bottom:10px">
-  <img src="assets/brain.svg" alt="Brain icon" class="app-icon" />
-  Muse EEG Explorer
+<mat-toolbar class="toolbar">
+  <a href="/home"><img src="assets/logo.png" alt="Brain icon" class="app-icon" /></a>
   <span class="header-fill"></span>
   <span [hidden]="!(eegStream.batteryLevel | async)" class="battery-level-indicator">
     <mat-icon>battery_std</mat-icon>{{eegStream.batteryLevel|async|number:"1.0-0"}}%
@@ -9,6 +8,6 @@
   <button mat-button *ngIf="Streaming" title="Disconnect" (click)="disconnect()">
       <mat-icon>stop</mat-icon>
   </button>
-  <button mat-button routerLink="/login">Login</button>
+  <button *ngIf="!authService.isLoggedIn()" mat-button routerLink="/login">Log In</button>
+  <button *ngIf="authService.isLoggedIn()" (click)="logout()" mat-button routerLink="/login">Log Out</button>
 </mat-toolbar>
-

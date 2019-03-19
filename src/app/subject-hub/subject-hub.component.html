@@ -1,6 +1,6 @@
 <section>
-    <div style="text-align: center">
-        <img src="../../assets/team.png" style="width:250px"><br>
+    <div class="imageDiv">
+        <img src="../../assets/team.png" class="image"><br>
     </div>
   <mat-card>
     <mat-card-title>Subject Hub</mat-card-title>
@@ -8,15 +8,15 @@
       <button (click)="newSubject()" mat-raised-button>New Subject</button>
       <mat-list>
         <mat-list-item *ngFor="let subject of sService.subjects | async">
-          <div style="display: table; min-width: 50%; max-width: 100;">
-              <span style="display: table-cell; text-align: left"> <b>{{subject.first_name}} {{subject.last_name}}</b> </span>
-                <span style="display: table-cell;  width: 50px;">
-                <button (click)="editSubject(subject)" style="margin: 10px; width: 20px" mat-raised-button name="edit">
+          <div class="subjectDiv">
+              <span class="firstLast"> <b>{{subject.first_name}} {{subject.last_name}}</b> </span>
+                <span class="spanSubject">
+                <button (click)="editSubject(subject)" class="buttons" mat-raised-button name="edit">
                   <mat-icon>edit</mat-icon>
                 </button>
               </span>
-              <span style="display: table-cell;  width: 50px;">
-                <button (click)="deleteSubject(subject)" style="margin: 10px;" mat-raised-button name="delete">
+              <span class="spanSubject">
+                <button (click)="deleteSubject(subject)" class="buttonsWidth" mat-raised-button name="delete">
                   <mat-icon>delete</mat-icon>
                 </button>
                 </span>

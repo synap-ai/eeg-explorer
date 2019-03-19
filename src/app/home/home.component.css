@@ -1,26 +1,229 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');
 .app-icon {
     width: 40px;
     margin-right: 10px;
   }
-  
+
   .header-fill {
     flex: 1;
   }
-  
+
   .battery-level-indicator mat-icon {
     margin-right: -4px;
     vertical-align: text-bottom;
   }
-  
+
   .battery-level-indicator {
     padding-right: 12px;
   }
-  
+
   mat-card {
     margin-bottom: 10px;
   }
-  
+
   .connection-options {
     margin-top: 16px;
   }
+
+  .app-icon {
+      width: 40px;
+      margin-right: 10px;
+    }
+
+    .header-fill {
+      flex: 1;
+    }
+
+    .battery-level-indicator mat-icon {
+      margin-right: -4px;
+      vertical-align: text-bottom;
+    }
+
+    .battery-level-indicator {
+      padding-right: 12px;
+    }
+
+    mat-card {
+      margin-bottom: 10px;
+    }
+
+    .connection-options {
+      margin-top: 16px;
+    }
+
+    .container {
+      position: relative;
+      text-align: center;
+      color: black;
+      background-color: white;
+    }
+
+    /* Bottom left text */
+    .bottom-left {
+      position: absolute;
+      bottom: 8px;
+      left: 16px;
+    }
+
+    /* Top left text */
+    .top-left {
+      position: absolute;
+      top: 8px;
+      left: 16px;
+    }
+
+    /* Top right text */
+    .top-right {
+      position: absolute;
+      top: 8px;
+      right: 16px;
+    }
+
+    /* Bottom right text */
+    .bottom-right {
+      position: absolute;
+      bottom: 8px;
+      right: 16px;
+    }
+
+    /* Centered text */
+    .centered {
+      position: absolute;
+      margin-top:80px;
+      color:#383838;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      font-weight: bolder;
+      font-family: 'Raleway';
+      font-weight: 700;
+      width: 100%;
+    }
+    .centeredBelow{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #0B0B0B;
+      overflow: hidden;
+    }
+
+  /* navi bar */
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 10;
+    }
+
+    /* Change the color of links on hover */
+    .topnav a:hover {
+      background-color: black;
+      color: #3164ED;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: black;
+      color: white;
+      font-weight: normal;
+
+
+
+    }
+    /*
+    img {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    opacity: 50%;
+  }
+  */
+
+  .logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #0B0B0B;
+  }
+
+  button {
+    background-color: #383838; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 50px;
+  }
+
+  div {
+    font-family: sans-serif;
+
+  }
+
+  .bigger
+  { font-size:30px;
+    font-weight: normal;
+    font-family: "Raleway";
+    color: #383838;
+    font-weight:700;
+  }
+a {
+  color: white;
+  font-family: 'Raleway';
+  font-weight: 300;
+  text-decoration: none;
   
+}
+.about{
+  font-family: 'Raleway';
+  font-weight: 300;
+  padding-top: 50px;
+}
+.text{
+  margin-left: 80px;
+  margin-right: 80px;
+  font-size: 18px;
+  font-family: 'Raleway';
+  text-align: center;
+  padding-bottom: 50px;
+  margin-block-end: 0;
+  padding-top: 40px;
+}
+.image{
+  opacity: 0.60;
+  width:100%;
+}
+h1{
+  margin-block-start: 0;
+}
+.icons{
+  display: flex;
+  padding:40px 50px 0 50px;
+}
+.icon{
+  width:100px;
+}
+.icoDiv{
+  width:33%;
+  padding:40px;
+}
+.label{
+  font-family: 'Raleway';
+  font-weight: 300;
+  margin-top: 10px;
+}
+.description{
+  font-family: 'Raleway';
+  font-weight: 300;
+}

@@ -1,6 +1,6 @@
 <section>
-    <div style="text-align: center">
-        <img src="../../assets/experiment.png" style="width:250px"><br>
+    <div class="image-div">
+        <img class="image" src="../../assets/experiment.png"><br>
     </div>
   <mat-card>
     <mat-card-title>Experiment Hub</mat-card-title>
@@ -8,15 +8,15 @@
       <button (click)="newExperiment()" mat-raised-button>New Experiment</button>
       <mat-list>
         <mat-list-item *ngFor="let experiment of experiments | async">
-          <div style="display: table; min-width: 50%; max-width: 100;">
-          <span style="display: table-cell; text-align: left"> <b>{{experiment.title}}</b> </span>
-            <span style="display: table-cell;  width: 50px;">
-            <button (click)="editExperiment(experiment)" style="margin: 10px; width: 20px" mat-raised-button name="edit">
+          <div class="experimentsDiv">
+          <span class="experimentTitle"> <b>{{experiment.title}}</b> </span>
+            <span class="span">
+            <button (click)="editExperiment(experiment)" class="buttons" mat-raised-button name="edit">
               <mat-icon>edit</mat-icon>
             </button>
           </span>
-          <span style="display: table-cell;  width: 50px;">
-            <button (click)="deleteExperiment(experiment.id)" style="margin: 10px;" mat-raised-button name="delete">
+          <span class="span">
+            <button (click)="deleteExperiment(experiment.id)" class="buttons" mat-raised-button name="delete">
               <mat-icon>delete</mat-icon>
             </button>
             </span>

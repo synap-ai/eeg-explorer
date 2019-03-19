@@ -37,6 +37,7 @@ import { ViewComponent } from './view/view.component';
 import { NeedAuthGuard } from 'app/need-auth.guard';
 import { AnalysisHubComponent } from './analysis-hub/analysis-hub.component';
 import { StaticEegComponent } from './static-eeg/static-eeg.component';
+import { CookieService } from 'ngx-cookie-service';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -102,6 +103,7 @@ const appRoutes: Routes = [
     NeedAuthGuard,
     ChartService,
     MatDatepickerModule,
+    CookieService,
     {
       provide: APOLLO_OPTIONS,
       useFactory(httpLink: HttpLink) {

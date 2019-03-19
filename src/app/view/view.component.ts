@@ -34,7 +34,7 @@ export class ViewComponent implements OnInit {
   }
 
   get loggedIn() {
-    return this.authService.isLogged();
+    return this.authService.isLoggedIn();
   }
 
   constructor(private snackBar: MatSnackBar,

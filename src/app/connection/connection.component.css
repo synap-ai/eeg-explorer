@@ -51,13 +51,15 @@
     background-color: #3f51b5;
   }
   .toolbar{
-    background-color:black;
+    background-color:white;
   }
   .header{
-    color:white;
+    color:black;
   }
   .login{
-    color:white;
+    color:black;
+    font-family: 'Raleway';
+    font-weight: 300;
   }
   .toolbar{
     font-family:'Raleway';

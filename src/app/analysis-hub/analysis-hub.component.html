@@ -15,7 +15,7 @@
       <mat-form-field *ngIf="experiment">
         <mat-select placeholder="Subject" [(value)]="subject">
           <mat-option *ngFor="let _subject of sService.subjects | async" [value]="_subject">
-            {{_subject.last_name}} id:{{_subject.id}}
+            {{_subject.first_name}} {{_subject.last_name}}
           </mat-option>
         </mat-select>
       </mat-form-field>

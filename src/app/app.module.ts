@@ -48,9 +48,9 @@ const appRoutes: Routes = [
   { path: 'media', component: DataCollectionComponent, canActivate: [NeedAuthGuard] },
   { path: 'subjects', component: SubjectHubComponent, canActivate: [NeedAuthGuard] },
   { path: 'login', component: LoginComponent},
-  { path: 'analysis', component: AnalysisHubComponent },
-  { path: 'stream', component: StreamViewComponent },
-  { path: '**', component: LoginComponent},
+  { path: 'analysis', component: AnalysisHubComponent, canActivate: [NeedAuthGuard] },
+  { path: 'stream', component: StreamViewComponent, canActivate: [NeedAuthGuard] },
+  { path: '**', component: HomeComponent},
 ];
 
 @NgModule({

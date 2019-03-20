@@ -43,19 +43,21 @@ export class AuthService {
     }
   `;
 
-  constructor( private cookieService: CookieService, private apollo: Apollo ) { }
+  constructor(private apollo: Apollo) { }
   isLoggedIn() {
-    return localStorage.getItem(this.TOKEN);
+    const loggedIn = !!localStorage.getItem(this.TOKEN);
+    return loggedIn;
   }
 
   login(email: string, password: string) {
+    this.logout();
     const response = this.apollo.mutate({
       mutation: this.signInMutation,
       variables: {
         email: email,
         password: password
       },
-      errorPolicy: 'all'
+      errorPolicy: 'ignore'
     }).pipe(share());
     response.subscribe(
       ({ errors, data }) => {
@@ -79,7 +81,7 @@ export class AuthService {
         email: user.email,
         password: password
       },
-      errorPolicy: 'all'
+      errorPolicy: 'ignore'
     });
   }
 

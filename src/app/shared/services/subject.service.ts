@@ -97,13 +97,13 @@ export class SubjectService {
       mut = this.apollo.mutate({
         mutation: this.updateSubjectMutation,
         variables: subject,
-        errorPolicy: 'all'
+        errorPolicy: 'ignore'
       });
     } else {
       mut = this.apollo.mutate({
         mutation: this.createSubjectMutation,
         variables: subject,
-        errorPolicy: 'all'
+        errorPolicy: 'ignore'
       });
     }
 

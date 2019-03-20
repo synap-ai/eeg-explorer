@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
     this.authService.register(newUser, password).subscribe(
       ({ errors, data }) => {
         if (data && data.signUp.token) {
-          this.cookieService.set(this.authService.TOKEN, data.signUp.token);
+          localStorage.setItem(this.authService.TOKEN, data.signUp.token);
           this.router.navigateByUrl('/experiments');
         } else {
           this.snackBar.open(

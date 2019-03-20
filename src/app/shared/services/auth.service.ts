@@ -56,14 +56,11 @@ export class AuthService {
         password: password
       },
       errorPolicy: 'all'
-    });
+    }).pipe(share());
     response.subscribe(
       ({ errors, data }) => {
         if (data && data.signIn.token) {
           localStorage.setItem(this.TOKEN, data.signIn.token);
-        } else {
-          console.log(data);
-          console.log(data.signIn);
         }
       },
       error => {
@@ -88,5 +85,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.TOKEN);
+    this.apollo.getClient().resetStore();
   }
 }

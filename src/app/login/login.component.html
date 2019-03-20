@@ -1,6 +1,6 @@
 <div class="card mt-5" style="margin:auto;width: 600px; margin-top:50px; text-align:center">
   <mat-card *ngIf="login">
-    <img src="assets/icon.png">
+    <img src="/assets/icon.png">
     <mat-card-title>Login</mat-card-title>
     <mat-card-content>
       <form #loginForm="ngForm" [formGroup]="loginOptions">
@@ -15,7 +15,7 @@
     </mat-card-content>
   </mat-card>
   <mat-card *ngIf="!login">
-      <img src="assets/icon.png">
+      <img src="/assets/icon.png">
       <mat-card-title>Register</mat-card-title>
       <mat-card-content>
         <form #registerForm="ngForm" [formGroup]="registerOptions">

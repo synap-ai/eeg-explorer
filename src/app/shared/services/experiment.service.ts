@@ -8,102 +8,95 @@ import { debug } from 'util';
 import { identifierModuleUrl } from '@angular/compiler';
 
 interface Response {
-  researcher: {
-    experiments: any[]
-  };
+  experiments: any[];
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExperimentService {
   createExperimentMutation = gql`
     mutation createExperiment(
-      $researcherId: ID!,
-      $title: String!,
-      $description: String,
+      $title: String!
+      $description: String
       $videos: [VideoInput]
     ) {
       createExperiment(
-        researcherId: $researcherId,
-        title: $title,
-        description: $description,
-        videos: $videos,
+        title: $title
+        description: $description
+        videos: $videos
       ) {
         id
       }
     }
   `;
   getExperimentsQuery = gql`
-    query getExperiments($researcherId: ID!) {
-      researcher(id: $researcherId) {
-        experiments {
+    query getExperiments {
+      experiments {
+        id
+        title
+        description
+        videos {
           id
           title
-          description
-          videos {
-            id
-            title
-            youtube_id
-            category
-          }
+          youtube_id
+          category
         }
       }
     }
   `;
   updateExperimentMutation = gql`
-  mutation updateExperiment(
-    $id: ID!,
-    $title: String!,
-    $description: String,
-    $videos: [VideoInput]
-  ) {
-    updateExperiment(
-      id: $id,
-      title: $title,
-      description: $description,
-      videos: $videos,
+    mutation updateExperiment(
+      $id: ID!
+      $title: String!
+      $description: String
+      $videos: [VideoInput]
     ) {
-      id
+      updateExperiment(
+        id: $id
+        title: $title
+        description: $description
+        videos: $videos
+      ) {
+        id
+      }
     }
-  }
-`;
+  `;
   deleteExperimentMutation = gql`
     mutation deleteExperiment($id: ID!) {
       deleteExperiment(id: $id)
     }
   `;
-
-  private last_id = -1;
   private queryRef: QueryRef<Response>;
 
-  constructor(private apollo: Apollo) {
-  }
+  constructor(private apollo: Apollo) {}
 
-  getExperiments(id: number): Observable<Experiment[]> {
-    if (this.last_id === id && this.queryRef) { // query is already on stored
+  getExperiments(): Observable<Experiment[]> {
+    if (this.queryRef) {
+      // query is already on stored
       this.queryRef.refetch();
     } else {
-      this.queryRef = this.apollo
-        .watchQuery<Response>({ query: this.getExperimentsQuery, variables: { researcherId: id }});
-      this.last_id = id;
+      this.queryRef = this.apollo.watchQuery<Response>({
+        query: this.getExperimentsQuery,
+      });
     }
-    return this.queryRef
-      .valueChanges
-      .pipe(
-        switchMap(x => {
-          const r = x.data.researcher;
-          const e = r ? r.experiments : null;
-          return e ? of(e.map(this.anyToExperiment)) : empty();
-        })
-      );
+    return this.queryRef.valueChanges.pipe(
+      switchMap(x => {
+        const e = x.data.experiments || [];
+        return e ? of(e.map(this.anyToExperiment)) : empty();
+      })
+    );
   }
 
   save(experiment: Experiment, callback: Function) {
     let mut: Observable<any>;
-    const videos = experiment.videos.map(x => ({ id: x.id, title: x.title, category: x.category, youtube_id: x.youtube_id}));
+    const videos = experiment.videos.map(x => ({
+      id: x.id,
+      title: x.title,
+      category: x.category,
+      youtube_id: x.youtube_id,
+    }));
     if (experiment.id) {
-
       mut = this.apollo.mutate({
         mutation: this.updateExperimentMutation,
         variables: {
@@ -112,49 +105,51 @@ export class ExperimentService {
           description: experiment.description,
           videos: videos,
         },
-        errorPolicy: 'all'
+        errorPolicy: 'all',
       });
-
     } else {
-
       mut = this.apollo.mutate({
         mutation: this.createExperimentMutation,
         variables: {
-          researcherId: 1, // temp
           title: experiment.title,
           description: experiment.description,
           videos: videos,
-        }
+        },
       });
-
     }
-      mut.subscribe(({ errors, data }) => {
+    mut.subscribe(
+      ({ errors, data }) => {
         if (errors) {
           console.log('something went wrong', errors);
         }
         console.log('Experiment saved - ', data);
         this.queryRef.refetch();
         callback();
-      }, (error) => {
+      },
+      error => {
         console.log('There was an error sending the query', error);
-      });
-      return mut;
+      }
+    );
+    return mut;
   }
 
-
-
   delete(id: Number) {
-    this.apollo.mutate({
-      mutation: this.deleteExperimentMutation,
-      variables: {
-        id: id
-      }
-    }).subscribe(({ data }) => {
-      console.log('Experiment delete - ', data);
-      this.queryRef.refetch();
-    }, (error) => {
-      console.log('There was an error deleting the experiment', error);
-    });
+    this.apollo
+      .mutate({
+        mutation: this.deleteExperimentMutation,
+        variables: {
+          id: id,
+        },
+      })
+      .subscribe(
+        ({ data }) => {
+          console.log('Experiment delete - ', data);
+          this.queryRef.refetch();
+        },
+        error => {
+          console.log('There was an error deleting the experiment', error);
+        }
+      );
   }
 
   private anyToExperiment(a: any) {

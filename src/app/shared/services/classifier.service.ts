@@ -3,6 +3,16 @@ import { Classifier } from '../classes/classifier';
 import { of, Observable } from 'rxjs';
 import { Classification } from '../classes/classification';
 import { Session } from '../classes/session';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { allowPreviousPlayerStylesMerge } from '@angular/animations/browser/src/util';
+
+const EMOTION_API_URL = 'https://synap-eeg-emotion-api.appspot.com/predict';
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -11,55 +21,35 @@ export class ClassifierService {
 
   classifiers: Observable<Classifier[]>;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     // for testing
-    this.classifiers = of([ {name: 'odd/even', id: 1 } ]);
+    this.classifiers = of([ {name: 'Pleasure / Arousal', id: 1 } ]);
    }
 
-   classify(classifier: Classifier, session: Session): Classification[] {
-     if (classifier.id = 1) {
-       const result = [];
-       let current: Classification | null = null;
-       for (let i = 0; i < session.eeg_data.length; i++) {
-         const timestamp = session.eeg_data[i].timestamp;
+   classify(classifier: Classifier, session: Session) {
+     return this.http.post(EMOTION_API_URL, {eeg : session.eeg_data}, httpOptions)
+     .pipe(
+       map((response: any) => {
+         if (!response.succesful) {
+           return { arousal: response.predictions.arousal[0] as string[], pleasure: response.predictions.pleasure[0] as string[] };
+         } else {
+           throw new Error('Somthing went wrong getting classifications');
+         }
+       }),
+       map(ap => {
+        const classifications: Classification[] = [];
+        const firstStart = session.eeg_data[0].timestamp;
+        for (let i = 0; i < ap.arousal.length; i++) {
+          const startTime = firstStart + i * (1000 / 16);
+          const endTime = startTime + 1000;
+          const clf = ap.arousal[i] + '-' + ap.pleasure[i];
 
-         const even = Math.round(timestamp / 1000) % 2;
+          classifications.push({ startTime, endTime, class: clf});
 
-         if (even && current == null) {
-           current = new Classification();
-           current.startTime = timestamp;
-           current.class = 'even';
-         } else if (!even && current == null) {
-           current = new Classification();
-           current.startTime = timestamp;
-           current.class = 'odd';
-         } else if (even && current) {
-           if (current.class === 'even') {
-             continue;
-           }
-           current.endTime = timestamp;
-           result.push(current);
-           current = new Classification();
-           current.startTime = timestamp;
-           current.class = 'even';
-         } else if (!even && current) {
-          if (current.class === 'odd') {
-            continue;
-          }
-          current.endTime = timestamp;
-          result.push(current);
-          current = new Classification();
-          current.startTime = timestamp;
-          current.class = 'odd';
-        }
-       }
-       if (current != null) {
-         current.endTime = session.eeg_data[session.eeg_data.length - 1].timestamp;
-         result.push(current);
-       }
-       return result;
-     } else {
-       return [];
-     }
+         }
+         console.log(classifications);
+         return classifications;
+       })
+      );
    }
 }

@@ -27,6 +27,7 @@ export class AnalysisHubComponent implements OnInit {
   experiments: Observable<Experiment[]>;
 
   loadingSession = false;
+  loadingClfs = false;
   selectedSession: Session | null = null;
   classifications: Classification[];
 
@@ -48,10 +49,11 @@ export class AnalysisHubComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.experiments = this.eService.getExperiments(1);
+    this.experiments = this.eService.getExperiments();
   }
 
   getSession() {
+    this.selectedSession = null;
     this.loadingSession = true;
     this.sessionsService.getSession(
       this.subject.id,
@@ -70,7 +72,15 @@ export class AnalysisHubComponent implements OnInit {
   }
 
   classify() {
-    this.classifications = this.cService.classify(this.classifier, this.selectedSession);
+    this.classifications = null;
+    this.loadingClfs = true;
+    this.cService.classify(this.classifier, this.selectedSession).subscribe(clfs => {
+      this.classifications = clfs;
+    }, error => {
+      console.log('Error getting classifications', error);
+    }, () => {
+      this.loadingClfs = false;
+    });
   }
 
 }

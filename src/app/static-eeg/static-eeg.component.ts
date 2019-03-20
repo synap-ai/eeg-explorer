@@ -4,11 +4,11 @@ import { Session } from 'app/shared/classes/session';
 import { Classification } from 'app/shared/classes/classification';
 
 const transparentColors = [
-  'rgba(255,0,0,0.2)',
-  'rgba(0,0,255,0.2)',
-  'rgba(0,255,0,0.2)',
-  'rgba(125,125,0,0.2)',
-  'rgba(0,125,125,0.2)',
+  'rgba(255,0,0,0.1)',
+  'rgba(0,0,255,0.1)',
+  'rgba(0,255,0,0.1)',
+  'rgba(125,125,0,0.1)',
+  'rgba(0,125,125,0.1)',
 ];
 
 @Component({
@@ -21,7 +21,19 @@ export class StaticEegComponent implements OnInit {
   @Input() session: Session;
 
   colorKeys = [];
-  classToColors: any = {};
+  classToColors: any = {
+    'High-Positive': 'rgba(255,0,0,0.1)',
+    'Low-Positive': 'rgba(125,125,0,0.1)',
+    'Low-Negative': 'rgba(0,125,125,0.1)',
+    'High-Negative': 'rgba(0,0,255,0.1)'
+  };
+
+  legendColors: any = {
+    'High-Positive': 'rgba(255,0,0,0.5)',
+    'Low-Positive': 'rgba(125,125,0,0.5)',
+    'Low-Negative': 'rgba(0,125,125,0.5)',
+    'High-Negative': 'rgba(0,0,255,0.5)'
+  };
 
   chart: Chart;
 
@@ -60,7 +72,7 @@ export class StaticEegComponent implements OnInit {
         const voltToY = (voltage: number) => {
           return ((voltage - minVoltage) / (maxVoltage - minVoltage)) * height;
         };
-        this.drawChannel(ctx, channels[i], timeToX, voltToY);
+
         this.classifications.forEach(clf => {
           ctx.beginPath();
           ctx.lineWidth = 0;
@@ -69,6 +81,8 @@ export class StaticEegComponent implements OnInit {
           ctx.fillRect(timeToX(clf.startTime), 0, timeToX(clf.endTime) - timeToX(clf.startTime), height);
           ctx.stroke();
         });
+
+        this.drawChannel(ctx, channels[i], timeToX, voltToY);
         i++;
       }
     });

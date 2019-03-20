@@ -1,6 +1,6 @@
 <section>
   <div class="imageDiv">
-      <img src="../../assets/analytics.png" class="image"><br>
+    <img src="../../assets/analytics.png" class="image"><br>
   </div>
   <mat-card>
     <mat-card-title>Select Session</mat-card-title>
@@ -26,9 +26,12 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button *ngIf="subject && experiment && video" 
-              mat-raised-button style="background-color:lightgreen; margin-left: 10px" 
-              name="fetch" (click)="getSession()">Fetch Session</button>
+      <span>
+        <button *ngIf="subject && experiment && video" mat-raised-button style="background-color:lightgreen; margin-left: 10px"
+          name="fetch" (click)="getSession()" [disabled]="loadingSession">Fetch Session</button>
+        <mat-spinner *ngIf="loadingSession" diameter="20"></mat-spinner>
+        <div *ngIf="selectedSession"> Session: {{selectedSession.id}} Ready </div>
+      </span>
     </mat-card-content>
   </mat-card>
   <mat-card>
@@ -41,15 +44,17 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button *ngIf="selectedSession && classifier" 
-              mat-raised-button style="background-color:lightgreen; margin-left: 10px" 
-              name="classify" (click)="classify()">Classify Session</button>
+      <span>
+        <button *ngIf="selectedSession && classifier" mat-raised-button style="background-color:lightgreen; margin-left: 10px"
+          name="classify" (click)="classify()" [disabled]="loadingClfs">Classify Session</button>
+        <mat-spinner *ngIf="loadingClfs" diameter="20"></mat-spinner>
+      </span>
     </mat-card-content>
   </mat-card>
   <mat-card *ngIf="selectedSession && classifications">
-      <mat-card-title> Static Sesssion Chart </mat-card-title>
-        <app-static-eeg [session]="selectedSession" [classifications]="classifications" ></app-static-eeg>
-      <mat-card-content>
-      </mat-card-content>
-    </mat-card>
+    <mat-card-title> Static Sesssion Chart </mat-card-title>
+    <app-static-eeg [session]="selectedSession" [classifications]="classifications"></app-static-eeg>
+    <mat-card-content>
+    </mat-card-content>
+  </mat-card>
 </section>

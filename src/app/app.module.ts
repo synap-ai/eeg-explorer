@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -39,6 +39,7 @@ import { AnalysisHubComponent } from './analysis-hub/analysis-hub.component';
 import { StaticEegComponent } from './static-eeg/static-eeg.component';
 import { CookieService } from 'ngx-cookie-service';
 import { StreamViewComponent } from './stream-view/stream-view.component';
+import { ApolloLink, concat } from 'apollo-link';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -109,12 +110,20 @@ const appRoutes: Routes = [
     CookieService,
     {
       provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink) {
+      useFactory(httpLink: HttpLink, cookieService: CookieService) {
+        const link = httpLink.create({
+          uri: 'http://localhost:8000/graphql'
+        });
+        const authMiddleware = new ApolloLink((operation, forward) => {
+          // add the authorization to the headers
+          operation.setContext({
+            headers: new HttpHeaders().set('x-token', localStorage.getItem('auth_token') || '')
+          });
+          return forward(operation);
+        });
         return {
           cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: 'http://localhost:8000/graphql'
-          })
+          link: concat(authMiddleware, link)
         };
       },
       deps: [HttpLink]

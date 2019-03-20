@@ -39,7 +39,7 @@ export class DataCollectionComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.experiments = this.eService.getExperiments(1);
+    this.experiments = this.eService.getExperiments();
   }
 
   savePlayer(player) {

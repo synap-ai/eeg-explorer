@@ -1,7 +1,5 @@
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpLinkModule } from 'apollo-angular-link-http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,7 +22,7 @@ import { HeadsetInfoComponent } from './headset-info/headset-info.component';
 import { RecorderComponent } from './recorder/recorder.component';
 import { ExperimentFormComponent } from './experiment-form/experiment-form.component';
 import { MediaDescriptionFormComponent } from './media-description-form/media-description-form.component';
-import { RouterModule, Routes, Router } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ConnectionComponent } from './connection/connection.component';
 import { ExperimentHubComponent } from './experiment-hub/experiment-hub.component';
@@ -39,8 +37,7 @@ import { AnalysisHubComponent } from './analysis-hub/analysis-hub.component';
 import { StaticEegComponent } from './static-eeg/static-eeg.component';
 import { CookieService } from 'ngx-cookie-service';
 import { StreamViewComponent } from './stream-view/stream-view.component';
-import { ApolloLink, concat } from 'apollo-link';
-import { onError } from 'apollo-link-error';
+import { GraphQLModule } from './graph-ql/graph-ql.module';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -76,7 +73,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     HttpClientModule,
-    ApolloModule,
+    GraphQLModule.forRoot(),
     HttpLinkModule,
     BrowserModule,
     FormsModule,
@@ -109,38 +106,6 @@ const appRoutes: Routes = [
     ChartService,
     MatDatepickerModule,
     CookieService,
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink, router: Router) {
-        const link = httpLink.create({
-          uri: 'https://synap-ai.appspot.com/graphql'
-        });
-        const authMiddleware = new ApolloLink((operation, forward) => {
-          // add the authorization to the headers
-          operation.setContext({
-            headers: new HttpHeaders().set('x-token', localStorage.getItem('auth_token') || '')
-          });
-          return forward(operation);
-        });
-        const logoutLink = onError( (error) => {
-          try {
-            if ((error.networkError as any).error.errors[0].extensions.code === 'UNAUTHENTICATED') {
-              localStorage.removeItem('auth_token');
-              if (router.url !== '/login') {
-                router.navigate(['/login']);
-              }
-            }
-          } catch {
-            // nothing
-          }
-        });
-        return {
-          cache: new InMemoryCache(),
-          link: logoutLink.concat(concat(authMiddleware, link))
-        };
-      },
-      deps: [HttpLink, Router]
-    }
   ],
   bootstrap: [AppComponent]
 })

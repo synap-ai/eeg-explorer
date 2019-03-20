@@ -22,8 +22,8 @@ export class SubjectFormComponent implements OnInit, OnChanges {
   @Input() subject: Subject;
   @Output() onSave = new EventEmitter<void>();
   date = new Date();
-  minDate = new Date(this.date.getFullYear()-100, 0, 1);
-  maxDate = new Date(this.date.getFullYear(),0,1);
+  minDate = new Date(this.date.getFullYear() - 100, 0, 1);
+  maxDate = new Date(this.date.getFullYear(), 0, 1);
 
   genders: Sex[] = [
     {value: 'M', viewValue: 'Male'},

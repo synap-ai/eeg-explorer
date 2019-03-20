@@ -30,7 +30,6 @@
     "apollo-client": "^2.5.1",
     "apollo-link": "^1.2.9",
     "apollo-link-error": "^1.1.10",
-    "chart.js": "^2.8.0",
     "core-js": "^2.5.1",
     "fili": "^2.0.0",
     "graphql": "^14.1.1",

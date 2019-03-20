@@ -43,11 +43,12 @@ export class LoginComponent implements OnInit {
 
   tryLogin(email: string, password: string) {
     this.authService.login(email, password).subscribe(
-      ({ errors, data }) => {
+      (response) => {
+        const data = response.data;
         if (data && data.signIn.token) {
           this.router.navigateByUrl('/experiments');
         } else {
-          this.snackBar.open(`Login failed: ${errors[0].message}`, 'Dismiss', {
+          this.snackBar.open(`Login failed: Bad Username or Password`, 'Dismiss', {
             duration: 3000
           });
         }
@@ -73,7 +74,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/experiments');
         } else {
           this.snackBar.open(
-            `Registered failed: ${errors[0].message}`,
+            `Registration failed`,
             'Dismiss',
             {
               duration: 3000

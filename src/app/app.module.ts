@@ -113,7 +113,7 @@ const appRoutes: Routes = [
       provide: APOLLO_OPTIONS,
       useFactory(httpLink: HttpLink, router: Router) {
         const link = httpLink.create({
-          uri: 'http://localhost:8000/graphql'
+          uri: 'https://synap-ai.appspot.com/graphql'
         });
         const authMiddleware = new ApolloLink((operation, forward) => {
           // add the authorization to the headers

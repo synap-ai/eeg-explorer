@@ -8,7 +8,7 @@
       <div class="row">
         <div class="item">
           <div class="connection">
-            <img src="../../assets/headset.png" class="image-headset"><br><br>
+            <img src="assets/headset.png" class="image-headset"><br><br>
               <label class="label" for="file">Connect Headset</label><br><br>
               <button *ngIf="!eegStream.connecting" mat-raised-button color="primary" (click)="connect()">
                   <mat-icon>bluetooth</mat-icon>
@@ -22,7 +22,7 @@
         </div>
         <div class="item">
             <div class="file-player">
-                <img src="../../assets/upload.png" class="image"><br><br>
+                <img src="assets/upload.png" class="image"><br><br>
                   <label class="label" for="file">Upload File</label><br><br>
                   <input class="btn" #fileInput type="file" id="file" (change)="handleFileInput($event.target.files)">
                 <div> <!-- File Player-->
@@ -36,7 +36,7 @@
         </div>
         <div class="item">
             <div class="file-player">
-                <img src="../../assets/video-player-outline.png" class="image"><br><br>
+                <img src="assets/video-player-outline.png" class="image"><br><br>
                 <label class="label" for="wave">Mock Data</label><br><br>
                 <button *ngIf="!Streaming" id="wave" mat-raised-button color="primary" (click)="playWave()">
                   <mat-icon>play_circle_outline</mat-icon>
@@ -46,7 +46,7 @@
         </div>
         <div class="item">
             <div class="session-fetcher">
-                <img src="../../assets/cloud-download.png" class="image"><br>
+                <img src="assets/cloud-download.png" class="image"><br>
                 <label class="label-fetch" for="session">Fetch Session</label><br>
                 <mat-form-field class="experimentField">
                     <mat-select placeholder="Experiment" [(value)]="experiment">

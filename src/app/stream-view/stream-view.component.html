@@ -1,0 +1,18 @@
+<section>
+    <!-- EEG data -->
+    <mat-card *ngIf="eegStream.data">
+      <mat-card-title>Live EEG Plot </mat-card-title>
+      <mat-card-content>
+        <app-blink-detector ></app-blink-detector>
+        <app-time-series></app-time-series>
+      </mat-card-content>
+    </mat-card>
+    <!--If data show recorder-->
+    <mat-card *ngIf="eegStream.data">
+      <mat-card-title>Recording</mat-card-title>
+      <mat-card-content>
+        <app-recorder></app-recorder>
+      </mat-card-content>
+    </mat-card>
+    <p *ngIf="!eegStream.data"> Waiting for connection... </p>
+  </section>

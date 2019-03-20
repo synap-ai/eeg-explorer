@@ -3,7 +3,36 @@
       <img src="../../assets/analytics.png" class="image"><br>
   </div>
   <mat-card>
-    <mat-card-title> Brain Wave Analysis </mat-card-title>
+    <mat-card-title>Select Session</mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <mat-select placeholder="Experiment" [(value)]="experiment">
+          <mat-option *ngFor="let _experiment of experiments | async" [value]="_experiment">
+            {{_experiment.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="experiment">
+        <mat-select placeholder="Subject" [(value)]="subject">
+          <mat-option *ngFor="let _subject of sService.subjects | async" [value]="_subject">
+            {{_subject.last_name}} id:{{_subject.id}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="subject && experiment">
+        <mat-select placeholder="Video" [(value)]="video">
+          <mat-option *ngFor="let _video of experiment.videos" [value]="_video">
+            {{_video.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button *ngIf="subject && experiment && video" 
+              mat-raised-button style="background-color:lightgreen; margin-left: 10px" 
+              name="fetch" (click)="getSession()">Fetch Session</button>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-title> Select Classifier </mat-card-title>
     <mat-card-content>
       <mat-form-field>
         <mat-select placeholder="Classifier" [(value)]="classifier">
@@ -12,14 +41,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <button *ngIf="selectedSession && classifier" 
+              mat-raised-button style="background-color:lightgreen; margin-left: 10px" 
+              name="classify" (click)="classify()">Classify Session</button>
     </mat-card-content>
   </mat-card>
-  <mat-card *ngIf="classifier">
-      <mat-card-title> {{classifier.name}} </mat-card-title>
+  <mat-card *ngIf="selectedSession && classifications">
+      <mat-card-title> Static Sesssion Chart </mat-card-title>
+        <app-static-eeg [session]="selectedSession" [classifications]="classifications" ></app-static-eeg>
       <mat-card-content>
-          <p *ngIf="!connected"> No Connection </p>
-          <app-analysis *ngIf="connected" [classifier]="classifier"></app-analysis>
-          <app-time-series *ngIf="connected"></app-time-series>
       </mat-card-content>
     </mat-card>
 </section>

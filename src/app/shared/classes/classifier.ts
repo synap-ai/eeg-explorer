@@ -4,8 +4,5 @@ import { sample } from 'rxjs/operators';
 
 export interface Classifier {
     name: string;
-    categories: string[];
-    result: Observable<number>;
-    start: (stream: Observable<EEGSample>) => void;
-    stop: () => void;
+    id: number;
 }

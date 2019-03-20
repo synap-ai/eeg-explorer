@@ -6,14 +6,14 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router/src/r
 @Injectable()
 export class NeedAuthGuard implements CanActivate {
 
-  constructor(private customerService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
     const redirectUrl = route['_routerState']['url'];
 
-    if (this.customerService.isLogged()) {
+    if (this.authService.isLoggedIn()) {
       return true;
     }
 

@@ -8,5 +8,6 @@
   <button mat-button *ngIf="Streaming" title="Disconnect" (click)="disconnect()">
       <mat-icon>stop</mat-icon>
   </button>
-  <button class="login" mat-button routerLink="/login">Login</button>
+  <button *ngIf="!authService.isLoggedIn()" mat-button routerLink="/login">Log In</button>
+  <button *ngIf="authService.isLoggedIn()" (click)="logout()" mat-button routerLink="/login">Log Out</button>
 </mat-toolbar>

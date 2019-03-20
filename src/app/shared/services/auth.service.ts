@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { User } from '../classes/user';
+import { share } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -44,11 +45,11 @@ export class AuthService {
 
   constructor( private cookieService: CookieService, private apollo: Apollo ) { }
   isLoggedIn() {
-    return this.cookieService.check(this.TOKEN);
+    return localStorage.getItem(this.TOKEN);
   }
 
   login(email: string, password: string) {
-    return this.apollo.mutate({
+    const response = this.apollo.mutate({
       mutation: this.signInMutation,
       variables: {
         email: email,
@@ -56,6 +57,20 @@ export class AuthService {
       },
       errorPolicy: 'all'
     });
+    response.subscribe(
+      ({ errors, data }) => {
+        if (data && data.signIn.token) {
+          localStorage.setItem(this.TOKEN, data.signIn.token);
+        } else {
+          console.log(data);
+          console.log(data.signIn);
+        }
+      },
+      error => {
+        console.log('There was an error registering user', error);
+      }
+    );
+    return response;
   }
 
   register(user: User, password: string) {
@@ -72,6 +87,6 @@ export class AuthService {
   }
 
   logout() {
-    this.cookieService.delete(this.TOKEN);
+    localStorage.removeItem(this.TOKEN);
   }
 }

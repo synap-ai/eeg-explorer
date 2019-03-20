@@ -45,16 +45,12 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe(
       ({ errors, data }) => {
         if (data && data.signIn.token) {
-          this.cookieService.set(this.authService.TOKEN, data.signIn.token);
           this.router.navigateByUrl('/experiments');
         } else {
           this.snackBar.open(`Login failed: ${errors[0].message}`, 'Dismiss', {
             duration: 3000
           });
         }
-      },
-      error => {
-        console.log('There was an error registering user', error);
       }
     );
   }

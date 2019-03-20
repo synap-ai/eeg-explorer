@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbar">
-  <a href="/home"><img src="assets/logo.png" alt="Brain icon" class="app-icon" /></a>
+  <a href="/home"><img src="/assets/logo.png" alt="Brain icon" class="app-icon" /></a>
   <span class="header-fill"></span>
   <span [hidden]="!(eegStream.batteryLevel | async)" class="battery-level-indicator">
     <mat-icon>battery_std</mat-icon>{{eegStream.batteryLevel|async|number:"1.0-0"}}%

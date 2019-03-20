@@ -14,5 +14,8 @@
         <app-recorder></app-recorder>
       </mat-card-content>
     </mat-card>
-    <p *ngIf="!eegStream.data"> Waiting for connection... </p>
+    <div class="notConnected" *ngIf="!eegStream.data">
+      <img src = "../../assets/silent_tears.gif"/>
+      <h1>Waiting for connection...</h1>
+    </div>
   </section>

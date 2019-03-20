@@ -24,7 +24,7 @@ import { HeadsetInfoComponent } from './headset-info/headset-info.component';
 import { RecorderComponent } from './recorder/recorder.component';
 import { ExperimentFormComponent } from './experiment-form/experiment-form.component';
 import { MediaDescriptionFormComponent } from './media-description-form/media-description-form.component';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ConnectionComponent } from './connection/connection.component';
 import { ExperimentHubComponent } from './experiment-hub/experiment-hub.component';
@@ -40,6 +40,7 @@ import { StaticEegComponent } from './static-eeg/static-eeg.component';
 import { CookieService } from 'ngx-cookie-service';
 import { StreamViewComponent } from './stream-view/stream-view.component';
 import { ApolloLink, concat } from 'apollo-link';
+import { onError } from 'apollo-link-error';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -47,9 +48,9 @@ const appRoutes: Routes = [
   { path: 'media', component: DataCollectionComponent, canActivate: [NeedAuthGuard] },
   { path: 'subjects', component: SubjectHubComponent, canActivate: [NeedAuthGuard] },
   { path: 'login', component: LoginComponent},
-  { path: 'analysis', component: AnalysisHubComponent },
-  { path: 'stream', component: StreamViewComponent },
-  { path: '**', component: LoginComponent},
+  { path: 'analysis', component: AnalysisHubComponent, canActivate: [NeedAuthGuard] },
+  { path: 'stream', component: StreamViewComponent, canActivate: [NeedAuthGuard] },
+  { path: '**', component: HomeComponent},
 ];
 
 @NgModule({
@@ -110,9 +111,9 @@ const appRoutes: Routes = [
     CookieService,
     {
       provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink, cookieService: CookieService) {
+      useFactory(httpLink: HttpLink, router: Router) {
         const link = httpLink.create({
-          uri: 'http://localhost:8000/graphql'
+          uri: 'https://synap-ai.appspot.com/graphql'
         });
         const authMiddleware = new ApolloLink((operation, forward) => {
           // add the authorization to the headers
@@ -121,12 +122,24 @@ const appRoutes: Routes = [
           });
           return forward(operation);
         });
+        const logoutLink = onError( (error) => {
+          try {
+            if ((error.networkError as any).error.errors[0].extensions.code === 'UNAUTHENTICATED') {
+              localStorage.removeItem('auth_token');
+              if (router.url !== '/login') {
+                router.navigate(['/login']);
+              }
+            }
+          } catch {
+            // nothing
+          }
+        });
         return {
           cache: new InMemoryCache(),
-          link: concat(authMiddleware, link)
+          link: logoutLink.concat(concat(authMiddleware, link))
         };
       },
-      deps: [HttpLink]
+      deps: [HttpLink, Router]
     }
   ],
   bootstrap: [AppComponent]

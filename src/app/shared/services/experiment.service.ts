@@ -105,7 +105,7 @@ export class ExperimentService {
           description: experiment.description,
           videos: videos,
         },
-        errorPolicy: 'all',
+        errorPolicy: 'ignore',
       });
     } else {
       mut = this.apollo.mutate({

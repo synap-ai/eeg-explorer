@@ -9,7 +9,7 @@
         <input matInput #subjectLastName formControlName="email" name="Email" type="text" placeholder="Email" required>
       </mat-form-field>
   <mat-form-field>
-    <input matInput formControlName="dob" [matDatepicker]="picker" placeholder="Date of Birth">
+    <input matInput formControlName="dob" [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Date of Birth">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>

@@ -15,7 +15,7 @@
       <mat-form-field *ngIf="experiment">
         <mat-select placeholder="Subject" [(value)]="subject">
           <mat-option *ngFor="let _subject of sService.subjects | async" [value]="_subject">
-            {{_subject.last_name}} id:{{_subject.id}}
+            {{_subject.first_name}} {{_subject.last_name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -30,7 +30,7 @@
         <button *ngIf="subject && experiment && video" mat-raised-button style="background-color:lightgreen; margin-left: 10px"
           name="fetch" (click)="getSession()" [disabled]="loadingSession">Fetch Session</button>
         <mat-spinner *ngIf="loadingSession" diameter="20"></mat-spinner>
-        <div *ngIf="selectedSession"> Session: {{selectedSession.id}} Ready </div>
+        <div *ngIf="selectedSession"> Session ready </div>
       </span>
     </mat-card-content>
   </mat-card>
@@ -52,6 +52,11 @@
     </mat-card-content>
   </mat-card>
   <mat-card *ngIf="selectedSession && classifications">
+    <p>High Arousal - Positive Pleasure: {{((highPositiveCount / classifications.length) * 100).toFixed(2)}}%</p>
+    <p>Low Arousal - Positive Pleasure: {{((lowPositiveCount / classifications.length) * 100).toFixed(2)}}% </p>
+    <p>High Arousal - Negative Pleasure: {{((highNegativeCount / classifications.length) * 100).toFixed(2)}}% </p>
+    <p>Low Arousal - Negative Pleasure: {{((lowNegativeCount / classifications.length) * 100).toFixed(2)}}% </p>
+    <br>
     <mat-card-title> Static Sesssion Chart </mat-card-title>
     <app-static-eeg [session]="selectedSession" [classifications]="classifications"></app-static-eeg>
     <mat-card-content>

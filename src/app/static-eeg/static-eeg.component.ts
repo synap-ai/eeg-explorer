@@ -28,6 +28,8 @@ export class StaticEegComponent implements OnInit {
     'High-Negative': 'rgba(0,0,255,0.1)'
   };
 
+  classToPercetages: any = {};
+
   legendColors: any = {
     'High-Positive': 'rgba(255,0,0,0.5)',
     'Low-Positive': 'rgba(125,125,0,0.5)',
@@ -88,6 +90,9 @@ export class StaticEegComponent implements OnInit {
     });
 
     this.colorKeys = Object.keys(this.classToColors);
+    this.colorKeys.forEach(key => {
+      this.classToPercetages[key] = this.classifications.filter(c => c.class === key).length / this.classifications.length;
+    });
   }
 
   colorDecider(classStr: string) {

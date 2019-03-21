@@ -58,6 +58,7 @@ export class AnalysisHubComponent implements OnInit {
 
   getSession() {
     this.selectedSession = null;
+    this.classifications = null;
     this.loadingSession = true;
     this.sessionsService.getSession(
       this.subject.id,

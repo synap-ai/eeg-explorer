@@ -39,6 +39,11 @@
           <mat-progress-bar style="max-width: 350px" mode="indeterminate"></mat-progress-bar>
         </span>
       </div>
+      <div *ngIf="sessionCreated">
+        <span>
+          <b> Session Saved </b>
+        </span>
+      </div>
     </mat-card-content>
   </mat-card>
   <mat-card *ngIf="subject && experiment && video && !eegStream.data">

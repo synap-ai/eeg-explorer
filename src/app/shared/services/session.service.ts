@@ -43,7 +43,7 @@ export class SessionService {
   constructor(private apollo: Apollo) {
   }
 
-  save(session: Session) {
+  save(session: Session, callback: Function = () => {}) {
     this.uploading = true;
     this.apollo.mutate({
       mutation: this.createSessionMutation,
@@ -55,9 +55,11 @@ export class SessionService {
       }
     }).subscribe(({ data }) => {
       console.log('Session created - ', data);
-      this.uploading = false;
+      callback();
     }, (error) => {
       console.log('There was an error sending the query', error);
+    }, () => {
+      this.uploading = false;
     });
   }
 

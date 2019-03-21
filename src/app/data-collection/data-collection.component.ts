@@ -18,16 +18,30 @@ import { Session } from 'app/shared/classes/session';
 export class DataCollectionComponent implements OnInit {
   subject: Subject;
   experiment: Experiment;
-  video: MediaDescription;
   experiments: Observable<Experiment[]>;
   Player: YT.Player;
 
   startTime = -1;
   endTime = Number.MAX_SAFE_INTEGER;
 
+  sessionCreated = false;
+
   get uploading() {
     return this.sessionsService.uploading;
   }
+  get video() {
+    return this._video;
+  }
+
+  set video(value: MediaDescription) {
+    if (value !== this._video) {
+      this._video = null;
+      setTimeout(() => this._video = value, 100);
+      this.sessionCreated = false;
+    }
+
+  }
+  _video: MediaDescription;
 
   private subscription: Subscription;
   samples: EEGSample[] = [];
@@ -86,7 +100,7 @@ export class DataCollectionComponent implements OnInit {
       experiment_id: this.experiment.id,
       video_id: this.video.id,
       eeg_data: eegSamples
-    }));
+    }), () => this.sessionCreated = true);
 
     this.samples = [];
     this.startTime = -1;

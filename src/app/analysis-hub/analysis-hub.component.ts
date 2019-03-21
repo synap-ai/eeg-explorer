@@ -12,7 +12,6 @@ import { SubjectService } from 'app/shared/services/subject.service';
 import { SessionService } from 'app/shared/services/session.service';
 import { Classification } from 'app/shared/classes/classification';
 import { Session } from 'app/shared/classes/session';
-import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-analysis-hub',
@@ -32,6 +31,10 @@ export class AnalysisHubComponent implements OnInit {
   classifications: Classification[];
 
   chart = [];
+  highPositiveCount = 0;
+  lowPositiveCount = 0;
+  highNegativeCount = 0;
+  lowNegativeCount = 0;
 
   get connected() {
     return (this.eegService.data !== null);
@@ -81,36 +84,17 @@ export class AnalysisHubComponent implements OnInit {
       } else {
         this.snackBar.open('Failed to get classifications', 'Dismiss');
       }
+      for (let i = 0; i < clfs.length; i++) {
+        const clf = clfs[i];
+        this.highPositiveCount += clf.class === 'High-Positive' ? 1 : 0;
+        this.lowPositiveCount += clf.class === 'Low-Positive' ? 1 : 0;
+        this.highNegativeCount += clf.class === 'High-Negative' ? 1 : 0;
+        this.lowNegativeCount += clf.class === 'Low-Negative' ? 1 : 0;
+      }
     }, error => {
       this.snackBar.open('Failed to get classifications: ' + error.toString(), 'Dismiss');
     }, () => {
       this.loadingClfs = false;
-    });
-  }
-
-  setChart(clfs) {
-    let highPositiveCount = 0;
-    let lowPositiveCount = 0;
-    let highNegativeCount = 0;
-    let lowNegativeCount = 0;
-    for (let i = 0; i < clfs.length; i++) {
-      const clf = clfs[i];
-      highPositiveCount += clf.class === 'High-Positive' ? 1 : 0;
-      lowPositiveCount += clf.class === 'Low-Positive' ? 1 : 0;
-      highNegativeCount += clf.class === 'High-Negative' ? 1 : 0;
-      lowNegativeCount += clf.class === 'Low-Negative' ? 1 : 0;
-    }
-    this.chart = new Chart('canvas', {
-      type: 'pie',
-      data: {
-        labels: ['High Arousal - Positive Pleasure', 'Low Arousal - Positive Pleasure',
-                'High Arousal - Positive Pleasure', 'Low Arousal - Positive Pleasure'],
-        datasets: [
-          {
-            data: [highPositiveCount, lowPositiveCount, highNegativeCount, lowNegativeCount]
-          }
-        ]
-      }
     });
   }
 }

@@ -52,9 +52,11 @@
     </mat-card-content>
   </mat-card>
   <mat-card *ngIf="selectedSession && classifications">
-    <div *ngIf="chart">
-      <canvas id="canvas">{{ chart }}</canvas>
-    </div>
+    <p>High Arousal - Positive Pleasure: {{((highPositiveCount / classifications.length) * 100).toFixed(2)}}%</p>
+    <p>Low Arousal - Positive Pleasure: {{((lowPositiveCount / classifications.length) * 100).toFixed(2)}}% </p>
+    <p>High Arousal - Negative Pleasure: {{((highNegativeCount / classifications.length) * 100).toFixed(2)}}% </p>
+    <p>Low Arousal - Negative Pleasure: {{((lowNegativeCount / classifications.length) * 100).toFixed(2)}}% </p>
+    <br>
     <mat-card-title> Static Sesssion Chart </mat-card-title>
     <app-static-eeg [session]="selectedSession" [classifications]="classifications"></app-static-eeg>
     <mat-card-content>

@@ -75,9 +75,13 @@ export class AnalysisHubComponent implements OnInit {
     this.classifications = null;
     this.loadingClfs = true;
     this.cService.classify(this.classifier, this.selectedSession).subscribe(clfs => {
-      this.classifications = clfs;
+      if (clfs) {
+        this.classifications = clfs;
+      } else {
+        this.snackBar.open('Failed to get classifications', 'Dismiss');
+      }
     }, error => {
-      console.log('Error getting classifications', error);
+      this.snackBar.open('Failed to get classifications: ' + error.toString(), 'Dismiss');
     }, () => {
       this.loadingClfs = false;
     });

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Chart } from 'chart.js';
 import { Session } from 'app/shared/classes/session';
 import { Classification } from 'app/shared/classes/classification';
 
@@ -34,8 +33,6 @@ export class StaticEegComponent implements OnInit {
     'Low-Negative': 'rgba(0,125,125,0.5)',
     'High-Negative': 'rgba(0,0,255,0.5)'
   };
-
-  chart: Chart;
 
   constructor() {}
 

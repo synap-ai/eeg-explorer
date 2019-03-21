@@ -10,7 +10,6 @@ import { MatSnackBar } from '@angular/material';
 import { ExperimentService } from 'app/shared/services/experiment.service';
 import { SubjectService } from 'app/shared/services/subject.service';
 import { SessionService } from 'app/shared/services/session.service';
-import { AuthService } from 'app/shared/services/auth.service';
 import { Classification } from 'app/shared/classes/classification';
 import { Session } from 'app/shared/classes/session';
 
@@ -31,6 +30,12 @@ export class AnalysisHubComponent implements OnInit {
   selectedSession: Session | null = null;
   classifications: Classification[];
 
+  chart = [];
+  highPositiveCount = 0;
+  lowPositiveCount = 0;
+  highNegativeCount = 0;
+  lowNegativeCount = 0;
+
   get connected() {
     return (this.eegService.data !== null);
   }
@@ -44,7 +49,6 @@ export class AnalysisHubComponent implements OnInit {
     public sService: SubjectService,
     public eegService: EegStreamService,
     private sessionsService: SessionService,
-    private authService: AuthService,
     private cService: ClassifierService) {
   }
 
@@ -77,6 +81,13 @@ export class AnalysisHubComponent implements OnInit {
     this.cService.classify(this.classifier, this.selectedSession).subscribe(clfs => {
       if (clfs) {
         this.classifications = clfs;
+        for (let i = 0; i < clfs.length; i++) {
+          const clf = clfs[i];
+          this.highPositiveCount += clf.class === 'High-Positive' ? 1 : 0;
+          this.lowPositiveCount += clf.class === 'Low-Positive' ? 1 : 0;
+          this.highNegativeCount += clf.class === 'High-Negative' ? 1 : 0;
+          this.lowNegativeCount += clf.class === 'Low-Negative' ? 1 : 0;
+        }
       } else {
         this.snackBar.open('Failed to get classifications', 'Dismiss');
       }
@@ -86,5 +97,4 @@ export class AnalysisHubComponent implements OnInit {
       this.loadingClfs = false;
     });
   }
-
 }

@@ -10,9 +10,9 @@ import { MatSnackBar } from '@angular/material';
 import { ExperimentService } from 'app/shared/services/experiment.service';
 import { SubjectService } from 'app/shared/services/subject.service';
 import { SessionService } from 'app/shared/services/session.service';
-import { AuthService } from 'app/shared/services/auth.service';
 import { Classification } from 'app/shared/classes/classification';
 import { Session } from 'app/shared/classes/session';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-analysis-hub',
@@ -31,6 +31,8 @@ export class AnalysisHubComponent implements OnInit {
   selectedSession: Session | null = null;
   classifications: Classification[];
 
+  chart = [];
+
   get connected() {
     return (this.eegService.data !== null);
   }
@@ -44,7 +46,6 @@ export class AnalysisHubComponent implements OnInit {
     public sService: SubjectService,
     public eegService: EegStreamService,
     private sessionsService: SessionService,
-    private authService: AuthService,
     private cService: ClassifierService) {
   }
 
@@ -87,4 +88,29 @@ export class AnalysisHubComponent implements OnInit {
     });
   }
 
+  setChart(clfs) {
+    let highPositiveCount = 0;
+    let lowPositiveCount = 0;
+    let highNegativeCount = 0;
+    let lowNegativeCount = 0;
+    for (let i = 0; i < clfs.length; i++) {
+      const clf = clfs[i];
+      highPositiveCount += clf.class === 'High-Positive' ? 1 : 0;
+      lowPositiveCount += clf.class === 'Low-Positive' ? 1 : 0;
+      highNegativeCount += clf.class === 'High-Negative' ? 1 : 0;
+      lowNegativeCount += clf.class === 'Low-Negative' ? 1 : 0;
+    }
+    this.chart = new Chart('canvas', {
+      type: 'pie',
+      data: {
+        labels: ['High Arousal - Positive Pleasure', 'Low Arousal - Positive Pleasure',
+                'High Arousal - Positive Pleasure', 'Low Arousal - Positive Pleasure'],
+        datasets: [
+          {
+            data: [highPositiveCount, lowPositiveCount, highNegativeCount, lowNegativeCount]
+          }
+        ]
+      }
+    });
+  }
 }

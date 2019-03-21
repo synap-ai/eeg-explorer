@@ -30,7 +30,7 @@
         <button *ngIf="subject && experiment && video" mat-raised-button style="background-color:lightgreen; margin-left: 10px"
           name="fetch" (click)="getSession()" [disabled]="loadingSession">Fetch Session</button>
         <mat-spinner *ngIf="loadingSession" diameter="20"></mat-spinner>
-        <div *ngIf="selectedSession"> Session: {{selectedSession.id}} Ready </div>
+        <div *ngIf="selectedSession"> Session ready </div>
       </span>
     </mat-card-content>
   </mat-card>
@@ -52,6 +52,9 @@
     </mat-card-content>
   </mat-card>
   <mat-card *ngIf="selectedSession && classifications">
+    <div *ngIf="chart">
+      <canvas id="canvas">{{ chart }}</canvas>
+    </div>
     <mat-card-title> Static Sesssion Chart </mat-card-title>
     <app-static-eeg [session]="selectedSession" [classifications]="classifications"></app-static-eeg>
     <mat-card-content>

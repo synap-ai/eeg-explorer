@@ -22,6 +22,9 @@ export class DataCollectionComponent implements OnInit {
   experiments: Observable<Experiment[]>;
   Player: YT.Player;
 
+  startTime = -1;
+  endTime = Number.MAX_SAFE_INTEGER;
+
   get uploading() {
     return this.sessionsService.uploading;
   }
@@ -49,18 +52,25 @@ export class DataCollectionComponent implements OnInit {
     const state = event.data;
     if (state === 1) {
       // playing
+      this.startTime = Date.now();
       this.subscription = this.eegStream.data.subscribe(s => {
-        this.samples.push(s);
+        if (s.timestamp >= this.startTime) {
+          if (s.timestamp <= this.endTime) {
+            this.samples.push(s);
+          } else {
+            this.cleanUp();
+          }
+        }
       });
     } else if (state === 0) {
-      this.subscription.unsubscribe();
-      this.cleanUp();
+      this.endTime = Date.now();
     } else if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
   async cleanUp() {
+    this.subscription.unsubscribe();
     const eegSamples = this.samples.map(sample => {
       return {
         timestamp: sample.timestamp,
@@ -79,5 +89,7 @@ export class DataCollectionComponent implements OnInit {
     }));
 
     this.samples = [];
+    this.startTime = -1;
+    this.endTime = Number.MAX_VALUE;
   }
 }

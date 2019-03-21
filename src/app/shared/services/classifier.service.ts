@@ -46,7 +46,7 @@ export class ClassifierService {
 
           classifications.push({ startTime, endTime, class: clf});
 
-         };
+         }
          return classifications;
        })
       );

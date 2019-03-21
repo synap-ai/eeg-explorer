@@ -81,15 +81,15 @@ export class AnalysisHubComponent implements OnInit {
     this.cService.classify(this.classifier, this.selectedSession).subscribe(clfs => {
       if (clfs) {
         this.classifications = clfs;
+        for (let i = 0; i < clfs.length; i++) {
+          const clf = clfs[i];
+          this.highPositiveCount += clf.class === 'High-Positive' ? 1 : 0;
+          this.lowPositiveCount += clf.class === 'Low-Positive' ? 1 : 0;
+          this.highNegativeCount += clf.class === 'High-Negative' ? 1 : 0;
+          this.lowNegativeCount += clf.class === 'Low-Negative' ? 1 : 0;
+        }
       } else {
         this.snackBar.open('Failed to get classifications', 'Dismiss');
-      }
-      for (let i = 0; i < clfs.length; i++) {
-        const clf = clfs[i];
-        this.highPositiveCount += clf.class === 'High-Positive' ? 1 : 0;
-        this.lowPositiveCount += clf.class === 'Low-Positive' ? 1 : 0;
-        this.highNegativeCount += clf.class === 'High-Negative' ? 1 : 0;
-        this.lowNegativeCount += clf.class === 'Low-Negative' ? 1 : 0;
       }
     }, error => {
       this.snackBar.open('Failed to get classifications: ' + error.toString(), 'Dismiss');

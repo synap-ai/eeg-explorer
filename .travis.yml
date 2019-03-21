@@ -14,6 +14,7 @@ before_script:
 script:
   - ng lint
   - ng build --prod --base-href https://synap-ai.github.io/eeg-explorer/
+  - cp dist/index.html dist/404.html
 deploy:
   provider: pages
   skip_cleanup: true
